@@ -30,5 +30,5 @@ require_once RACINE . "app/views/templates/header.php";
     </div>
     <button type="submit">Mettre à jour</button>
 </form>
-
+<a href="index.php?page=logout">Déconnexion</a>
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>

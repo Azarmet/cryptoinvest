@@ -22,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?page=leaderboard">Leaderboard</a></li>
                 <?php if(isset($_SESSION['user'])): ?>
                     <!-- L'utilisateur est connecté : afficher le pseudo et un lien vers le profil -->
-                    <li><a href="index.php?page=profil"><?php echo htmlspecialchars($_SESSION['user']['pseudo']); ?></a></li>
+                    <li><img src="<?php echo htmlspecialchars($_SESSION['user']['image_profil']); ?>" alt="Image de Profil" width="30"><a href="index.php?page=profil"><?php echo htmlspecialchars($_SESSION['user']['pseudo']); ?></a></li>
                 <?php else: ?>
                     <!-- L'utilisateur n'est pas connecté : afficher le lien de connexion -->
                     <li><a href="index.php?page=login">Connexion</a></li>
