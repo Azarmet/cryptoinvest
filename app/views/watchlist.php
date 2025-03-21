@@ -32,7 +32,7 @@
         <?php endif; ?>
     </tbody>
 </table>
-
+<a href="index.php?page=market">Go to Market</a>
 <script>
 // Fonction de rafraîchissement du tableau via AJAX
 function refreshWatchlistData() {
@@ -52,7 +52,7 @@ function refreshWatchlistData() {
                               "<td>" + crypto.prix_actuel + "</td>" +
                               "<td>" + variation +"%" + "</td>" +
                               "<td>" + crypto.date_maj + "</td>" +
-                              "<td><a href='index.php?page=watchlist&action=remove&id=" + crypto.id_crypto_market + "'>Supprimer</a></td>" +
+                              "<td><a href='index.php?page=watchlist&action=remove&id=" + crypto.id_crypto_market + "'>Remove</a></td>" +
                               "</tr>";
                     tbody.innerHTML += row;
                 });

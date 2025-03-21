@@ -32,7 +32,9 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-
+<?php if(isset($_SESSION['user'])): ?>
+    <a href="index.php?page=watchlist">Go to Watchlist</a>
+<?php endif; ?>
 <script>
 // Définir une variable pour savoir si l'utilisateur est connecté
 var isLoggedIn = <?php echo isset($_SESSION['user']) ? 'true' : 'false'; ?>;

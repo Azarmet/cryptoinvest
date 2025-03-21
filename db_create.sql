@@ -15,9 +15,12 @@ CREATE TABLE IF NOT EXISTS utilisateur (
     email         VARCHAR(100) NOT NULL UNIQUE,
     pseudo        VARCHAR(50)  NOT NULL UNIQUE,
     mot_de_passe  VARCHAR(255) NOT NULL,
-    role          VARCHAR(20)  NOT NULL DEFAULT 'utilisateur'
+    role          VARCHAR(20)  NOT NULL DEFAULT 'utilisateur',
+    bio           TEXT NULL,
+    image_profil  VARCHAR(255) NULL
     -- Exemples de rôles : 'utilisateur', 'administrateur'
 ) ENGINE=InnoDB;
+
 
 -- -----------------------------------------------------
 -- 3. Table CryptoTrans (cryptos disponibles aux transactions)
