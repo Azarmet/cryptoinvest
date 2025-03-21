@@ -1,10 +1,13 @@
 <?php
-    // Définition de la racine du projet (pour inclure plus facilement les fichiers)
-    define("RACINE", __DIR__ . "/");
+    // Définir la racine du projet
+    define('RACINE', __DIR__ . '/');
+
+    // Charger l'autoloader de Composer
+    require_once RACINE . 'vendor/autoload.php';
 
     // Inclure le routeur
     require_once RACINE . "app/routeur.php";
 
-    // On appelle la fonction principale du routeur
+    // Appeler la fonction du routeur
     routeur();
 ?>

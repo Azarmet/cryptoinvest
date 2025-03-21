@@ -1,9 +1,12 @@
 <?php
+namespace App\Controllers;
 
+use App\Models\User;
 
-require_once RACINE . "app/views/templates/header.php";
-require_once RACINE . "app/views/home.php";
-require_once RACINE . "app/views/templates/footer.php";
+function showHome() {
+    require_once RACINE . "app/views/home.php";
+}
+
 
 
 ?>
