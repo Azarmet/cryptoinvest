@@ -34,8 +34,13 @@ function routeur() {
             break;
 
         case "market":
-            require_once RACINE . "app/controllers/MarketController.php";
-            \App\Controllers\showMarket();
+             require_once RACINE . "app/controllers/MarketController.php";
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            if ($action == 'refresh') {
+                \App\Controllers\refreshMarket();
+            } else {
+                \App\Controllers\showMarket();
+            }
             break;
 
         case "profil":
