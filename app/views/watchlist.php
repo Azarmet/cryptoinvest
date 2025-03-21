@@ -5,7 +5,7 @@
 <table id="watchlist-table" border="1" cellpadding="5">
     <thead>
         <tr>
-            <th>Code</th>
+            <th></th>
             <th>Prix Actuel</th>
             <th>Variation 24H</th>
             <th>Date Mise à Jour</th>
@@ -65,7 +65,7 @@ function refreshWatchlistData() {
 
 
 // Rafraîchir la watchlist toutes les 50 secondes (50000 millisecondes)
-setInterval(refreshWatchlistData, 50000);
+setInterval(refreshWatchlistData, 5000);
 </script>
 
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>
