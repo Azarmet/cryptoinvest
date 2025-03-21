@@ -47,8 +47,8 @@ function refreshMarketData() {
     xhr.send();
 }
 
-// Rafraîchir toutes les 5 secondes (5000 millisecondes)
-setInterval(refreshMarketData, 5000);
+// Rafraîchir toutes les 50 secondes (50000 millisecondes)
+setInterval(refreshMarketData, 50000);
 </script>
 
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>
