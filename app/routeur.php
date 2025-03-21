@@ -68,6 +68,20 @@ function routeur() {
                 require_once RACINE . "app/views/register.php";
             }
             break;
+
+        case "watchlist":
+             require_once RACINE . "app/controllers/WatchlistController.php";
+             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+             if ($action == 'add') {
+                 \App\Controllers\addToWatchlist();
+            } elseif ($action == 'remove') {
+                 \App\Controllers\removeFromWatchlist();
+              } elseif ($action == 'refresh') {
+                 \App\Controllers\refreshWatchlist();
+              } else {
+                 \App\Controllers\showWatchlist();
+             }
+             break;
         
         case "logout":
             require_once RACINE . "app/controllers/ProfilController.php";

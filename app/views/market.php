@@ -9,6 +9,9 @@
             <th>Prix Actuel</th>
             <th>Variation 24H</th>
             <th>Date Mise à Jour</th>
+            <?php if(isset($_SESSION['user'])): ?>
+                <th>Action</th>
+            <?php endif; ?>
         </tr>
     </thead>
     <tbody>
@@ -18,12 +21,22 @@
             <td><?php echo htmlspecialchars($crypto['prix_actuel']); ?></td>
             <td><?php echo htmlspecialchars($crypto['variation_24h']); ?></td>
             <td><?php echo htmlspecialchars($crypto['date_maj']); ?></td>
+            <?php if(isset($_SESSION['user'])): ?>
+                <td>
+                    <a href="index.php?page=watchlist&action=add&id=<?php echo $crypto['id_crypto_market']; ?>">
+                        Ajouter à ma watchlist
+                    </a>
+                </td>
+            <?php endif; ?>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 
 <script>
+// Définir une variable pour savoir si l'utilisateur est connecté
+var isLoggedIn = <?php echo isset($_SESSION['user']) ? 'true' : 'false'; ?>;
+
 // Fonction de rafraîchissement du tableau via AJAX
 function refreshMarketData() {
     var xhr = new XMLHttpRequest();
@@ -38,8 +51,11 @@ function refreshMarketData() {
                           "<td>" + crypto.code + "</td>" +
                           "<td>" + crypto.prix_actuel + "</td>" +
                           "<td>" + crypto.variation_24h + "</td>" +
-                          "<td>" + crypto.date_maj + "</td>" +
-                          "</tr>";
+                          "<td>" + crypto.date_maj + "</td>";
+                if(isLoggedIn) {
+                    row += "<td><a href=\"index.php?page=watchlist&action=add&id=" + crypto.id_crypto_market + "\">Ajouter à ma watchlist</a></td>";
+                }
+                row += "</tr>";
                 tbody.innerHTML += row;
             });
         }
