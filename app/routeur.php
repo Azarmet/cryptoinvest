@@ -38,6 +38,11 @@ function routeur() {
             \App\Controllers\showMarket();
             break;
 
+        case "profil":
+            require_once RACINE . "app/controllers/ProfilController.php";
+            \App\Controllers\showProfil();
+            break;
+
         case "login":
             require_once RACINE . "app/controllers/LoginController.php";
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
@@ -58,6 +63,12 @@ function routeur() {
                 require_once RACINE . "app/views/register.php";
             }
             break;
+        
+        case "logout":
+            require_once RACINE . "app/controllers/ProfilController.php";
+            \App\Controllers\logout();
+            break;
+            
 
         default:
             echo "Erreur 404 : page introuvable.";
