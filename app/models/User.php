@@ -34,5 +34,24 @@ class User {
         }
         return false;
     }
+
+    // Méthode pour mettre à jour la bio et l'image de profil de l'utilisateur
+    public function updateProfile($userId, $bio, $imagePath) {
+        $sql = "UPDATE utilisateur SET bio = :bio, image_profil = :image_profil WHERE id_utilisateur = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':bio' => $bio,
+            ':image_profil' => $imagePath,
+            ':id' => $userId
+        ]);
+    }
+
+    // (Optionnel) Méthode pour récupérer l'utilisateur par son ID
+    public function getById($userId) {
+        $sql = "SELECT * FROM utilisateur WHERE id_utilisateur = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id' => $userId]);
+        return $stmt->fetch();
+    }
 }
 ?>

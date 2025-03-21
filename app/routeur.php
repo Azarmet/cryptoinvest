@@ -45,8 +45,14 @@ function routeur() {
 
         case "profil":
             require_once RACINE . "app/controllers/ProfilController.php";
-            \App\Controllers\showProfil();
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            if ($action == 'update') {
+                \App\Controllers\updateProfile();
+            } else {
+                \App\Controllers\showProfile();
+            }
             break;
+        
 
         case "login":
             require_once RACINE . "app/controllers/LoginController.php";
