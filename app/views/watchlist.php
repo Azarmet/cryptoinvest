@@ -6,10 +6,10 @@
     <thead>
         <tr>
             <th></th>
-            <th>Prix Actuel</th>
+            <th>Actual Price</th>
             <th>Variation 24H</th>
-            <th>Date Mise à Jour</th>
-            <th>Action</th>
+            <th>Last Update</th>
+            <th>Watchlist</th>
         </tr>
     </thead>
     <tbody>
@@ -18,10 +18,10 @@
                 <tr>
                     <td><?php echo htmlspecialchars($crypto['code']); ?></td>
                     <td><?php echo htmlspecialchars($crypto['prix_actuel']); ?></td>
-                    <td><?php echo htmlspecialchars($crypto['variation_24h']); ?></td>
+                    <td><?php echo number_format($crypto['variation_24h'], 2, '.', '') ."%"; ?></td>
                     <td><?php echo htmlspecialchars($crypto['date_maj']); ?></td>
                     <td>
-                        <a href="index.php?page=watchlist&action=remove&id=<?php echo $crypto['id_crypto_market']; ?>">Supprimer</a>
+                        <a href="index.php?page=watchlist&action=remove&id=<?php echo $crypto['id_crypto_market']; ?>">Remove</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -46,10 +46,11 @@ function refreshWatchlistData() {
             tbody.innerHTML = "";
             if (cryptos.length > 0) {
                 cryptos.forEach(function(crypto) {
+                    var variation = parseFloat(crypto.variation_24h).toFixed(2);
                     var row = "<tr>" +
                               "<td>" + crypto.code + "</td>" +
                               "<td>" + crypto.prix_actuel + "</td>" +
-                              "<td>" + crypto.variation_24h + "</td>" +
+                              "<td>" + variation +"%" + "</td>" +
                               "<td>" + crypto.date_maj + "</td>" +
                               "<td><a href='index.php?page=watchlist&action=remove&id=" + crypto.id_crypto_market + "'>Supprimer</a></td>" +
                               "</tr>";
@@ -63,8 +64,7 @@ function refreshWatchlistData() {
     xhr.send();
 }
 
-
-// Rafraîchir la watchlist toutes les 50 secondes (50000 millisecondes)
+// Rafraîchir la watchlist toutes les 5 secondes (5000 millisecondes)
 setInterval(refreshWatchlistData, 5000);
 </script>
 

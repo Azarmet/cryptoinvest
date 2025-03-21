@@ -6,11 +6,11 @@
     <thead>
         <tr>
             <th></th>
-            <th>Prix Actuel</th>
+            <th>Actual Price</th>
             <th>Variation 24H</th>
-            <th>Date Mise à Jour</th>
+            <th>Last Update</th>
             <?php if(isset($_SESSION['user'])): ?>
-                <th>Action</th>
+                <th>Watchlist</th>
             <?php endif; ?>
         </tr>
     </thead>
@@ -19,12 +19,12 @@
         <tr>
             <td><?php echo htmlspecialchars($crypto['code']); ?></td>
             <td><?php echo htmlspecialchars($crypto['prix_actuel']); ?></td>
-            <td><?php echo htmlspecialchars($crypto['variation_24h']); ?></td>
+            <td><?php echo number_format($crypto['variation_24h'], 2, '.', '') ."%"; ?></td>
             <td><?php echo htmlspecialchars($crypto['date_maj']); ?></td>
             <?php if(isset($_SESSION['user'])): ?>
                 <td>
                     <a href="index.php?page=watchlist&action=add&id=<?php echo $crypto['id_crypto_market']; ?>">
-                        Ajouter à ma watchlist
+                        Add
                     </a>
                 </td>
             <?php endif; ?>
@@ -47,13 +47,14 @@ function refreshMarketData() {
             var tbody = document.querySelector("#market-table tbody");
             tbody.innerHTML = "";
             cryptos.forEach(function(crypto) {
+                var variation = parseFloat(crypto.variation_24h).toFixed(2);
                 var row = "<tr>" +
                           "<td>" + crypto.code + "</td>" +
                           "<td>" + crypto.prix_actuel + "</td>" +
-                          "<td>" + crypto.variation_24h + "</td>" +
+                          "<td>" + variation +"%" + "</td>" +
                           "<td>" + crypto.date_maj + "</td>";
                 if(isLoggedIn) {
-                    row += "<td><a href=\"index.php?page=watchlist&action=add&id=" + crypto.id_crypto_market + "\">Ajouter à ma watchlist</a></td>";
+                    row += "<td><a href=\"index.php?page=watchlist&action=add&id=" + crypto.id_crypto_market + "\">Add</a></td>";
                 }
                 row += "</tr>";
                 tbody.innerHTML += row;
