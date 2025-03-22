@@ -6,24 +6,25 @@ function refreshMarketData() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var cryptos = JSON.parse(xhr.responseText);
             var tbody = document.querySelector("#market-table tbody");
-            tbody.innerHTML = "";
+            var htmlContent = "";
             cryptos.forEach(function(crypto) {
                 var variation = parseFloat(crypto.variation_24h).toFixed(2);
-                var row = "<tr>" +
-                          "<td>" + crypto.code + "</td>" +
-                          "<td>" + crypto.prix_actuel + "</td>" +
-                          "<td>" + variation +"%" + "</td>" +
-                          "<td>" + crypto.date_maj + "</td>";
-                if(isLoggedIn) {
-                    row += "<td><a href=\"index.php?page=watchlist&action=add&id=" + crypto.id_crypto_market + "\">Add</a></td>";
+                htmlContent += "<tr>";
+                htmlContent += "<td>" + crypto.code + "</td>";
+                htmlContent += "<td>" + crypto.prix_actuel + "</td>";
+                htmlContent += "<td>" + variation + "%" + "</td>";
+                htmlContent += "<td>" + crypto.date_maj + "</td>";
+                if (isLoggedIn) {
+                    htmlContent += "<td><a href=\"index.php?page=watchlist&action=add&id=" + crypto.id_crypto_market + "\">Add</a></td>";
                 }
-                row += "</tr>";
-                tbody.innerHTML += row;
+                htmlContent += "</tr>";
             });
+            tbody.innerHTML = htmlContent;
         }
     };
     xhr.send();
 }
+
 
 // Rafraîchir toutes les 50 secondes (50000 millisecondes)
 setInterval(refreshMarketData, 5000);
