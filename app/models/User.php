@@ -16,12 +16,26 @@ class User {
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO utilisateur (email, pseudo, mot_de_passe) VALUES (:email, :pseudo, :mot_de_passe)";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([
+        if (!$stmt->execute([
             ':email'       => $email,
             ':pseudo'      => $pseudo,
             ':mot_de_passe'=> $hash
-        ]);
+        ])) {
+            return false;
+        }
+    
+        $newUserId = $this->pdo->lastInsertId();
+    
+        // Créer automatiquement le portefeuille pour ce user
+        $sqlPortefeuille = "INSERT INTO portefeuille (capital_initial, id_utilisateur) VALUES (10000, :userId)";
+        $stmtPf = $this->pdo->prepare($sqlPortefeuille);
+        if (!$stmtPf->execute([':userId' => $newUserId])) {
+            return false;
+        }
+    
+        return true;
     }
+    
 
     // Login : vérifie l'identifiant et retourne l'utilisateur si correct
     public function login($email, $password) {

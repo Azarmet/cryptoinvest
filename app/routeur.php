@@ -25,8 +25,29 @@ function routeur() {
 
         case "dashboard":
             require_once RACINE . "app/controllers/DashboardController.php";
-            \App\Controllers\showDashboard();
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            switch($action) {
+                case "show":
+                    \App\Controllers\showDashboard();
+                    break;
+                case "openPosition":
+                    \App\Controllers\openPosition();
+                    break;
+                case "closePosition":
+                    \App\Controllers\closePosition();
+                    break;
+                case "refreshPositions":
+                    \App\Controllers\refreshPositions();
+                    break;
+                case "refreshPortfolioData":
+                    \App\Controllers\refreshPortfolioData();
+                    break;
+                default:
+                    // 404 ou redirection
+                    echo "Erreur 404 : action inconnue.";
+            }
             break;
+            
 
         case "leaderboard":
             require_once RACINE . "app/controllers/LeaderboardController.php";
