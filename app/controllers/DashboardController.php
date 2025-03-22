@@ -104,17 +104,21 @@ function refreshPortfolioData() {
         exit();
     }
     $userId = $_SESSION['user']['id_utilisateur'];
+    $interval = $_GET['interval'] ?? 'jour';
 
-    $interval = $_GET['interval'] ?? 'jour'; // "jour", "semaine", "mois", "annee"
-
-    $pfModel = new Portefeuille();
+    $pfModel = new \App\Models\Portefeuille();
     $chartData = $pfModel->getSoldeHistory($userId, $interval);
     $stats     = $pfModel->getPortfolioStats($userId);
+    // Récupérer la valeur actuelle directement depuis la colonne capital_actuel
+    $currentValue = $pfModel->getSoldeActuel($userId);
 
     $data = [
-        'chartData' => $chartData,
-        'stats'     => $stats
+        'chartData'    => $chartData,
+        'stats'        => $stats,
+        'currentValue' => $currentValue
     ];
     echo json_encode($data);
     exit();
 }
+
+

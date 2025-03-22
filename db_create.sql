@@ -49,15 +49,14 @@ CREATE TABLE IF NOT EXISTS cryptomarket (
 CREATE TABLE IF NOT EXISTS portefeuille (
     id_portefeuille INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     capital_initial DECIMAL(15,2) NOT NULL DEFAULT 10000.00,
-    -- Ex. : 10 000 USDT de départ
+    capital_actuel DECIMAL(15,2) NOT NULL DEFAULT 10000.00,
     id_utilisateur  INT UNSIGNED NOT NULL,
     CONSTRAINT fk_portefeuille_utilisateur
       FOREIGN KEY (id_utilisateur) REFERENCES utilisateur (id_utilisateur)
       ON DELETE CASCADE
       ON UPDATE CASCADE
-    -- Relation 1-1 avec l’utilisateur (mais techniquement 1-N autorisé).
-    -- Pour forcer le 1-1 strictement, vous pouvez ajouter une contrainte UNIQUE sur id_utilisateur.
 ) ENGINE=InnoDB;
+
 
 -- -----------------------------------------------------
 -- 6. Table HistoriqueBTC (historique de prix du BTC)

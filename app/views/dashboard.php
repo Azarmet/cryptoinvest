@@ -8,6 +8,8 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 ?>
 
 <h2>Welcome <?php echo $userName; ?></h2>
+<!-- Affichage de la valeur actuelle du portefeuille -->
+<h3 id="current-portfolio-value">Valeur actuelle : Loading...</h3>
 
 <!-- SECTION 1 : Graphique du portefeuille + indicateurs -->
 <div id="portfolio-section" style="margin-bottom: 30px;">
@@ -76,10 +78,10 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// -------------- PORTFOLIO SECTION --------------
+// ------------------ PORTFOLIO SECTION ------------------
 let currentInterval = 'jour';
 
-// Rafraîchissement du portefeuille (graphique + stats)
+// Rafraîchissement du portefeuille (graphique, stats et valeur actuelle)
 function refreshPortfolioData() {
     fetch(`index.php?page=dashboard&action=refreshPortfolioData&interval=${currentInterval}`)
         .then(res => res.json())
@@ -88,6 +90,8 @@ function refreshPortfolioData() {
             document.getElementById('roi-total').textContent = data.stats.roiTotal + ' %';
             document.getElementById('pnl-total').textContent = data.stats.pnlTotal + ' USDT';
             document.getElementById('tx-count').textContent = data.stats.txCount;
+            // Affichage du capital_actuel
+            document.getElementById('current-portfolio-value').textContent = "Valeur actuelle : " + data.currentValue + " USDT";
         })
         .catch(err => console.error(err));
 }
@@ -134,7 +138,7 @@ document.querySelectorAll('.interval-btn').forEach(btn => {
     });
 });
 
-// -------------- POSITIONS SECTION --------------
+// ------------------ POSITIONS SECTION ------------------
 function refreshPositions() {
     fetch("index.php?page=dashboard&action=refreshPositions")
         .then(res => res.json())
@@ -159,10 +163,11 @@ function refreshPositions() {
         .catch(err => console.error(err));
 }
 
-// -------------- INITIALISATION --------------
+// ------------------ INITIALISATION ------------------
 refreshPortfolioData();
 refreshPositions();
 setInterval(refreshPositions, 1000);
+setInterval(refreshPortfolioData, 1000);
 </script>
 
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>

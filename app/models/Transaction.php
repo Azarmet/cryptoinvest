@@ -13,46 +13,51 @@ class Transaction {
 
     /**
      * Ouvre une nouvelle position (long/short) pour l'utilisateur, sur BTCUSDT.
+     * Le prix d'ouverture est récupéré directement via l'API Binance.
+     * Cette méthode ne modifie pas la colonne capital_actuel.
      */
     public function openPosition($userId, $montant, $type) {
-        // Récupérer le prix actuel du BTCUSDT depuis Binance
+        // Récupérer le prix d'ouverture en temps réel via l'API Binance
         $prixOuverture = $this->getCurrentPriceFromBinance('BTCUSDT');
         if (!$prixOuverture) {
-            // Gestion d'erreur, par exemple retourner ou afficher un message
-            return;
+            return; // ou gérer l'erreur
         }
 
+        // Calculer la quantité investie : montant / prixOuverture
         $quantite = ($prixOuverture > 0) ? ($montant / $prixOuverture) : 0;
 
-        // Insérer la transaction
+        // Insérer la transaction avec statut 'open'
         $sqlInsert = "
             INSERT INTO transaction
                 (statut, date_ouverture, prix_ouverture, quantite, sens, id_portefeuille, id_crypto_trans)
             VALUES
                 ('open', NOW(), :prixOuverture, :quantite, :sens,
-                 (SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur=:userId LIMIT 1),
-                 (SELECT id_crypto_trans FROM cryptotrans WHERE code='BTCUSDT' LIMIT 1)
+                 (SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1),
+                 (SELECT id_crypto_trans FROM cryptotrans WHERE code = 'BTCUSDT' LIMIT 1)
                 )
         ";
         $stmtInsert = $this->pdo->prepare($sqlInsert);
         $stmtInsert->execute([
             ':prixOuverture' => $prixOuverture,
             ':quantite'      => $quantite,
-            ':sens'          => $type,
+            ':sens'          => $type,      // "long" ou "short"
             ':userId'        => $userId
         ]);
+        // Note : Nous ne mettons pas à jour capital_actuel ici.
     }
 
     /**
-     * Clôture une position 'open' et met à jour le PnL.
+     * Clôture une position 'open' et met à jour le portefeuille.
+     * Le capital_actuel est mis à jour en ajoutant uniquement le PnL réalisé.
      */
     public function closePosition($idTransaction, $userId) {
+        // Récupérer la transaction à clôturer appartenant à l'utilisateur
         $sql = "
-            SELECT t.*, pf.id_utilisateur as userOwner
+            SELECT t.*, pf.id_utilisateur AS userOwner
             FROM transaction t
             JOIN portefeuille pf ON pf.id_portefeuille = t.id_portefeuille
             WHERE t.id_transaction = :id
-              AND t.statut='open'
+              AND t.statut = 'open'
               AND pf.id_utilisateur = :userId
             LIMIT 1
         ";
@@ -64,12 +69,13 @@ class Transaction {
             return;
         }
 
-        // Récupérer le prix actuel du BTCUSDT
+        // Récupérer le prix actuel en temps réel de BTCUSDT
         $prixCloture = $this->getCurrentPriceFromBinance('BTCUSDT');
         if (!$prixCloture) {
             return;
         }
 
+        // Calculer le PnL en fonction du type de position
         $pnl = 0;
         if ($transaction['sens'] === 'long') {
             $pnl = ($prixCloture - $transaction['prix_ouverture']) * $transaction['quantite'];
@@ -77,9 +83,10 @@ class Transaction {
             $pnl = ($transaction['prix_ouverture'] - $prixCloture) * $transaction['quantite'];
         }
 
+        // Mettre à jour la transaction : statut 'close', enregistre le prix de clôture, le PnL et la date de clôture
         $sqlUpdate = "
             UPDATE transaction
-            SET statut='close',
+            SET statut = 'close',
                 date_cloture = NOW(),
                 prix_cloture = :prixCloture,
                 pnl = :pnl
@@ -91,65 +98,20 @@ class Transaction {
             ':pnl'           => $pnl,
             ':idTransaction' => $idTransaction
         ]);
-    }
 
-    /**
-     * Récupère les positions 'open' de l'utilisateur et met à jour dynamiquement le prix pour chaque crypto.
-     */
-    public function getOpenPositions($userId) {
-        $sql = "
-            SELECT t.id_transaction, t.prix_ouverture, t.quantite, t.date_ouverture, t.sens,
-                   c.code
-            FROM transaction t
-            JOIN portefeuille pf ON pf.id_portefeuille = t.id_portefeuille
-            JOIN utilisateur u ON u.id_utilisateur = pf.id_utilisateur
-            JOIN cryptotrans c ON c.id_crypto_trans = t.id_crypto_trans
-            WHERE t.statut = 'open'
-              AND u.id_utilisateur = :userId
-        ";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':userId' => $userId]);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if (!$rows) {
-            return [];
-        }
-
-        $positions = [];
-        foreach ($rows as $row) {
-            $code = $row['code'];
-            // Récupérer le prix actuel en interrogeant directement Binance pour ce code
-            $prixActuel = $this->getCurrentPriceFromBinance($code);
-            if (!$prixActuel) {
-                $prixActuel = floatval($row['prix_ouverture']);
-            }
-            $pnl = 0;
-            if ($row['sens'] === 'long') {
-                $pnl = ($prixActuel - $row['prix_ouverture']) * $row['quantite'];
-            } else {
-                $pnl = ($row['prix_ouverture'] - $prixActuel) * $row['quantite'];
-            }
-            $montantInvesti = $row['prix_ouverture'] * $row['quantite'];
-            $roi = ($montantInvesti > 0) ? (($pnl / $montantInvesti) * 100) : 0;
-
-            $positions[] = [
-                'id_transaction' => $row['id_transaction'],
-                'code'           => $code,
-                'sens'           => $row['sens'],
-                'prix_ouverture' => floatval($row['prix_ouverture']),
-                'prix_actuel'    => $prixActuel,
-                'date_ouverture' => $row['date_ouverture'],
-                'pnl'            => round($pnl, 2),
-                'roi'            => round($roi, 2) . '%'
-            ];
-        }
-        return $positions;
+        // Mettre à jour le portefeuille en ajoutant uniquement le PnL réalisé
+        $sqlUpdatePf = "UPDATE portefeuille SET capital_actuel = capital_actuel + :pnl WHERE id_utilisateur = :userId";
+        $stmtPf = $this->pdo->prepare($sqlUpdatePf);
+        $stmtPf->execute([
+            ':pnl'   => $pnl,
+            ':userId'=> $userId
+        ]);
     }
 
     /**
      * Récupère le prix actuel en temps réel pour un code donné en appelant l'API Binance.
-     * @param string $code - Le code de la cryptomonnaie (ex: 'BTCUSDT')
-     * @return float|false - Le prix actuel ou false en cas d'erreur.
+     * @param string $code Le code de la cryptomonnaie (ex: 'BTCUSDT')
+     * @return float|false Le prix actuel ou false en cas d'erreur.
      */
     private function getCurrentPriceFromBinance($code) {
         $apiUrl = "https://api.binance.com/api/v3/ticker/24hr?symbol=" . $code;
@@ -168,5 +130,51 @@ class Transaction {
             return floatval($data['lastPrice']);
         }
         return false;
+    }
+
+    /**
+     * Récupère les positions 'open' de l'utilisateur et met à jour dynamiquement le prix pour chaque position.
+     */
+    public function getOpenPositions($userId) {
+        $sql = "
+            SELECT t.id_transaction, t.prix_ouverture, t.quantite, t.date_ouverture, t.sens,
+                   c.code
+            FROM transaction t
+            JOIN portefeuille pf ON pf.id_portefeuille = t.id_portefeuille
+            JOIN utilisateur u ON u.id_utilisateur = pf.id_utilisateur
+            JOIN cryptotrans c ON c.id_crypto_trans = t.id_crypto_trans
+            WHERE t.statut = 'open'
+              AND u.id_utilisateur = :userId
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':userId' => $userId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (!$rows) {
+            return [];
+        }
+        $positions = [];
+        foreach ($rows as $row) {
+            $code = $row['code'];
+            $prixActuel = $this->getCurrentPriceFromBinance($code);
+            if (!$prixActuel) {
+                $prixActuel = floatval($row['prix_ouverture']);
+            }
+            $pnl = ($row['sens'] === 'long')
+                    ? ($prixActuel - $row['prix_ouverture']) * $row['quantite']
+                    : ($row['prix_ouverture'] - $prixActuel) * $row['quantite'];
+            $montantInvesti = $row['prix_ouverture'] * $row['quantite'];
+            $roi = ($montantInvesti > 0) ? (($pnl / $montantInvesti) * 100) : 0;
+            $positions[] = [
+                'id_transaction' => $row['id_transaction'],
+                'code'           => $code,
+                'sens'           => $row['sens'],
+                'prix_ouverture' => floatval($row['prix_ouverture']),
+                'prix_actuel'    => $prixActuel,
+                'date_ouverture' => $row['date_ouverture'],
+                'pnl'            => round($pnl, 2),
+                'roi'            => round($roi, 2) . '%'
+            ];
+        }
+        return $positions;
     }
 }

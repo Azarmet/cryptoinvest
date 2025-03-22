@@ -54,6 +54,16 @@ class Portefeuille {
         return $solde;
     }
 
+
+    public function getSoldeActuel($userId) {
+        $sql = "SELECT capital_actuel FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':userId' => $userId]);
+        $row = $stmt->fetch();
+        return $row ? floatval($row['capital_actuel']) : 0;
+    }
+    
+
     /**
      * Retourne l'historique du solde pour le graphique.
      * Ici, exemple statique. À implémenter pour un historique réel.
