@@ -10,7 +10,12 @@ function routeur() {
         
         case "faq":
             require_once RACINE . "app/controllers/FaqController.php";
-            \App\Controllers\showFaq();
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            if ($action == 'search') {
+                \App\Controllers\searchFaq();
+            } else {
+                \App\Controllers\showFaq();
+            }
             break;
 
         case "articles":
