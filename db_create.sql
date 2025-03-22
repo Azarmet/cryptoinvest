@@ -79,6 +79,10 @@ CREATE TABLE IF NOT EXISTS article (
     date_publication DATETIME     NOT NULL,
     id_auteur        INT UNSIGNED NOT NULL,
     categorie        VARCHAR(100) NULL,
+    statut           VARCHAR(20)  NOT NULL DEFAULT 'brouillon',
+    slug             VARCHAR(255) NULL,
+    meta_description VARCHAR(255) NULL,
+    image            VARCHAR(255) NULL,
     CONSTRAINT fk_article_auteur
       FOREIGN KEY (id_auteur) REFERENCES utilisateur (id_utilisateur)
       ON DELETE CASCADE
