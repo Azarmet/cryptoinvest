@@ -35,8 +35,14 @@ function routeur() {
 
         case "learn":
             require_once RACINE . "app/controllers/LearnController.php";
-            \App\Controllers\showLearn();
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            if ($action == 'search') {
+                \App\Controllers\searchLearn();
+            } else {
+                \App\Controllers\showLearn();
+            }
             break;
+            
 
         case "market":
              require_once RACINE . "app/controllers/MarketController.php";
