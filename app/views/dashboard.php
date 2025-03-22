@@ -166,8 +166,7 @@ function refreshPositions() {
 // ------------------ INITIALISATION ------------------
 refreshPortfolioData();
 refreshPositions();
-setInterval(refreshPositions, 1000);
-setInterval(refreshPortfolioData, 1000);
+setInterval(refreshPositions, 3000);
 </script>
 
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>
