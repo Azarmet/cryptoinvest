@@ -33,6 +33,36 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
     </div>
 </div>
 
+
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<div class="tradingview-widget-container">
+  <div id="tradingview_graph"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+    new TradingView.widget({
+      container_id: "tradingview_graph",
+      autosize: true,
+      symbol: "BINANCE:BTCUSDT",
+      interval: "D",
+      timezone: "Etc/UTC",
+      theme: "dark",
+      style: "1",
+      locale: "fr",
+      toolbar_bg: "#f1f3f6",
+      enable_publishing: false,
+      allow_symbol_change: false,
+      hideideas: true
+    });
+  </script>
+</div>
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+
 <!-- SECTION 2 : Trading (Long/Short) -->
 <div id="trading-section" style="margin-bottom: 30px;">
     <h3>Passer un ordre (BTCUSDT)</h3>
@@ -53,7 +83,6 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
         <button type="submit">Ouvrir une position</button>
     </form>
 </div>
-
 <!-- SECTION 3 : Positions en cours -->
 <div id="positions-section">
     <h3>Mes Positions en cours</h3>
