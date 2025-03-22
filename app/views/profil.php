@@ -48,18 +48,6 @@ require_once RACINE . "app/views/templates/header.php";
     </form>
 </div>
 
-<script>
-// Bouton pour afficher le formulaire de modification
-document.getElementById('btn-modify').addEventListener('click', function(){
-    document.getElementById('profile-display').style.display = 'none';
-    document.getElementById('profile-edit').style.display = 'block';
-});
-
-// Bouton pour annuler la modification et revenir à l'affichage
-document.getElementById('btn-cancel').addEventListener('click', function(){
-    document.getElementById('profile-edit').style.display = 'none';
-    document.getElementById('profile-display').style.display = 'block';
-});
-</script>
+<script src="<?php echo RACINE_URL; ?>public/js/profil.js"></script>
 
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>
