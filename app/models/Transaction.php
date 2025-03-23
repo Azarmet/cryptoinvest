@@ -172,9 +172,10 @@ class Transaction {
                 'prix_actuel'    => $prixActuel,
                 'date_ouverture' => $row['date_ouverture'],
                 'pnl'            => round($pnl, 2),
-                'roi'            => round($roi, 2) . '%'
+                'roi'            => round($roi, 2) . '%',
+                'taille'         => floatval($row['quantite'])
             ];
         }
         return $positions;
     }
-}
+}    

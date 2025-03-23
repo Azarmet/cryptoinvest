@@ -33,7 +33,6 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
     </div>
 </div>
 
-
 <!-- Graphique TradingView intégré (widget gratuit) -->
 <!-- Graphique TradingView intégré (widget gratuit) -->
 <!-- Graphique TradingView intégré (widget gratuit) -->
@@ -63,9 +62,12 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 <!-- Graphique TradingView intégré (widget gratuit) -->
 <!-- Graphique TradingView intégré (widget gratuit) -->
 
+
 <!-- SECTION 2 : Trading (Long/Short) -->
 <div id="trading-section" style="margin-bottom: 30px;">
     <h3>Passer un ordre (BTCUSDT)</h3>
+    <!-- Afficher le solde disponible (non alloué) -->
+    <p id="available-balance">Solde disponible : Loading...</p>
     <?php if(isset($_GET['error']) && $_GET['error'] === 'solde_insuffisant'): ?>
         <p style="color:red;">Solde insuffisant pour ouvrir cette position.</p>
     <?php endif; ?>
@@ -83,6 +85,7 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
         <button type="submit">Ouvrir une position</button>
     </form>
 </div>
+
 <!-- SECTION 3 : Positions en cours -->
 <div id="positions-section">
     <h3>Mes Positions en cours</h3>
@@ -92,6 +95,7 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
                 <th>Crypto</th>
                 <th>Type</th>
                 <th>Prix d'ouverture</th>
+                <th>Taille</th>
                 <th>Prix actuel</th>
                 <th>Date ouverture</th>
                 <th>PNL (USDT)</th>
@@ -109,3 +113,4 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 <script src="<?php echo RACINE_URL; ?>public/js/dashboard.js"></script>
 
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>
+

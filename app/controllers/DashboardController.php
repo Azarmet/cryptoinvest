@@ -109,16 +109,20 @@ function refreshPortfolioData() {
     $pfModel = new \App\Models\Portefeuille();
     $chartData = $pfModel->getSoldeHistory($userId, $interval);
     $stats     = $pfModel->getPortfolioStats($userId);
-    // Récupérer la valeur actuelle directement depuis la colonne capital_actuel
+    // Valeur actuelle = capital_actuel
     $currentValue = $pfModel->getSoldeActuel($userId);
+    // Solde disponible (non alloué)
+    $availableBalance = $pfModel->getSoldeDisponible($userId);
 
     $data = [
-        'chartData'    => $chartData,
-        'stats'        => $stats,
-        'currentValue' => $currentValue
+        'chartData'       => $chartData,
+        'stats'           => $stats,
+        'currentValue'    => $currentValue,
+        'availableBalance'=> $availableBalance
     ];
     echo json_encode($data);
     exit();
 }
+
 
 
