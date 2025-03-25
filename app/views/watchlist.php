@@ -32,6 +32,16 @@
         <?php endif; ?>
     </tbody>
 </table>
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<div id="tradingview-widget-container-watch">
+</div>
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
 <a href="index.php?page=market">Go to Market</a>
 
 <script src="<?php echo RACINE_URL; ?>public/js/watchlist.js"></script>

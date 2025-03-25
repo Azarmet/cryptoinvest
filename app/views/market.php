@@ -32,6 +32,16 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<div id="tradingview-widget-container">
+</div>
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
+<!-- Graphique TradingView intégré (widget gratuit) -->
 <?php if(isset($_SESSION['user'])): ?>
     <a href="index.php?page=watchlist">Go to Watchlist</a>
 <?php endif; ?>

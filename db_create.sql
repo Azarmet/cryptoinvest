@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS cryptomarket (
     prix_actuel      DECIMAL(15,6) NOT NULL, -- Ajustez la précision selon vos besoins
     variation_24h    DECIMAL(7,4)  NOT NULL, -- Variation en pourcentage (+X.XXXX / -X.XXXX)
     date_maj         DATETIME      NOT NULL,
+    categorie        VARCHAR(20)   NULL
     CONSTRAINT uk_code_market UNIQUE (code)
 ) ENGINE=InnoDB;
 
