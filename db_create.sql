@@ -49,14 +49,15 @@ CREATE TABLE IF NOT EXISTS cryptomarket (
 CREATE TABLE IF NOT EXISTS portefeuille (
     id_portefeuille INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     capital_initial DECIMAL(15,2) NOT NULL DEFAULT 10000.00,
-    capital_actuel DECIMAL(15,2) NOT NULL DEFAULT 10000.00,
+    -- Ex. : 10 000 USDT de départ
     id_utilisateur  INT UNSIGNED NOT NULL,
     CONSTRAINT fk_portefeuille_utilisateur
       FOREIGN KEY (id_utilisateur) REFERENCES utilisateur (id_utilisateur)
       ON DELETE CASCADE
       ON UPDATE CASCADE
+    -- Relation 1-1 avec l’utilisateur (mais techniquement 1-N autorisé).
+    -- Pour forcer le 1-1 strictement, vous pouvez ajouter une contrainte UNIQUE sur id_utilisateur.
 ) ENGINE=InnoDB;
-
 
 -- -----------------------------------------------------
 -- 6. Table HistoriqueBTC (historique de prix du BTC)
@@ -98,28 +99,9 @@ CREATE TABLE IF NOT EXISTS faq (
     -- Possibilité d'ajouter catégorie, ordre d'affichage, etc.
 ) ENGINE=InnoDB;
 
--- -----------------------------------------------------
--- 9. Table Classement
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS classement (
-    id_classement       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    valeur_portefeuille DECIMAL(15,2) NOT NULL DEFAULT 0.00,
-    pnl_24h             DECIMAL(15,2) NOT NULL DEFAULT 0.00,
-    pnl_1semaine        DECIMAL(15,2) NOT NULL DEFAULT 0.00,
-    pnl_1mois           DECIMAL(15,2) NOT NULL DEFAULT 0.00,
-    nb_transactions     INT UNSIGNED  NOT NULL DEFAULT 0,
-    date_calcul         DATETIME      NOT NULL,
-    id_utilisateur      INT UNSIGNED  NOT NULL,
-    CONSTRAINT fk_classement_utilisateur
-      FOREIGN KEY (id_utilisateur) REFERENCES utilisateur (id_utilisateur)
-      ON DELETE CASCADE
-      ON UPDATE CASCADE
-    -- Selon vos besoins, vous pouvez rendre cette relation 1-1 ou 1-N
-    -- si vous stockez un historique du classement.
-) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
--- 10. Table Transaction (historique de transactions sur BTC ou autres cryptos)
+-- 9. Table Transaction (historique de transactions sur BTC ou autres cryptos)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS transaction (
     id_transaction  INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -144,7 +126,7 @@ CREATE TABLE IF NOT EXISTS transaction (
 );
 
 -- -----------------------------------------------------
--- 11. Table Watchlist (relation N-N entre Utilisateur et CryptoMarket)
+-- 10. Table Watchlist (relation N-N entre Utilisateur et CryptoMarket)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS watchlist (
     id_utilisateur    INT UNSIGNED      NOT NULL,

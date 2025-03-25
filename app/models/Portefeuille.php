@@ -66,7 +66,6 @@ class Portefeuille {
 
     /**
      * Retourne l'historique du solde pour le graphique.
-     * Ici, exemple statique. À implémenter pour un historique réel.
      */
     public function getSoldeHistory($userId, $interval) {
         // Récupérer le portefeuille de l'utilisateur

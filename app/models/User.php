@@ -14,12 +14,14 @@ class User {
     // Inscription : ajoute un nouvel utilisateur
     public function register($email, $pseudo, $password) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO utilisateur (email, pseudo, mot_de_passe) VALUES (:email, :pseudo, :mot_de_passe)";
+        $imgdefaut ="public/uploads/profiles/default.png";
+        $sql = "INSERT INTO utilisateur (email, pseudo, mot_de_passe, image_profil) VALUES (:email, :pseudo, :mot_de_passe, :image_profil)";
         $stmt = $this->pdo->prepare($sql);
         if (!$stmt->execute([
             ':email'       => $email,
             ':pseudo'      => $pseudo,
-            ':mot_de_passe'=> $hash
+            ':mot_de_passe'=> $hash,
+            ':image_profil'=> $imgdefaut
         ])) {
             return false;
         }
@@ -67,5 +69,14 @@ class User {
         $stmt->execute([':id' => $userId]);
         return $stmt->fetch();
     }
+
+    // Méthode pour récupérer tous les utilisateurs
+    public function getAllIdUsers() {
+        $sql = "SELECT id_utilisateur FROM utilisateur WHERE id_utilisateur ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>
