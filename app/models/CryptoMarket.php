@@ -16,6 +16,17 @@ class CryptoMarket {
         $stmt = $this->pdo->query("SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj FROM cryptomarket");
         return $stmt->fetchAll();
     }
+    
+    // Récupère toutes les cryptomonnaies de la table
+    public function getAllFromCat($cat) {
+        $sql = "SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj 
+                FROM cryptomarket 
+                WHERE categorie LIKE CONCAT('%', :cat, '%');
+            ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':cat' => $cat]);
+        return $stmt->fetchAll();
+    }
 
     // Met à jour les données de chaque crypto via l'API Binance en parallèle
     public function updateFromBinance() {

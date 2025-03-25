@@ -1,7 +1,10 @@
+// Variable globale pour stocker la catégorie courante
+let currentCategory = 'all';
+
 // Fonction de rafraîchissement du tableau via AJAX
-function refreshMarketData() {
+function refreshMarketData(category = currentCategory) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "index.php?page=market&action=refresh", true);
+    xhr.open("GET", "index.php?page=market&action=refresh&categorie=" + category, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var cryptos = JSON.parse(xhr.responseText);
@@ -24,6 +27,7 @@ function refreshMarketData() {
     };
     xhr.send();
 }
+
 
 function updateTradingViewSymbol(symbol) {
     const container = document.querySelector("#tradingview-widget-container");
@@ -57,6 +61,17 @@ function updateTradingViewSymbol(symbol) {
     container.appendChild(script);
 }
 
+// Gestion des onglets
+document.querySelectorAll(".tab-button").forEach(button => {
+    button.addEventListener("click", function() {
+        document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+        this.classList.add("active");
+        // Met à jour la catégorie globale
+        currentCategory = this.getAttribute("data-category");
+        refreshMarketData(currentCategory);
+    });
+});
+
 
 // Gérer le clic sur un code de crypto
 document.addEventListener("click", function(e) {
@@ -69,8 +84,10 @@ document.addEventListener("click", function(e) {
 
 window.onload = function() {
     updateTradingViewSymbol("BTCUSDT");
-    refreshMarketData();
+    refreshMarketData("all"); // ou "top10" par défaut
 };
 
-// Rafraîchir toutes les 50 secondes (50000 millisecondes)
-setInterval(refreshMarketData, 5000);
+// Rafraîchir toutes les 5 secondes avec la catégorie courante
+setInterval(function() {
+    refreshMarketData(currentCategory);
+}, 5000);

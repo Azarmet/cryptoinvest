@@ -1,6 +1,20 @@
 <?php require_once RACINE . "app/views/templates/header.php"; ?>
 
 <h2>Marché des Cryptomonnaies</h2>
+<div class="market-tabs">
+  <button class="tab-button active" data-category="all">Toutes</button>
+  <button class="tab-button" data-category="top">Top 10</button>
+  <button class="tab-button" data-category="ino">Innovation</button>
+  <button class="tab-button" data-category="defi">DeFi</button>
+  <button class="tab-button" data-category="nft">NFT / Metaverse</button>
+  <button class="tab-button" data-category="meme">Meme</button>
+  <button class="tab-button" data-category="AI">AI</button>
+  <button class="tab-button" data-category="layer1">Layer 1</button>
+  <button class="tab-button" data-category="layer2">Layer 2</button>
+  <button class="tab-button" data-category="web3">Web3</button>
+  <button class="tab-button" data-category="new">Nouveautés</button>
+</div>
+
 
 <table id="market-table" border="1" cellpadding="5">
     <thead>

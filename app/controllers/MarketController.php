@@ -17,6 +17,20 @@ function refreshMarket() {
     // Mettre à jour les données en temps réel via l'API Binance
     $cryptoModel->updateFromBinance();
     $cryptos = $cryptoModel->getAll();
+    $categorie = $_GET['categorie'] ?? 'all';
+
+    if ($categorie === 'all') {
+        $cryptos = $cryptoModel->getAll();
+    } else {
+        $cryptos = $cryptoModel->getAllFromCat($categorie);
+    }
+    
+
     echo json_encode($cryptos);
+    exit;
+
 }
+
+
+
 ?>
