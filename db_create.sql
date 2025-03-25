@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS utilisateur (
     mot_de_passe  VARCHAR(255) NOT NULL,
     role          VARCHAR(20)  NOT NULL DEFAULT 'utilisateur',
     bio           TEXT NULL,
-    image_profil  VARCHAR(255) NULL
+    image_profil  VARCHAR(255) NULL DEFAULT 'public/uploads/profiles/default.png'
     -- Exemples de rôles : 'utilisateur', 'administrateur'
 ) ENGINE=InnoDB;
 
@@ -59,18 +59,10 @@ CREATE TABLE IF NOT EXISTS portefeuille (
     -- Pour forcer le 1-1 strictement, vous pouvez ajouter une contrainte UNIQUE sur id_utilisateur.
 ) ENGINE=InnoDB;
 
--- -----------------------------------------------------
--- 6. Table HistoriqueBTC (historique de prix du BTC)
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS historiquebtc (
-    date    DATETIME     NOT NULL,
-    prix    DECIMAL(15,6) NOT NULL,
-    PRIMARY KEY (date)
-    -- Stocke l'évolution du prix BTC dans le temps.
-) ENGINE=InnoDB;
+
 
 -- -----------------------------------------------------
--- 7. Table Article (contenu éditorial, tutoriels, etc.)
+-- 6. Table Article (contenu éditorial, tutoriels, etc.)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS article (
     id_article       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -90,7 +82,7 @@ CREATE TABLE IF NOT EXISTS article (
 ) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
--- 8. Table FAQ
+-- 7. Table FAQ
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS faq (
     id_faq   INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -101,7 +93,7 @@ CREATE TABLE IF NOT EXISTS faq (
 
 
 -- -----------------------------------------------------
--- 9. Table Transaction (historique de transactions sur BTC ou autres cryptos)
+-- 8. Table Transaction (historique de transactions sur BTC ou autres cryptos)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS transaction (
     id_transaction  INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -126,7 +118,7 @@ CREATE TABLE IF NOT EXISTS transaction (
 );
 
 -- -----------------------------------------------------
--- 10. Table Watchlist (relation N-N entre Utilisateur et CryptoMarket)
+-- 9. Table Watchlist (relation N-N entre Utilisateur et CryptoMarket)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS watchlist (
     id_utilisateur    INT UNSIGNED      NOT NULL,
