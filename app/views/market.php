@@ -2,8 +2,8 @@
 
 <h2>Marché des Cryptomonnaies</h2>
 <div class="market-tabs">
-  <button class="tab-button active" data-category="all">Toutes</button>
-  <button class="tab-button" data-category="top">Top 10</button>
+  <button class="tab-button" data-category="all">Toutes</button>
+  <button class="tab-button active" data-category="top">Top 10</button>
   <button class="tab-button" data-category="ino">Innovation</button>
   <button class="tab-button" data-category="defi">DeFi</button>
   <button class="tab-button" data-category="nft">NFT / Metaverse</button>

@@ -1,5 +1,5 @@
 // Variable globale pour stocker la catégorie courante
-let currentCategory = 'all';
+let currentCategory = 'top';
 
 // Fonction de rafraîchissement du tableau via AJAX
 function refreshMarketData(category = currentCategory) {
@@ -84,7 +84,7 @@ document.addEventListener("click", function(e) {
 
 window.onload = function() {
     updateTradingViewSymbol("BTCUSDT");
-    refreshMarketData("all"); // ou "top10" par défaut
+    refreshMarketData(); // ou "top10" par défaut
 };
 
 // Rafraîchir toutes les 5 secondes avec la catégorie courante

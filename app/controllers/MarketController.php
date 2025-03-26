@@ -7,7 +7,9 @@ function showMarket() {
     $cryptoModel = new CryptoMarket();
     // Optionnel : mettre à jour les données lors du chargement initial
     $cryptoModel->updateFromBinance();
-    $cryptos = $cryptoModel->getAll();
+    $categorie = $_GET['categorie'] ?? 'top';
+    $cryptos = $cryptoModel->getAllFromCat($categorie);
+    
     require_once RACINE . "app/views/market.php";
 }
 
@@ -17,7 +19,7 @@ function refreshMarket() {
     // Mettre à jour les données en temps réel via l'API Binance
     $cryptoModel->updateFromBinance();
     $cryptos = $cryptoModel->getAll();
-    $categorie = $_GET['categorie'] ?? 'all';
+    $categorie = $_GET['categorie'] ?? 'top';
 
     if ($categorie === 'all') {
         $cryptos = $cryptoModel->getAll();
