@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\Transaction;
 use App\Models\Portefeuille;
 
+
 function showDashboard() {
     // Vérifier la session
     if (session_status() === PHP_SESSION_NONE) {
@@ -13,11 +14,16 @@ function showDashboard() {
         header("Location: index.php?page=login");
         exit();
     }
-
+    $cryptos = cryptoTrans();
     // Afficher la vue du dashboard
     require_once RACINE . "app/views/dashboard.php";
 }
 
+function cryptoTrans(){
+    $transactionnModel = new Transaction();
+    $cryptos = $transactionnModel -> getCryptoTrans();
+    return $cryptos;
+}
 /**
  * Ouvre une nouvelle position (long/short) sur BTCUSDT.
  */
@@ -30,26 +36,28 @@ function openPosition() {
     $userId = $_SESSION['user']['id_utilisateur'];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $montant = floatval($_POST['montant'] ?? 0);
-        $type    = $_POST['type'] ?? 'long'; // "long" ou "short"
+        $montant    = floatval($_POST['montant'] ?? 0);
+        $type       = $_POST['type'] ?? 'long'; // "long" ou "short"
+        // RÉCUPÉRER LE CODE CRYPTO SÉLECTIONNÉ
+        $cryptoCode = !empty($_POST['crypto_code']) ? $_POST['crypto_code'] : 'BTCUSDT';
 
         // Vérifier qu'on ne dépasse pas le solde disponible
         $pfModel = new Portefeuille();
         $soldeDisponible = $pfModel->getSoldeDisponible($userId);
         if ($montant <= 0 || $montant > $soldeDisponible) {
-            // Rediriger avec un message d'erreur
             header("Location: index.php?page=dashboard&error=solde_insuffisant");
             exit();
         }
 
-        // Créer la transaction via le modèle
+        // Ouvrir la position en passant la crypto choisie
         $transactionModel = new Transaction();
-        $transactionModel->openPosition($userId, $montant, $type);
+        $transactionModel->openPosition($userId, $montant, $type, $cryptoCode);
 
         header("Location: index.php?page=dashboard&success=position_opened");
         exit();
     }
 }
+
 
 /**
  * Clôture la position en cours (idTransaction).

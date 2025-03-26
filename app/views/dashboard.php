@@ -38,24 +38,7 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 <!-- Graphique TradingView intégré (widget gratuit) -->
 <!-- Graphique TradingView intégré (widget gratuit) -->
 <div class="tradingview-widget-container">
-  <div id="tradingview_graph"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-  <script type="text/javascript">
-    new TradingView.widget({
-      container_id: "tradingview_graph",
-      autosize: true,
-      symbol: "BINANCE:BTCUSDT",
-      interval: "D",
-      timezone: "Etc/UTC",
-      theme: "dark",
-      style: "1",
-      locale: "fr",
-      toolbar_bg: "#f1f3f6",
-      enable_publishing: false,
-      allow_symbol_change: false,
-      hideideas: true
-    });
-  </script>
+  <div id="tradingview_graph" style="height: 500px;"></div>
 </div>
 <!-- Graphique TradingView intégré (widget gratuit) -->
 <!-- Graphique TradingView intégré (widget gratuit) -->
@@ -65,15 +48,33 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 
 <!-- SECTION 2 : Trading (Long/Short) -->
 <div id="trading-section" style="margin-bottom: 30px;">
-    <h3>Passer un ordre (BTCUSDT)</h3>
+    <h3>Passer un ordre</h3>
     <!-- Afficher le solde disponible (non alloué) -->
     <p id="available-balance">Solde disponible : Loading...</p>
+
     <?php if(isset($_GET['error']) && $_GET['error'] === 'solde_insuffisant'): ?>
         <p style="color:red;">Solde insuffisant pour ouvrir cette position.</p>
     <?php endif; ?>
+
     <form action="index.php?page=dashboard&action=openPosition" method="POST">
+
+        <!-- NOUVEAU : choix de la crypto -->
+        <label for="crypto_code">Crypto :</label>
+        <select name="crypto_code" id="crypto_code">
+          <?php
+          // $cryptos a été défini dans showDashboard()
+          // On crée une option pour chaque code disponible
+          foreach ($cryptos as $code) {
+              echo '<option value="' . htmlspecialchars($code) . '">' . htmlspecialchars($code) . '</option>';
+          }
+          ?>
+        </select>
+
+        <br><br>
+
         <label for="montant">Montant (USDT) :</label>
         <input type="number" id="montant" name="montant" step="0.01" min="0">
+
         <div>
             <label>
                 <input type="radio" name="type" value="long" checked> Long
@@ -82,9 +83,11 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
                 <input type="radio" name="type" value="short"> Short
             </label>
         </div>
+
         <button type="submit">Ouvrir une position</button>
     </form>
 </div>
+
 
 <!-- SECTION 3 : Positions en cours -->
 <div id="positions-section">
@@ -108,9 +111,8 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
         </tbody>
     </table>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="<?php echo RACINE_URL; ?>public/js/dashboard.js"></script>
-
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script src="<?php echo RACINE_URL; ?>public/js/dashboard.js"></script>
 
