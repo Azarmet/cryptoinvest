@@ -95,7 +95,7 @@ function searchLearn(){
 
     // Récupération des articles filtrés
     $articleModel = new Article();
-    $articles = $articleModel->getArticles($categorie, $search, $articlesPerPage, $offset);
+    $articles = $articleModel->getArticlesPublie($categorie, $search, $articlesPerPage, $offset);
 
     // Calcul du nombre total d'articles pour générer la pagination côté client
     $totalArticles = $articleModel->countArticles($categorie, $search);

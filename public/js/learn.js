@@ -28,6 +28,7 @@ function loadArticles(page){
     xhr.onreadystatechange = function(){
          if(xhr.readyState === 4 && xhr.status === 200){
              // On reçoit un objet JSON contenant : articles, currentPage, totalPages
+             console.log(xhr.responseText);
              var data = JSON.parse(xhr.responseText);
              var articles = data.articles || [];
              var container = document.getElementById('articles-container');
@@ -43,6 +44,7 @@ function loadArticles(page){
                      div.style.marginBottom = "10px";
                      
                      var html = "<h3>" + article.titre + "</h3>"
+                              + `<img src="public/uploads/article/${article.image}" alt="${article.titre}" width="200">`
                               + "<p><em>" + article.categorie + " - " + article.date_publication + "</em></p>"
                               + "<p>" + article.contenu.substring(0,200).replace(/(<([^>]+)>)/ig, "") + "...</p>"
                               + "<a href='index.php?page=article&action=show&id=" + article.id_article + "'>Lire la suite</a>";
