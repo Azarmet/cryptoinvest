@@ -13,7 +13,7 @@ function refreshMarketData(category = currentCategory) {
             cryptos.forEach(function(crypto) {
                 var variation = parseFloat(crypto.variation_24h).toFixed(2);
                 htmlContent += "<tr>";
-                htmlContent += "<td><a href='#' class='crypto-link' data-symbol='" + crypto.code + "'>" + crypto.code + "</a></td>";
+                htmlContent += "<td><a href='javascript:void(0);' class='crypto-link' data-symbol='" + crypto.code + "'>" + crypto.code + "</a></td>";
                 htmlContent += "<td>" + crypto.prix_actuel + "</td>";
                 htmlContent += "<td>" + variation + "%" + "</td>";
                 htmlContent += "<td>" + crypto.date_maj + "</td>";
@@ -76,7 +76,7 @@ document.querySelectorAll(".tab-button").forEach(button => {
 // Gérer le clic sur un code de crypto
 document.addEventListener("click", function(e) {
     if (e.target.classList.contains("crypto-link")) {
-        e.preventDefault();
+        e.preventDefault(); 
         const newSymbol = e.target.getAttribute("data-symbol");
         updateTradingViewSymbol(newSymbol);
     }

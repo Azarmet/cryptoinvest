@@ -11,6 +11,19 @@ function showLearn() {
     require_once RACINE . "app/views/learn.php";
 }
 
+
+function showArticleDetail($id) {
+    $articleModel = new \App\Models\Article();
+    $article = $articleModel->getById($id);
+
+    if ($article) {
+        require_once RACINE . "app/views/detailArticle.php";
+    } else {
+        echo "Article introuvable.";
+    }
+}
+
+
 /**
  * Appelé en AJAX pour renvoyer la liste d'articles filtrés,
  * ainsi que la pagination (nombre total de pages, page courante).

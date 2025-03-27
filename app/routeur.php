@@ -67,7 +67,19 @@ function routeur() {
                 \App\Controllers\showProfileByPseudo($pseudo);
                 }
                 break;
-            
+        
+        case 'article':
+            require_once RACINE ."app/controllers/LearnController.php";
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+                if ($action === 'show') {
+                    $id = $_GET['id'] ?? null;
+                    if ($id) {
+                        \App\Controllers\showArticleDetail($id);
+                    } else {
+                        \App\Controllers\showLearn();
+                    }
+                }
+            break;
 
         case "learn":
             require_once RACINE . "app/controllers/LearnController.php";

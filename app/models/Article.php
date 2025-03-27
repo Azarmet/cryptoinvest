@@ -29,6 +29,16 @@ class Article {
          return $row ? (int)$row['total'] : 0;
     }
 
+
+    public function getById($id) {
+        $sql = "SELECT * FROM article WHERE id_article = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+
     // Récupère les articles avec filtrage, pagination, et tri par date
     public function getArticles($categorie = null, $search = null, $limit = 10, $offset = 0) {
          $sql = "SELECT * FROM article WHERE statut = 'publié'";
