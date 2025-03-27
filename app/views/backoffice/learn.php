@@ -32,3 +32,4 @@
     <?php endforeach; ?>
     </tbody>
 </table>
+<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>

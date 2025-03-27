@@ -24,3 +24,4 @@
 </form>
 
 <a href="index.php?action=showBackLearn">← Retour à la liste</a>
+<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>
