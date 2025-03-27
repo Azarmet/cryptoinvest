@@ -2,6 +2,8 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use App\Models\Transaction;
+use App\Models\Portefeuille;
 
 function showProfile() {
     if (session_status() === PHP_SESSION_NONE) {
@@ -10,6 +12,48 @@ function showProfile() {
     // Afficher la vue du profil
     require_once RACINE . "app/views/profil.php";
 }
+
+function showProfileByPseudo($pseudo){
+    $userModel = new User();
+    $profiluser = $userModel->getByPseudo($pseudo);
+    require_once RACINE . "app/views/profilboard.php";
+    // Surtout pas d'appel direct à refreshPortfolioDataPseudo ici
+    // exit() ferait qu'on n'affiche jamais le HTML
+}
+
+function refreshPortfolioDataPseudo($pseudo) {
+    header('Content-Type: application/json');
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        echo json_encode([]);
+        exit();
+    }
+    $userModel = new User();
+    $userprofile =  $userModel -> getByPseudo($pseudo);
+    $userId = $userprofile['id_utilisateur'];
+    $interval = $_GET['interval'] ?? 'jour';
+
+    $pfModel = new \App\Models\Portefeuille();
+    $chartData = $pfModel->getSoldeHistory($userId, $interval);
+    $stats     = $pfModel->getPortfolioStats($userId);
+    // Valeur actuelle = capital_actuel
+    $currentValue = $pfModel->getSoldeActuel($userId);
+    // Solde disponible (non alloué)
+    $availableBalance = $pfModel->getSoldeDisponible($userId);
+
+    $data = [
+        'chartData'       => $chartData,
+        'stats'           => $stats,
+        'currentValue'    => $currentValue,
+        'availableBalance'=> $availableBalance
+    ];
+    echo json_encode($data);
+    exit();
+}
+
+
+
+
 
 function logout() {
     // Démarrer la session si elle n'est pas déjà lancée

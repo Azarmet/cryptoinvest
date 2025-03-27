@@ -6,9 +6,7 @@ use App\Models\User;
 use App\Models\Transaction;
 use App\Models\Portefeuille;
 
-// function showLeaderboard(){
-//     require_once RACINE . "app/views/leaderboard.php";
-// }
+
 function showLeaderboard() {
     $userModel = new User();
     $pfUser = new Portefeuille();
@@ -37,10 +35,4 @@ function showLeaderboard() {
     require_once RACINE . "app/views/leaderboard.php";
 
 }
-
-
-
-
-
-
 ?>

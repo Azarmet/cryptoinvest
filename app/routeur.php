@@ -54,6 +54,21 @@ function routeur() {
             \App\Controllers\showLeaderboard();
             break;
 
+        case "profilboard":
+            require_once RACINE . "app/controllers/ProfilController.php";
+            // On regarde s'il y a 'action' dans l'URL
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            $pseudo = $_GET['pseudo'] ?? '';
+                if ($action === 'refreshPortfolioData') {
+                // Renvoie du JSON seulement
+                \App\Controllers\refreshPortfolioDataPseudo($pseudo);
+                } else {
+                // Affiche la page HTML
+                \App\Controllers\showProfileByPseudo($pseudo);
+                }
+                break;
+            
+
         case "learn":
             require_once RACINE . "app/controllers/LearnController.php";
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';

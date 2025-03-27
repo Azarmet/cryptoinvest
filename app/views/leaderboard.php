@@ -9,15 +9,15 @@ foreach ($usersWithSolde as $user) {
 
     $tableRows .= "
         <tr>
-            <td>$photoProfil</td>
+            <td><a href=\"index.php?page=profilboard&pseudo=$pseudo\">$photoProfil</a></td>
             <td>$pseudo</td>
             <td>$solde</td>
         </tr>
     ";
-}
+} ?>
 
-echo "
-    <table border=\"1\" cellspacing=\"0\" cellpadding=\"8\">
+ 
+    <table border="1" cellspacing="0" cellpadding="8">
         <thead>
             <tr>
                 <th>Photo</th>
@@ -26,9 +26,9 @@ echo "
             </tr>
         </thead>
         <tbody>
-            $tableRows
+           <?= $tableRows ?>
         </tbody>
     </table>
-";
- ?>
+
+ 
 <?php require_once RACINE . "app/views/templates/footer.php"; ?>

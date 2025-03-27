@@ -78,5 +78,13 @@ class User {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Méthode pour récupérer un utilisateur par son pseudo (toutes les infos sauf l'ID)
+    public function getByPseudo($pseudo) {
+        $sql = "SELECT pseudo, id_utilisateur, image_profil, bio FROM utilisateur WHERE pseudo = :pseudo";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':pseudo' => $pseudo]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

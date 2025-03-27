@@ -1,0 +1,34 @@
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once RACINE . "app/views/templates/header.php"; 
+?>
+<h1>Profil de <?=  $profiluser['pseudo'] ?> </h1>
+<!-- SECTION 1 : Graphique du portefeuille + indicateurs -->
+<div id="portfolio-section" style="margin-bottom: 30px;">
+    <h3>Portefeuille</h3>
+    <!-- Choix de l'intervalle -->
+    <div>
+        <button class="interval-btn" data-interval="jour">Jour</button>
+        <button class="interval-btn" data-interval="semaine">Semaine</button>
+        <button class="interval-btn" data-interval="mois">Mois</button>
+        <button class="interval-btn" data-interval="annee">Année</button>
+    </div>
+
+    <!-- Graphique (Canvas pour Chart.js) -->
+    <canvas id="portfolioChart" width="600" height="300" style="border:1px solid #ccc;"></canvas>
+
+    <!-- Indicateurs clés -->
+    <div id="portfolio-stats" style="margin-top: 15px;">
+        <p>ROI Total : <span id="roi-total">-</span></p>
+        <p>PnL Total : <span id="pnl-total">-</span></p>
+        <p>Nombre de transactions : <span id="tx-count">-</span></p>
+    </div>
+</div>
+<?php require_once RACINE . "app/views/templates/footer.php"; ?>
+<script>
+    var pseudoleaderboard = "<?= $profiluser['pseudo'] ?>";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="<?php echo RACINE_URL; ?>public/js/profilboard.js"></script>
