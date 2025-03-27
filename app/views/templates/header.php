@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon Site MVC</title>
+    <title>CryptoInvest</title>
 </head>
 <body>
     <header>

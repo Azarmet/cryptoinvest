@@ -9,6 +9,10 @@ function showFaq(){
     require_once RACINE . "app/views/faq.php";
 }
 
+function showBackFaq() {
+    require_once RACINE . "app/views/backoffice/faq.php";
+}
+
 function searchFaq(){
     header('Content-Type: application/json');
     $term = isset($_GET['term']) ? trim($_GET['term']) : '';

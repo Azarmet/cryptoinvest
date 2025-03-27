@@ -11,6 +11,11 @@ function showLearn() {
     require_once RACINE . "app/views/learn.php";
 }
 
+function showBackLearn(){
+    $articleModel = new Article();
+    $articles = $articleModel->getArticles();
+    require_once RACINE . "app/views/backoffice/learn.php";
+}
 
 function showArticleDetail($id) {
     $articleModel = new \App\Models\Article();
@@ -21,6 +26,52 @@ function showArticleDetail($id) {
     } else {
         echo "Article introuvable.";
     }
+}
+
+function createArticle() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $articleModel = new \App\Models\Article();
+
+        $data = [
+            'titre' => $_POST['titre'],
+            'contenu' => $_POST['contenu'],
+            'auteur' => $_POST['auteur'],
+            'categorie' => $_POST['categorie'],
+            'statut' => $_POST['statut']
+        ];
+
+        $articleModel->createArticle($data);
+        header("Location: index.php?pageback=learn");
+        exit;
+    }
+    require_once RACINE . "app/views/backoffice/formArticle.php";
+}
+
+function editArticle($id) {
+    $articleModel = new \App\Models\Article();
+    $article = $articleModel->getById($id);
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data = [
+            'titre' => $_POST['titre'],
+            'contenu' => $_POST['contenu'],
+            'auteur' => $_POST['auteur'],
+            'categorie' => $_POST['categorie'],
+            'statut' => $_POST['statut']
+        ];
+        $articleModel->updateArticle($id, $data);
+        header("Location: index.php?pageback=learn");
+        exit;
+    }
+
+    require_once RACINE . "app/views/backoffice/formArticle.php";
+}
+
+function deleteArticle($id) {
+    $articleModel = new \App\Models\Article();
+    $articleModel->deleteArticle($id);
+    header("Location: index.php?pageback=learn");
+    exit;
 }
 
 

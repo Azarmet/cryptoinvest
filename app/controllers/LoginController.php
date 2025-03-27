@@ -27,6 +27,7 @@ function processLogin() {
             // Régénérer l'ID de session pour prévenir la fixation de session
             session_regenerate_id(true);
             $_SESSION['user'] = $user;
+            $_SESSION['role'] = $user['role'];
             header('Location: index.php?page=home');
             exit();
         } else {

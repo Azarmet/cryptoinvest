@@ -33,6 +33,8 @@ function refreshMarket() {
 
 }
 
-
+function showBackMarket() {
+    require_once RACINE . "app/views/backoffice/market.php";
+}
 
 ?>

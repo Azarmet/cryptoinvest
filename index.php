@@ -9,5 +9,14 @@
     require_once RACINE . "app/routeur.php";
 
     // Appeler la fonction du routeur
+    
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    };
+    
+    if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin'){
+        routeurBack();
+    }else{
     routeur();
+    }
 ?>

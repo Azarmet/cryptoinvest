@@ -40,7 +40,7 @@ class Article {
     
 
     // Récupère les articles avec filtrage, pagination, et tri par date
-    public function getArticles($categorie = null, $search = null, $limit = 10, $offset = 0) {
+    public function getArticles($categorie = null, $search = null, $limit = 100, $offset = 0) {
          $sql = "SELECT * FROM article WHERE statut = 'publié'";
          $params = [];
          if(!empty($categorie) && strtolower($categorie) != 'tous'){
@@ -62,5 +62,40 @@ class Article {
          $stmt->execute();
          return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function createArticle($data) {
+        $sql = "INSERT INTO article (titre, contenu, id_auteur, categorie, statut, date_publication) 
+                VALUES (:titre, :contenu, :auteur, :categorie, :statut, NOW())";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':titre' => $data['titre'],
+            ':contenu' => $data['contenu'],
+            ':auteur' => $data['auteur'],
+            ':categorie' => $data['categorie'],
+            ':statut' => $data['statut']
+        ]);
+    }
+    
+    public function updateArticle($id, $data) {
+        $sql = "UPDATE article SET titre = :titre, contenu = :contenu, id_auteur = :auteur, categorie = :categorie, statut = :statut WHERE id_article = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':titre' => $data['titre'],
+            ':contenu' => $data['contenu'],
+            ':auteur' => $data['auteur'],
+            ':categorie' => $data['categorie'],
+            ':statut' => $data['statut'],
+            ':id' => $id
+        ]);
+    }
+    
+    public function deleteArticle($id) {
+        $sql = "DELETE FROM article WHERE id_article = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([':id' => $id]);
+    }
+    
+
+
 }
 ?>

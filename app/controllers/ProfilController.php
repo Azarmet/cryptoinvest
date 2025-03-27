@@ -17,17 +17,12 @@ function showProfileByPseudo($pseudo){
     $userModel = new User();
     $profiluser = $userModel->getByPseudo($pseudo);
     require_once RACINE . "app/views/profilboard.php";
-    // Surtout pas d'appel direct à refreshPortfolioDataPseudo ici
-    // exit() ferait qu'on n'affiche jamais le HTML
 }
 
 function refreshPortfolioDataPseudo($pseudo) {
     header('Content-Type: application/json');
     session_start();
-    if (!isset($_SESSION['user'])) {
-        echo json_encode([]);
-        exit();
-    }
+  
     $userModel = new User();
     $userprofile =  $userModel -> getByPseudo($pseudo);
     $userId = $userprofile['id_utilisateur'];

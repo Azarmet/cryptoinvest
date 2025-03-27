@@ -159,4 +159,66 @@ function routeur() {
             break;
     }
 }
+
+
+function routeurBack(){
+    $pageback = isset($_GET["pageback"]) ? $_GET["pageback"] : "home";
+    switch($pageback) {
+
+        case 'home':
+            require_once RACINE ."app/controllers/HomeController.php";
+            \App\Controllers\showBackHome();
+            break;
+            
+
+        case 'faq':
+            require_once RACINE ."app/controllers/FaqController.php";
+            \App\Controllers\showBackFaq();
+            break;
+
+        case "learn":
+            require_once RACINE . "app/controllers/LearnController.php";
+            \App\Controllers\showBackLearn();
+            break;
+            
+        case "createArticle":
+            require_once RACINE . "app/controllers/LearnController.php";
+            \App\Controllers\createArticle();
+            break;
+        
+        case "editArticle":
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/LearnController.php";
+                \App\Controllers\editArticle($_GET['id']);
+            } else {
+                echo "ID manquant pour l'édition.";
+            }
+            break;
+            
+        case "deleteArticle":
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/LearnController.php";
+                \App\Controllers\deleteArticle($_GET['id']);
+             } else {
+                echo "ID manquant pour la suppression.";
+            }
+            break;
+            
+        case "market":
+            require_once RACINE . "app/controllers/MarketController.php";
+            \App\Controllers\showBackMarket();
+            break;
+
+        
+        case "logout":
+            require_once RACINE . "app/controllers/ProfilController.php";
+            \App\Controllers\logout();
+            break;
+            
+
+        default:
+            echo "Erreur 404 : page introuvable.";
+            break;
+    }   
+}
 ?>
