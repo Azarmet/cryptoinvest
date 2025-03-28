@@ -13,7 +13,7 @@ class CryptoMarket {
 
     // Récupère toutes les cryptomonnaies de la table
     public function getAll() {
-        $stmt = $this->pdo->query("SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj FROM cryptomarket");
+        $stmt = $this->pdo->query("SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj, categorie FROM cryptomarket");
         return $stmt->fetchAll();
     }
     
@@ -106,6 +106,19 @@ class CryptoMarket {
         }
         curl_close($curl);
         return json_decode($result, true);
+    }
+
+    public function createCrypto($code, $categorie) {
+        $stmt = $this->pdo->prepare("INSERT INTO cryptomarket (code, categorie) VALUES (:code, :categorie)");
+        return $stmt->execute([
+            ':code' => $code,
+            ':categorie' => $categorie
+        ]);
+    }
+    
+    public function deleteCrypto($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM cryptomarket WHERE id_crypto_market = :id");
+        return $stmt->execute([':id' => $id]);
     }
 }
 ?>

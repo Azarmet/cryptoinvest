@@ -232,7 +232,34 @@ function routeurBack(){
             require_once RACINE . "app/controllers/MarketController.php";
             \App\Controllers\showBackMarket();
             break;
-
+        case 'createCryptoMarket':
+            require_once RACINE . "app/controllers/MarketController.php";
+            \App\Controllers\createCryptoMarket();
+            break;
+        
+        case 'deleteCryptoMarket':
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/MarketController.php";
+                \App\Controllers\deleteCryptoMarket($_GET['id']);
+            } else {
+                echo "ID manquant pour la suppression de la crypto du marché.";
+            }
+            break;
+        
+        case 'createCryptoTrans':
+            require_once RACINE . "app/controllers/MarketController.php";
+            \App\Controllers\createCryptoTrans();
+            break;
+        
+        case 'deleteCryptoTrans':
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/MarketController.php";
+                \App\Controllers\deleteCryptoTrans($_GET['id']);
+            } else {
+                echo "ID manquant pour la suppression de la crypto transactionnelle.";
+            }
+            break;
+            
         
         case "logout":
             require_once RACINE . "app/controllers/ProfilController.php";
