@@ -1,24 +1,28 @@
 <?php
 namespace App\Models;
 
-use PDO;
 use App\Models\Database;
+use PDO;
 
-class CryptoMarket {
+class CryptoMarket
+{
     private $pdo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = Database::getInstance()->getConnection();
     }
 
     // Récupère toutes les cryptomonnaies de la table
-    public function getAll() {
-        $stmt = $this->pdo->query("SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj, categorie FROM cryptomarket");
+    public function getAll()
+    {
+        $stmt = $this->pdo->query('SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj, categorie FROM cryptomarket');
         return $stmt->fetchAll();
     }
-    
+
     // Récupère toutes les cryptomonnaies de la table
-    public function getAllFromCat($cat) {
+    public function getAllFromCat($cat)
+    {
         $sql = "SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj 
                 FROM cryptomarket 
                 WHERE categorie LIKE CONCAT('%', :cat, '%');
@@ -29,9 +33,10 @@ class CryptoMarket {
     }
 
     // Met à jour les données de chaque crypto via l'API Binance en parallèle
-    public function updateFromBinance() {
+    public function updateFromBinance()
+    {
         // Récupérer tous les enregistrements
-        $stmt = $this->pdo->query("SELECT id_crypto_market, code FROM cryptomarket");
+        $stmt = $this->pdo->query('SELECT id_crypto_market, code FROM cryptomarket');
         $cryptos = $stmt->fetchAll();
 
         if (empty($cryptos)) {
@@ -45,7 +50,7 @@ class CryptoMarket {
         // Préparez tous les handles de requête
         foreach ($cryptos as $crypto) {
             $symbol = $crypto['code'];
-            $apiUrl = "https://api.binance.com/api/v3/ticker/24hr?symbol=" . $symbol;
+            $apiUrl = 'https://api.binance.com/api/v3/ticker/24hr?symbol=' . $symbol;
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $apiUrl);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -73,14 +78,14 @@ class CryptoMarket {
                     $priceChangePercent = $data['priceChangePercent'];
 
                     $updateStmt = $this->pdo->prepare(
-                        "UPDATE cryptomarket 
+                        'UPDATE cryptomarket 
                          SET prix_actuel = :prix_actuel, variation_24h = :variation_24h, date_maj = NOW() 
-                         WHERE id_crypto_market = :id"
+                         WHERE id_crypto_market = :id'
                     );
                     $updateStmt->execute([
-                        ':prix_actuel'    => $lastPrice,
-                        ':variation_24h'  => $priceChangePercent,
-                        ':id'             => $id
+                        ':prix_actuel' => $lastPrice,
+                        ':variation_24h' => $priceChangePercent,
+                        ':id' => $id
                     ]);
                 }
             }
@@ -93,7 +98,8 @@ class CryptoMarket {
     }
 
     // Fonction privée pour appeler l'API Binance (ancienne méthode, non utilisée ici)
-    private function callBinanceApi($url) {
+    private function callBinanceApi($url)
+    {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -108,16 +114,18 @@ class CryptoMarket {
         return json_decode($result, true);
     }
 
-    public function createCrypto($code, $categorie) {
-        $stmt = $this->pdo->prepare("INSERT INTO cryptomarket (code, categorie) VALUES (:code, :categorie)");
+    public function createCrypto($code, $categorie)
+    {
+        $stmt = $this->pdo->prepare('INSERT INTO cryptomarket (code, categorie) VALUES (:code, :categorie)');
         return $stmt->execute([
             ':code' => $code,
             ':categorie' => $categorie
         ]);
     }
-    
-    public function deleteCrypto($id) {
-        $stmt = $this->pdo->prepare("DELETE FROM cryptomarket WHERE id_crypto_market = :id");
+
+    public function deleteCrypto($id)
+    {
+        $stmt = $this->pdo->prepare('DELETE FROM cryptomarket WHERE id_crypto_market = :id');
         return $stmt->execute([':id' => $id]);
     }
 }

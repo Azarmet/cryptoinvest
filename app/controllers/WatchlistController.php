@@ -1,10 +1,12 @@
 <?php
 namespace App\Controllers;
+
 use App\Models\CryptoMarket;
 use App\Models\Watchlist;
 
-function showWatchlist() {
-    if(session_status() === PHP_SESSION_NONE) {
+function showWatchlist()
+{
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     // L'utilisateur doit être connecté
@@ -13,15 +15,16 @@ function showWatchlist() {
         exit();
     }
     $userId = $_SESSION['user']['id_utilisateur'];
-    
+
     $watchlistModel = new Watchlist();
     $cryptos = $watchlistModel->getWatchlist($userId);
-    
-    require_once RACINE . "app/views/watchlist.php";
+
+    require_once RACINE . 'app/views/watchlist.php';
 }
 
-function addToWatchlist() {
-    if(session_status() === PHP_SESSION_NONE) {
+function addToWatchlist()
+{
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user'])) {
@@ -39,8 +42,9 @@ function addToWatchlist() {
     exit();
 }
 
-function removeFromWatchlist() {
-    if(session_status() === PHP_SESSION_NONE) {
+function removeFromWatchlist()
+{
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user'])) {
@@ -58,7 +62,8 @@ function removeFromWatchlist() {
     exit();
 }
 
-function refreshWatchlist() {
+function refreshWatchlist()
+{
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -66,7 +71,7 @@ function refreshWatchlist() {
         header('HTTP/1.1 403 Forbidden');
         exit();
     }
-    
+
     // 1) Mettre à jour la table cryptomarket depuis l'API Binance
     $cryptoModel = new CryptoMarket();
     $cryptoModel->updateFromBinance();

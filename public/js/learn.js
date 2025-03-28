@@ -28,7 +28,6 @@ function loadArticles(page){
     xhr.onreadystatechange = function(){
          if(xhr.readyState === 4 && xhr.status === 200){
              // On reçoit un objet JSON contenant : articles, currentPage, totalPages
-             console.log(xhr.responseText);
              var data = JSON.parse(xhr.responseText);
              var articles = data.articles || [];
              var container = document.getElementById('articles-container');

@@ -3,29 +3,31 @@ namespace App\Controllers;
 
 use App\Models\User;
 
-function showBackUsers() {
+function showBackUsers()
+{
     $userModel = new User();
     $users = $userModel->getAllUsers();
 
-    require_once RACINE . "app/views/backoffice/users.php";
+    require_once RACINE . 'app/views/backoffice/users.php';
 }
 
-function deleteUser($id) {
-
+function deleteUser($id)
+{
     // Empêcher de supprimer l'utilisateur connecté
     if ($_SESSION['user']['id_utilisateur'] == $id) {
-        header("Location: index.php?pageback=users&error=cannot_delete_self");
+        header('Location: index.php?pageback=users&error=cannot_delete_self');
         exit;
     }
 
     $userModel = new User();
     $userModel->deleteUser($id);
 
-    header("Location: index.php?pageback=users&success=1");
+    header('Location: index.php?pageback=users&success=1');
     exit;
 }
 
-function toggleUserRole($id) {
+function toggleUserRole($id)
+{
     $userModel = new \App\Models\User();
     $users = $userModel->getAllUsers();
 
@@ -36,20 +38,21 @@ function toggleUserRole($id) {
 
             // Interdire de se modifier soi-même
             if ($_SESSION['user']['id_utilisateur'] == $id) {
-                header("Location: index.php?pageback=users&error=modify_self");
+                header('Location: index.php?pageback=users&error=modify_self');
                 exit;
             }
 
             $userModel->updateRole($id, $newRole);
-            header("Location: index.php?pageback=users&success=2");
+            header('Location: index.php?pageback=users&success=2');
             exit;
         }
     }
 
-    header("Location: index.php?pageback=users&error=user_not_found");
+    header('Location: index.php?pageback=users&error=user_not_found');
 }
 
-function searchUser() {
+function searchUser()
+{
     header('Content-Type: application/json');
     $term = isset($_GET['q']) ? trim($_GET['q']) : '';
     $model = new \App\Models\User();
@@ -57,4 +60,3 @@ function searchUser() {
     echo json_encode($results);
     exit;
 }
-

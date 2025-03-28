@@ -1,10 +1,10 @@
-<?php 
+<?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once RACINE . "app/views/templates/header.php"; 
+require_once RACINE . 'app/views/templates/header.php';
 ?>
-<h1>Profil de <?=  $profiluser['pseudo'] ?> </h1>
+<h1>Profil de <?= $profiluser['pseudo'] ?> </h1>
 <!-- SECTION 1 : Graphique du portefeuille + indicateurs -->
 <div id="portfolio-section" style="margin-bottom: 30px;">
     <h3>Portefeuille</h3>
@@ -27,7 +27,7 @@ require_once RACINE . "app/views/templates/header.php";
         <p>Nombre de transactions : <span id="tx-count">-</span></p>
     </div>
 </div>
-<?php require_once RACINE . "app/views/templates/footer.php"; ?>
+<?php require_once RACINE . 'app/views/templates/footer.php'; ?>
 <script>
     var pseudoleaderboard = "<?= $profiluser['pseudo'] ?>";
 </script>

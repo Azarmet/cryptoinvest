@@ -1,4 +1,4 @@
-<?php require_once RACINE . "app/views/backoffice/headerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
 <h1>Gestion des utilisateurs</h1>
 
@@ -19,14 +19,14 @@
 
 <?php if (!empty($users)): ?>
     <div id="users-data">
-    <?= include RACINE . "app/views/backoffice/_usersTable.php"; ?>
+    <?= include RACINE . 'app/views/backoffice/_usersTable.php'; ?>
 </div>
 
 <?php else: ?>
     <p>Aucun utilisateur trouvé.</p>
 <?php endif; ?>
 
-<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/footerback.php'; ?>
 <script>
     window.currentUserId = <?= $_SESSION['user']['id_utilisateur'] ?>;
 </script>

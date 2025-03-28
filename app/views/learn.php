@@ -1,4 +1,4 @@
-<?php require_once RACINE . "app/views/templates/header.php"; ?>
+<?php require_once RACINE . 'app/views/templates/header.php'; ?>
 
 <h2>Learn - Articles</h2>
 
@@ -29,4 +29,4 @@
 <script src="<?php echo RACINE_URL; ?>public/js/learn.js"></script>
 
 
-<?php require_once RACINE . "app/views/templates/footer.php"; ?>
+<?php require_once RACINE . 'app/views/templates/footer.php'; ?>

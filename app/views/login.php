@@ -1,4 +1,4 @@
-<?php require_once RACINE . "app/views/templates/header.php"; ?>
+<?php require_once RACINE . 'app/views/templates/header.php'; ?>
 <h2>Connexion</h2>
 <?php if (isset($error)): ?>
     <p style="color:red;"><?php echo $error; ?></p>
@@ -13,4 +13,4 @@
     <button type="submit">Se connecter</button>
 </form>
 <p>Pas encore inscrit ? <a href="index.php?page=register">S'inscrire</a></p>
-<?php require_once RACINE . "app/views/templates/footer.php"; ?>
+<?php require_once RACINE . 'app/views/templates/footer.php'; ?>

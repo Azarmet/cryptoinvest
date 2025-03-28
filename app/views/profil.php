@@ -1,8 +1,8 @@
-<?php 
+<?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once RACINE . "app/views/templates/header.php"; 
+require_once RACINE . 'app/views/templates/header.php';
 ?>
 
 <h2>Mon Profil</h2>
@@ -12,13 +12,13 @@ require_once RACINE . "app/views/templates/header.php";
     <p><strong>Pseudo :</strong> <?php echo htmlspecialchars($_SESSION['user']['pseudo']); ?></p>
     <p><strong>Email :</strong> <?php echo htmlspecialchars($_SESSION['user']['email']); ?></p>
     <p><strong>Biographie :</strong> 
-        <?php 
-            echo isset($_SESSION['user']['bio']) && !empty($_SESSION['user']['bio']) 
-                 ? htmlspecialchars($_SESSION['user']['bio']) 
-                 : 'Aucune bio disponible.';
+        <?php
+        echo isset($_SESSION['user']['bio']) && !empty($_SESSION['user']['bio'])
+            ? htmlspecialchars($_SESSION['user']['bio'])
+            : 'Aucune bio disponible.';
         ?>
     </p>
-    <?php if(isset($_SESSION['user']['image_profil']) && !empty($_SESSION['user']['image_profil'])): ?>
+    <?php if (isset($_SESSION['user']['image_profil']) && !empty($_SESSION['user']['image_profil'])): ?>
         <div>
             <img src="<?php echo htmlspecialchars($_SESSION['user']['image_profil']); ?>" alt="Image de Profil" width="150">
         </div>
@@ -28,19 +28,19 @@ require_once RACINE . "app/views/templates/header.php";
 <?php if (isset($_GET['error'])): ?>
     <div class="alert alert-danger">
         <?php
-            switch ($_GET['error']) {
-                case 'type':
-                    echo "❌ Format de fichier non autorisé. Seules les images JPEG, PNG, GIF ou WEBP sont acceptées.";
-                    break;
-                case 'size':
-                    echo "❌ L'image dépasse la taille maximale autorisée (10 Mo).";
-                    break;
-                case 'upload':
-                    echo "❌ Une erreur est survenue lors du transfert du fichier.";
-                    break;
-                default:
-                    echo "❌ Une erreur inconnue est survenue.";
-            }
+        switch ($_GET['error']) {
+            case 'type':
+                echo '❌ Format de fichier non autorisé. Seules les images JPEG, PNG, GIF ou WEBP sont acceptées.';
+                break;
+            case 'size':
+                echo "❌ L'image dépasse la taille maximale autorisée (10 Mo).";
+                break;
+            case 'upload':
+                echo '❌ Une erreur est survenue lors du transfert du fichier.';
+                break;
+            default:
+                echo '❌ Une erreur inconnue est survenue.';
+        }
         ?>
     </div>
 <?php endif; ?>
@@ -61,7 +61,7 @@ require_once RACINE . "app/views/templates/header.php";
     <img id="preview-image" src="#" alt="Aperçu de l'image" style="display: none; max-width: 150px;">
 </div>
 
-            <?php if(isset($_SESSION['user']['image_profil']) && !empty($_SESSION['user']['image_profil'])): ?>
+            <?php if (isset($_SESSION['user']['image_profil']) && !empty($_SESSION['user']['image_profil'])): ?>
                 <div>
                     <img src="<?php echo htmlspecialchars($_SESSION['user']['image_profil']); ?>" alt="Image de Profil" width="100">
                 </div>
@@ -74,4 +74,4 @@ require_once RACINE . "app/views/templates/header.php";
 
 <script src="<?php echo RACINE_URL; ?>public/js/profil.js"></script>
 
-<?php require_once RACINE . "app/views/templates/footer.php"; ?>
+<?php require_once RACINE . 'app/views/templates/footer.php'; ?>

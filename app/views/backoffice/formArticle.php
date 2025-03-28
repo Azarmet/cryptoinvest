@@ -1,6 +1,6 @@
-<?php require_once RACINE . "app/views/backoffice/headerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
-<h1><?= isset($article) ? "Modifier" : "Créer" ?> un article</h1>
+<h1><?= isset($article) ? 'Modifier' : 'Créer' ?> un article</h1>
 
 <?php if (!empty($error)): ?>
     <div style="background-color: #ffd1d1; color: #900; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
@@ -47,4 +47,4 @@
 
 <script src="<?php echo RACINE_URL; ?>public/js/formarticle.js"></script>
 
-<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/footerback.php'; ?>

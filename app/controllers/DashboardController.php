@@ -1,43 +1,46 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Transaction;
 use App\Models\Portefeuille;
+use App\Models\Transaction;
 
-
-function showDashboard() {
+function showDashboard()
+{
     // Vérifier la session
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user'])) {
-        header("Location: index.php?page=login");
+        header('Location: index.php?page=login');
         exit();
     }
     $cryptos = cryptoTrans();
     // Afficher la vue du dashboard
-    require_once RACINE . "app/views/dashboard.php";
+    require_once RACINE . 'app/views/dashboard.php';
 }
 
-function cryptoTrans(){
+function cryptoTrans()
+{
     $transactionnModel = new Transaction();
-    $cryptos = $transactionnModel -> getCryptoTrans();
+    $cryptos = $transactionnModel->getCryptoTrans();
     return $cryptos;
 }
+
 /**
  * Ouvre une nouvelle position (long/short) sur BTCUSDT.
  */
-function openPosition() {
+function openPosition()
+{
     session_start();
     if (!isset($_SESSION['user'])) {
-        header("Location: index.php?page=login");
+        header('Location: index.php?page=login');
         exit();
     }
     $userId = $_SESSION['user']['id_utilisateur'];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $montant    = floatval($_POST['montant'] ?? 0);
-        $type       = $_POST['type'] ?? 'long'; // "long" ou "short"
+        $montant = floatval($_POST['montant'] ?? 0);
+        $type = $_POST['type'] ?? 'long';  // "long" ou "short"
         // RÉCUPÉRER LE CODE CRYPTO SÉLECTIONNÉ
         $cryptoCode = !empty($_POST['crypto_code']) ? $_POST['crypto_code'] : 'BTCUSDT';
 
@@ -45,7 +48,7 @@ function openPosition() {
         $pfModel = new Portefeuille();
         $soldeDisponible = $pfModel->getSoldeDisponible($userId);
         if ($montant <= 0 || $montant > $soldeDisponible) {
-            header("Location: index.php?page=dashboard&error=solde_insuffisant");
+            header('Location: index.php?page=dashboard&error=solde_insuffisant');
             exit();
         }
 
@@ -53,19 +56,19 @@ function openPosition() {
         $transactionModel = new Transaction();
         $transactionModel->openPosition($userId, $montant, $type, $cryptoCode);
 
-        header("Location: index.php?page=dashboard&success=position_opened");
+        header('Location: index.php?page=dashboard&success=position_opened');
         exit();
     }
 }
 
-
 /**
  * Clôture la position en cours (idTransaction).
  */
-function closePosition() {
+function closePosition()
+{
     session_start();
     if (!isset($_SESSION['user'])) {
-        header("Location: index.php?page=login");
+        header('Location: index.php?page=login');
         exit();
     }
     $userId = $_SESSION['user']['id_utilisateur'];
@@ -76,14 +79,15 @@ function closePosition() {
         $transactionModel->closePosition($idTransaction, $userId);
     }
 
-    header("Location: index.php?page=dashboard");
+    header('Location: index.php?page=dashboard');
     exit();
 }
 
 /**
  * Renvoie la liste JSON des positions en cours (rafraîchissement toutes les secondes).
  */
-function refreshPositions() {
+function refreshPositions()
+{
     header('Content-Type: application/json');
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -106,7 +110,8 @@ function refreshPositions() {
  *  - chartData : l'historique du solde pour tracer le graphique
  *  - stats : {roiTotal, pnlTotal, txCount}
  */
-function refreshPortfolioData() {
+function refreshPortfolioData()
+{
     header('Content-Type: application/json');
     if (!isset($_SESSION['user'])) {
         echo json_encode([]);
@@ -117,21 +122,18 @@ function refreshPortfolioData() {
 
     $pfModel = new \App\Models\Portefeuille();
     $chartData = $pfModel->getSoldeHistory($userId, $interval);
-    $stats     = $pfModel->getPortfolioStats($userId);
+    $stats = $pfModel->getPortfolioStats($userId);
     // Valeur actuelle = capital_actuel
     $currentValue = $pfModel->getSoldeActuel($userId);
     // Solde disponible (non alloué)
     $availableBalance = $pfModel->getSoldeDisponible($userId);
 
     $data = [
-        'chartData'       => $chartData,
-        'stats'           => $stats,
-        'currentValue'    => $currentValue,
-        'availableBalance'=> $availableBalance
+        'chartData' => $chartData,
+        'stats' => $stats,
+        'currentValue' => $currentValue,
+        'availableBalance' => $availableBalance
     ];
     echo json_encode($data);
     exit();
 }
-
-
-

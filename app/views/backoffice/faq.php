@@ -1,4 +1,4 @@
-<?php require_once RACINE . "app/views/backoffice/headerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
 <h1>Gestion de la FAQ</h1>
 <?php if (isset($_GET['success'])): ?>
@@ -6,13 +6,13 @@
         <?php
         switch ($_GET['success']) {
             case '1':
-                echo "✅ La question a été ajoutée avec succès.";
+                echo '✅ La question a été ajoutée avec succès.';
                 break;
             case '2':
-                echo "✅ La question a été modifiée avec succès.";
+                echo '✅ La question a été modifiée avec succès.';
                 break;
             case '3':
-                echo "✅ La question a été supprimée avec succès.";
+                echo '✅ La question a été supprimée avec succès.';
                 break;
         }
         ?>
@@ -49,4 +49,4 @@
     <p>Aucune question enregistrée.</p>
 <?php endif; ?>
 
-<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/footerback.php'; ?>

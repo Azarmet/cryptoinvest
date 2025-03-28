@@ -3,20 +3,23 @@ namespace App\Controllers;
 
 use App\Models\Faq;
 
-function showFaq() {
+function showFaq()
+{
     $faqModel = new Faq();
     $faqs = $faqModel->getAll();
-    require_once RACINE . "app/views/faq.php";
+    require_once RACINE . 'app/views/faq.php';
 }
 
-function showBackFaq() {
+function showBackFaq()
+{
     $faqModel = new Faq();
     $faqs = $faqModel->getAll();
-    require_once RACINE . "app/views/backoffice/faq.php";
+    require_once RACINE . 'app/views/backoffice/faq.php';
 }
 
 // ✅ Créer une nouvelle FAQ
-function createFaq() {
+function createFaq()
+{
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $question = trim($_POST['question']);
         $reponse = trim($_POST['reponse']);
@@ -24,22 +27,23 @@ function createFaq() {
         if (!empty($question) && !empty($reponse)) {
             $faqModel = new Faq();
             $faqModel->createFaq($question, $reponse);
-            header("Location: index.php?pageback=faq&success=1"); // ✅ Ajouté
+            header('Location: index.php?pageback=faq&success=1');  // ✅ Ajouté
             exit;
         } else {
-            $error = "Veuillez remplir tous les champs.";
+            $error = 'Veuillez remplir tous les champs.';
         }
     }
-    require_once RACINE . "app/views/backoffice/formFaq.php";
+    require_once RACINE . 'app/views/backoffice/formFaq.php';
 }
 
 // ✅ Éditer une FAQ existante
-function editFaq($id) {
+function editFaq($id)
+{
     $faqModel = new Faq();
     $faq = $faqModel->getById($id);
 
     if (!$faq) {
-        echo "FAQ introuvable.";
+        echo 'FAQ introuvable.';
         exit;
     }
 
@@ -49,26 +53,28 @@ function editFaq($id) {
 
         if (!empty($question) && !empty($reponse)) {
             $faqModel->updateFaq($id, $question, $reponse);
-            header("Location: index.php?pageback=faq&success=2"); // ✅ Mise à jour
+            header('Location: index.php?pageback=faq&success=2');  // ✅ Mise à jour
             exit;
         } else {
-            $error = "Veuillez remplir tous les champs.";
+            $error = 'Veuillez remplir tous les champs.';
         }
     }
 
-    require_once RACINE . "app/views/backoffice/formFaq.php";
+    require_once RACINE . 'app/views/backoffice/formFaq.php';
 }
 
 // ✅ Supprimer une FAQ
-function deleteFaq($id) {
+function deleteFaq($id)
+{
     $faqModel = new Faq();
     $faqModel->deleteFaq($id);
-    header("Location: index.php?pageback=faq&success=3"); // ✅ Suppression
+    header('Location: index.php?pageback=faq&success=3');  // ✅ Suppression
     exit;
 }
 
 // API JSON
-function searchFaq() {
+function searchFaq()
+{
     header('Content-Type: application/json');
     $term = isset($_GET['term']) ? trim($_GET['term']) : '';
     $faqModel = new Faq();

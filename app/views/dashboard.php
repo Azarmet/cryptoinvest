@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once RACINE . "app/views/templates/header.php";
+require_once RACINE . 'app/views/templates/header.php';
 
 $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 ?>
@@ -52,7 +52,7 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
     <!-- Afficher le solde disponible (non alloué) -->
     <p id="available-balance">Solde disponible : Loading...</p>
 
-    <?php if(isset($_GET['error']) && $_GET['error'] === 'solde_insuffisant'): ?>
+    <?php if (isset($_GET['error']) && $_GET['error'] === 'solde_insuffisant'): ?>
         <p style="color:red;">Solde insuffisant pour ouvrir cette position.</p>
     <?php endif; ?>
 
@@ -62,12 +62,12 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
         <label for="crypto_code">Crypto :</label>
         <select name="crypto_code" id="crypto_code">
           <?php
-          // $cryptos a été défini dans showDashboard()
-          // On crée une option pour chaque code disponible
-          foreach ($cryptos as $code) {
-              echo '<option value="' . htmlspecialchars($code) . '">' . htmlspecialchars($code) . '</option>';
-          }
-          ?>
+// $cryptos a été défini dans showDashboard()
+// On crée une option pour chaque code disponible
+foreach ($cryptos as $code) {
+    echo '<option value="' . htmlspecialchars($code) . '">' . htmlspecialchars($code) . '</option>';
+}
+?>
         </select>
 
         <br><br>
@@ -111,7 +111,7 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
         </tbody>
     </table>
 </div>
-<?php require_once RACINE . "app/views/templates/footer.php"; ?>
+<?php require_once RACINE . 'app/views/templates/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://s3.tradingview.com/tv.js"></script>
 <script src="<?php echo RACINE_URL; ?>public/js/dashboard.js"></script>

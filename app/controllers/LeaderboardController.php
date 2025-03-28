@@ -2,12 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
-use App\Models\Transaction;
 use App\Models\Portefeuille;
+use App\Models\Transaction;
+use App\Models\User;
 
-
-function showLeaderboard() {
+function showLeaderboard()
+{
     $userModel = new User();
     $pfUser = new Portefeuille();
 
@@ -30,9 +30,8 @@ function showLeaderboard() {
 
     // 2. Trier par solde décroissant
     usort($usersWithSolde, function ($a, $b) {
-        return $b['solde'] <=> $a['solde']; // tri décroissant
+        return $b['solde'] <=> $a['solde'];  // tri décroissant
     });
-    require_once RACINE . "app/views/leaderboard.php";
-
+    require_once RACINE . 'app/views/leaderboard.php';
 }
 ?>

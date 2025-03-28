@@ -1,4 +1,4 @@
-<?php require_once RACINE . "app/views/backoffice/headerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
 <h1>Gestion des Articles</h1>
 
@@ -32,4 +32,4 @@
     <?php endforeach; ?>
     </tbody>
 </table>
-<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/footerback.php'; ?>

@@ -1,15 +1,16 @@
 <?php
-function routeur() {
-    $page = isset($_GET["page"]) ? $_GET["page"] : "home";
+function routeur()
+{
+    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-    switch($page) {
-        case "home":
-            require_once RACINE . "app/controllers/HomeController.php";
+    switch ($page) {
+        case 'home':
+            require_once RACINE . 'app/controllers/HomeController.php';
             \App\Controllers\showHome();
             break;
-        
-        case "faq":
-            require_once RACINE . "app/controllers/FaqController.php";
+
+        case 'faq':
+            require_once RACINE . 'app/controllers/FaqController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             if ($action == 'search') {
                 \App\Controllers\searchFaq();
@@ -18,71 +19,70 @@ function routeur() {
             }
             break;
 
-        case "articles":
-            require_once RACINE . "app/controllers/ArticleController.php";
+        case 'articles':
+            require_once RACINE . 'app/controllers/ArticleController.php';
             \App\Controllers\showArticles();
             break;
 
-        case "dashboard":
-            require_once RACINE . "app/controllers/DashboardController.php";
+        case 'dashboard':
+            require_once RACINE . 'app/controllers/DashboardController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
-            switch($action) {
-                case "show":
+            switch ($action) {
+                case 'show':
                     \App\Controllers\showDashboard();
                     break;
-                case "openPosition":
+                case 'openPosition':
                     \App\Controllers\openPosition();
                     break;
-                case "closePosition":
+                case 'closePosition':
                     \App\Controllers\closePosition();
                     break;
-                case "refreshPositions":
+                case 'refreshPositions':
                     \App\Controllers\refreshPositions();
                     break;
-                case "refreshPortfolioData":
+                case 'refreshPortfolioData':
                     \App\Controllers\refreshPortfolioData();
                     break;
                 default:
                     // 404 ou redirection
-                    echo "Erreur 404 : action inconnue.";
+                    echo 'Erreur 404 : action inconnue.';
             }
             break;
-            
 
-        case "leaderboard":
-            require_once RACINE . "app/controllers/LeaderboardController.php";
+        case 'leaderboard':
+            require_once RACINE . 'app/controllers/LeaderboardController.php';
             \App\Controllers\showLeaderboard();
             break;
 
-        case "profilboard":
-            require_once RACINE . "app/controllers/ProfilController.php";
+        case 'profilboard':
+            require_once RACINE . 'app/controllers/ProfilController.php';
             // On regarde s'il y a 'action' dans l'URL
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             $pseudo = $_GET['pseudo'] ?? '';
-                if ($action === 'refreshPortfolioData') {
+            if ($action === 'refreshPortfolioData') {
                 // Renvoie du JSON seulement
                 \App\Controllers\refreshPortfolioDataPseudo($pseudo);
-                } else {
+            } else {
                 // Affiche la page HTML
                 \App\Controllers\showProfileByPseudo($pseudo);
-                }
-                break;
-        
-        case 'article':
-            require_once RACINE ."app/controllers/LearnController.php";
-            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
-                if ($action === 'show') {
-                    $id = $_GET['id'] ?? null;
-                    if ($id) {
-                        \App\Controllers\showArticleDetail($id);
-                    } else {
-                        \App\Controllers\showLearn();
-                    }
-                }
+            }
             break;
 
-        case "learn":
-            require_once RACINE . "app/controllers/LearnController.php";
+        case 'article':
+            require_once RACINE . 'app/controllers/LearnController.php';
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            if ($action === 'show') {
+                $id = $_GET['id'] ?? null;
+                if ($id) {
+                    \App\Controllers\showArticleDetail($id);
+                } else {
+                    \App\Controllers\showLearn();
+                }
+            }
+            break;
+
+        case 'learn':
+            require_once RACINE . 'app/controllers/LearnController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             if ($action == 'search') {
                 \App\Controllers\searchLearn();
@@ -90,10 +90,9 @@ function routeur() {
                 \App\Controllers\showLearn();
             }
             break;
-            
 
-        case "market":
-             require_once RACINE . "app/controllers/MarketController.php";
+        case 'market':
+            require_once RACINE . 'app/controllers/MarketController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             if ($action == 'refresh') {
                 \App\Controllers\refreshMarket();
@@ -102,8 +101,8 @@ function routeur() {
             }
             break;
 
-        case "profil":
-            require_once RACINE . "app/controllers/ProfilController.php";
+        case 'profil':
+            require_once RACINE . 'app/controllers/ProfilController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             if ($action == 'update') {
                 \App\Controllers\updateProfile();
@@ -111,10 +110,9 @@ function routeur() {
                 \App\Controllers\showProfile();
             }
             break;
-        
 
-        case "login":
-            require_once RACINE . "app/controllers/LoginController.php";
+        case 'login':
+            require_once RACINE . 'app/controllers/LoginController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             if ($action == 'process') {
                 \App\Controllers\processLogin();
@@ -123,181 +121,175 @@ function routeur() {
             }
             break;
 
-        case "register":
-            require_once RACINE . "app/controllers/LoginController.php";
+        case 'register':
+            require_once RACINE . 'app/controllers/LoginController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             if ($action == 'process') {
                 \App\Controllers\processRegister();
             } else {
                 // Affichage direct de la vue d'inscription
-                require_once RACINE . "app/views/register.php";
+                require_once RACINE . 'app/views/register.php';
             }
             break;
 
-        case "watchlist":
-             require_once RACINE . "app/controllers/WatchlistController.php";
-             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
-             if ($action == 'add') {
-                 \App\Controllers\addToWatchlist();
+        case 'watchlist':
+            require_once RACINE . 'app/controllers/WatchlistController.php';
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            if ($action == 'add') {
+                \App\Controllers\addToWatchlist();
             } elseif ($action == 'remove') {
-                 \App\Controllers\removeFromWatchlist();
-              } elseif ($action == 'refresh') {
-                 \App\Controllers\refreshWatchlist();
-              } else {
-                 \App\Controllers\showWatchlist();
-             }
-             break;
-        
-        case "logout":
-            require_once RACINE . "app/controllers/ProfilController.php";
+                \App\Controllers\removeFromWatchlist();
+            } elseif ($action == 'refresh') {
+                \App\Controllers\refreshWatchlist();
+            } else {
+                \App\Controllers\showWatchlist();
+            }
+            break;
+
+        case 'logout':
+            require_once RACINE . 'app/controllers/ProfilController.php';
             \App\Controllers\logout();
             break;
-            
 
         default:
-            echo "Erreur 404 : page introuvable.";
+            echo 'Erreur 404 : page introuvable.';
             break;
     }
 }
 
-
-function routeurBack(){
-    $pageback = isset($_GET["pageback"]) ? $_GET["pageback"] : "home";
-    switch($pageback) {
-
+function routeurBack()
+{
+    $pageback = isset($_GET['pageback']) ? $_GET['pageback'] : 'home';
+    switch ($pageback) {
         case 'home':
-            require_once RACINE ."app/controllers/HomeController.php";
+            require_once RACINE . 'app/controllers/HomeController.php';
             \App\Controllers\showBackHome();
             break;
-            
 
         case 'faq':
-            require_once RACINE ."app/controllers/FaqController.php";
+            require_once RACINE . 'app/controllers/FaqController.php';
             \App\Controllers\showBackFaq();
             break;
-        
+
         case 'createFaq':
-        require_once RACINE . "app/controllers/FaqController.php";
+            require_once RACINE . 'app/controllers/FaqController.php';
             \App\Controllers\createFaq();
             break;
-            
+
         case 'editFaq':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/FaqController.php";
+                require_once RACINE . 'app/controllers/FaqController.php';
                 \App\Controllers\editFaq($_GET['id']);
             } else {
                 echo "ID manquant pour l'édition de la FAQ.";
             }
             break;
-        
+
         case 'deleteFaq':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/FaqController.php";
+                require_once RACINE . 'app/controllers/FaqController.php';
                 \App\Controllers\deleteFaq($_GET['id']);
             } else {
-                echo "ID manquant pour la suppression de la FAQ.";
+                echo 'ID manquant pour la suppression de la FAQ.';
             }
             break;
-            
 
-        case "learn":
-            require_once RACINE . "app/controllers/LearnController.php";
+        case 'learn':
+            require_once RACINE . 'app/controllers/LearnController.php';
             \App\Controllers\showBackLearn();
             break;
-            
-        case "createArticle":
-            require_once RACINE . "app/controllers/LearnController.php";
+
+        case 'createArticle':
+            require_once RACINE . 'app/controllers/LearnController.php';
             \App\Controllers\createArticle();
             break;
-        
-        case "editArticle":
+
+        case 'editArticle':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/LearnController.php";
+                require_once RACINE . 'app/controllers/LearnController.php';
                 \App\Controllers\editArticle($_GET['id']);
             } else {
                 echo "ID manquant pour l'édition.";
             }
             break;
-            
-        case "deleteArticle":
+
+        case 'deleteArticle':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/LearnController.php";
+                require_once RACINE . 'app/controllers/LearnController.php';
                 \App\Controllers\deleteArticle($_GET['id']);
-             } else {
-                echo "ID manquant pour la suppression.";
+            } else {
+                echo 'ID manquant pour la suppression.';
             }
             break;
-            
-        case "market":
-            require_once RACINE . "app/controllers/MarketController.php";
+
+        case 'market':
+            require_once RACINE . 'app/controllers/MarketController.php';
             \App\Controllers\showBackMarket();
             break;
         case 'createCryptoMarket':
-            require_once RACINE . "app/controllers/MarketController.php";
+            require_once RACINE . 'app/controllers/MarketController.php';
             \App\Controllers\createCryptoMarket();
             break;
-        
+
         case 'deleteCryptoMarket':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/MarketController.php";
+                require_once RACINE . 'app/controllers/MarketController.php';
                 \App\Controllers\deleteCryptoMarket($_GET['id']);
             } else {
-                echo "ID manquant pour la suppression de la crypto du marché.";
+                echo 'ID manquant pour la suppression de la crypto du marché.';
             }
             break;
-        
+
         case 'createCryptoTrans':
-            require_once RACINE . "app/controllers/MarketController.php";
+            require_once RACINE . 'app/controllers/MarketController.php';
             \App\Controllers\createCryptoTrans();
             break;
-        
+
         case 'deleteCryptoTrans':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/MarketController.php";
+                require_once RACINE . 'app/controllers/MarketController.php';
                 \App\Controllers\deleteCryptoTrans($_GET['id']);
             } else {
-                echo "ID manquant pour la suppression de la crypto transactionnelle.";
+                echo 'ID manquant pour la suppression de la crypto transactionnelle.';
             }
             break;
-            
-        
-        case "logout":
-            require_once RACINE . "app/controllers/ProfilController.php";
+
+        case 'logout':
+            require_once RACINE . 'app/controllers/ProfilController.php';
             \App\Controllers\logout();
             break;
-        
+
         case 'users':
-            require_once RACINE . "app/controllers/UserController.php";
+            require_once RACINE . 'app/controllers/UserController.php';
             \App\Controllers\showBackUsers();
             break;
-            
+
         case 'deleteUser':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/UserController.php";
+                require_once RACINE . 'app/controllers/UserController.php';
                 \App\Controllers\deleteUser($_GET['id']);
             } else {
                 echo "ID manquant pour la suppression de l'utilisateur.";
             }
             break;
-                        
+
         case 'toggleUserRole':
             if (isset($_GET['id'])) {
-                require_once RACINE . "app/controllers/UserController.php";
+                require_once RACINE . 'app/controllers/UserController.php';
                 \App\Controllers\toggleUserRole($_GET['id']);
             } else {
-                echo "ID manquant pour la modification du rôle.";
+                echo 'ID manquant pour la modification du rôle.';
             }
             break;
-        
 
         case 'searchUser':
-            require_once RACINE . "app/controllers/UserController.php";
+            require_once RACINE . 'app/controllers/UserController.php';
             \App\Controllers\searchUser();
             break;
-            
+
         default:
-            echo "Erreur 404 : page introuvable.";
+            echo 'Erreur 404 : page introuvable.';
             break;
-    }   
+    }
 }
 ?>

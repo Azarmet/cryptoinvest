@@ -1,6 +1,6 @@
-<?php require_once RACINE . "app/views/backoffice/headerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
-<h1><?= isset($faq) ? "Modifier" : "Ajouter" ?> une question</h1>
+<h1><?= isset($faq) ? 'Modifier' : 'Ajouter' ?> une question</h1>
 
 <?php if (!empty($error)): ?>
     <div style="background-color: #ffd1d1; color: #900; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
@@ -21,4 +21,4 @@
 
 <a href="index.php?pageback=faq">← Retour à la liste</a>
 
-<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/footerback.php'; ?>

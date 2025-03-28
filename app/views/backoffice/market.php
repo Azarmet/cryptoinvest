@@ -1,4 +1,4 @@
-<?php require_once RACINE . "app/views/backoffice/headerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
 <h1>Gestion du Marché Crypto</h1>
 
@@ -6,10 +6,18 @@
     <div style="background-color: #d4edda; color: #155724; padding: 10px; margin: 15px 0; border-radius: 5px;">
         <?php
         switch ($_GET['success']) {
-            case '1': echo "✅ Crypto ajoutée au marché global."; break;
-            case '2': echo "✅ Crypto supprimée du marché global."; break;
-            case '3': echo "✅ Crypto ajoutée aux transactions."; break;
-            case '4': echo "✅ Crypto supprimée des transactions."; break;
+            case '1':
+                echo '✅ Crypto ajoutée au marché global.';
+                break;
+            case '2':
+                echo '✅ Crypto supprimée du marché global.';
+                break;
+            case '3':
+                echo '✅ Crypto ajoutée aux transactions.';
+                break;
+            case '4':
+                echo '✅ Crypto supprimée des transactions.';
+                break;
         }
         ?>
     </div>
@@ -88,4 +96,4 @@
     <?php endif; ?>
 </section>
 
-<?php require_once RACINE . "app/views/backoffice/footerback.php"; ?>
+<?php require_once RACINE . 'app/views/backoffice/footerback.php'; ?>
