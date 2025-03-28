@@ -85,7 +85,9 @@ function closePosition() {
  */
 function refreshPositions() {
     header('Content-Type: application/json');
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     if (!isset($_SESSION['user'])) {
         echo json_encode([]);
         exit();
