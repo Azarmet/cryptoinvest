@@ -175,6 +175,30 @@ function routeurBack(){
             require_once RACINE ."app/controllers/FaqController.php";
             \App\Controllers\showBackFaq();
             break;
+        
+        case 'createFaq':
+        require_once RACINE . "app/controllers/FaqController.php";
+            \App\Controllers\createFaq();
+            break;
+            
+        case 'editFaq':
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/FaqController.php";
+                \App\Controllers\editFaq($_GET['id']);
+            } else {
+                echo "ID manquant pour l'édition de la FAQ.";
+            }
+            break;
+        
+        case 'deleteFaq':
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/FaqController.php";
+                \App\Controllers\deleteFaq($_GET['id']);
+            } else {
+                echo "ID manquant pour la suppression de la FAQ.";
+            }
+            break;
+            
 
         case "learn":
             require_once RACINE . "app/controllers/LearnController.php";
