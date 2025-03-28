@@ -18,6 +18,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="index.php?pageback=faq">FAQ Manager</a></li>
                 <li><a href="index.php?pageback=learn">Learn Manager</a></li>
                 <li><a href="index.php?pageback=market">Market Manager</a></li>
+                <li><a href="index.php?pageback=users">Users Manager</a></li>
             </ul>
         </nav>
     </header>

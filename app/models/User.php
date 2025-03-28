@@ -86,5 +86,44 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Récupère tous les utilisateurs
+public function getAllUsers() {
+    $sql = "SELECT id_utilisateur, email, pseudo, role, bio, image_profil FROM utilisateur ORDER BY id_utilisateur DESC";
+    $stmt = $this->pdo->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Supprime un utilisateur (et son portefeuille par exemple)
+public function deleteUser($id) {
+    // Supprimer d'abord les dépendances éventuelles (ex: portefeuille, watchlist)
+    $this->pdo->prepare("DELETE FROM portefeuille WHERE id_utilisateur = :id")->execute([':id' => $id]);
+    $this->pdo->prepare("DELETE FROM watchlist WHERE id_utilisateur = :id")->execute([':id' => $id]);
+
+    // Supprimer l'utilisateur lui-même
+    $stmt = $this->pdo->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id");
+    return $stmt->execute([':id' => $id]);
+}
+
+public function updateRole($id, $newRole) {
+    $stmt = $this->pdo->prepare("UPDATE utilisateur SET role = :role WHERE id_utilisateur = :id");
+    return $stmt->execute([
+        ':id' => $id,
+        ':role' => $newRole
+    ]);
+}
+
+public function searchUsers($term) {
+    $stmt = $this->pdo->prepare("
+        SELECT id_utilisateur, pseudo, email, role, bio, image_profil
+        FROM utilisateur
+        WHERE pseudo LIKE :term OR email LIKE :term
+        ORDER BY id_utilisateur DESC
+    ");
+    $like = '%' . $term . '%';
+    $stmt->execute([':term' => $like]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 }
 ?>

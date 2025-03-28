@@ -265,8 +265,36 @@ function routeurBack(){
             require_once RACINE . "app/controllers/ProfilController.php";
             \App\Controllers\logout();
             break;
+        
+        case 'users':
+            require_once RACINE . "app/controllers/UserController.php";
+            \App\Controllers\showBackUsers();
+            break;
             
+        case 'deleteUser':
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/UserController.php";
+                \App\Controllers\deleteUser($_GET['id']);
+            } else {
+                echo "ID manquant pour la suppression de l'utilisateur.";
+            }
+            break;
+                        
+        case 'toggleUserRole':
+            if (isset($_GET['id'])) {
+                require_once RACINE . "app/controllers/UserController.php";
+                \App\Controllers\toggleUserRole($_GET['id']);
+            } else {
+                echo "ID manquant pour la modification du rôle.";
+            }
+            break;
+        
 
+        case 'searchUser':
+            require_once RACINE . "app/controllers/UserController.php";
+            \App\Controllers\searchUser();
+            break;
+            
         default:
             echo "Erreur 404 : page introuvable.";
             break;
