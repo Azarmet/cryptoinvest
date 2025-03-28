@@ -88,6 +88,7 @@ function updateProfile() {
             if (!is_dir($uploadsDir)) {
                 mkdir($uploadsDir, 0777, true);
             }
+            
             // Créer un nom de fichier unique
             $filename = uniqid() . "_" . basename($_FILES['image_profil']['name']);
             $targetFile = $uploadsDir . $filename;

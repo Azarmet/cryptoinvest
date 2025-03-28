@@ -30,35 +30,47 @@ function showArticleDetail($id) {
 
 function createArticle() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $imageName = changeImage();
+
         $articleModel = new \App\Models\Article();
 
         $data = [
             'titre' => $_POST['titre'],
             'contenu' => $_POST['contenu'],
-            'auteur' => $_POST['auteur'],
+            'auteur' => $_SESSION['user']['id_utilisateur'],
             'categorie' => $_POST['categorie'],
-            'statut' => $_POST['statut']
+            'statut' => $_POST['statut'],
+            'image' => $imageName
         ];
 
         $articleModel->createArticle($data);
         header("Location: index.php?pageback=learn");
         exit;
     }
+
     require_once RACINE . "app/views/backoffice/formArticle.php";
 }
+
 
 function editArticle($id) {
     $articleModel = new \App\Models\Article();
     $article = $articleModel->getById($id);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $imageName = changeImage();
+        if (!$imageName) {
+            $imageName = $article['image']; // garde l'ancienne image
+        }
+
         $data = [
             'titre' => $_POST['titre'],
             'contenu' => $_POST['contenu'],
-            'auteur' => $_POST['auteur'],
+            'auteur' => $_SESSION['user']['id_utilisateur'],
             'categorie' => $_POST['categorie'],
-            'statut' => $_POST['statut']
+            'statut' => $_POST['statut'],
+            'image' => $imageName
         ];
+
         $articleModel->updateArticle($id, $data);
         header("Location: index.php?pageback=learn");
         exit;
@@ -66,6 +78,27 @@ function editArticle($id) {
 
     require_once RACINE . "app/views/backoffice/formArticle.php";
 }
+
+
+function changeImage() {
+    if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === 0) {
+        $targetDir = "public/uploads/article/";
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
+        $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $imageName = uniqid() . "." . $extension;
+        $targetFile = $targetDir . $imageName;
+
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+            return $imageName;
+        }
+    }
+    return null;
+}
+
+
 
 function deleteArticle($id) {
     $articleModel = new \App\Models\Article();

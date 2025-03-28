@@ -87,31 +87,36 @@ class Article {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
    }
 
-    public function createArticle($data) {
-        $sql = "INSERT INTO article (titre, contenu, id_auteur, categorie, statut, date_publication) 
-                VALUES (:titre, :contenu, :auteur, :categorie, :statut, NOW())";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([
-            ':titre' => $data['titre'],
-            ':contenu' => $data['contenu'],
-            ':auteur' => $data['auteur'],
-            ':categorie' => $data['categorie'],
-            ':statut' => $data['statut']
-        ]);
-    }
+   public function createArticle($data) {
+    $sql = "INSERT INTO article (titre, contenu, id_auteur, categorie, statut, date_publication, image)
+            VALUES (:titre, :contenu, :auteur, :categorie, :statut, NOW(), :image)";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute([
+        ':titre' => $data['titre'],
+        ':contenu' => $data['contenu'],
+        ':auteur' => $data['auteur'],
+        ':categorie' => $data['categorie'],
+        ':statut' => $data['statut'],
+        ':image' => $data['image']
+    ]);
+}
+
     
-    public function updateArticle($id, $data) {
-        $sql = "UPDATE article SET titre = :titre, contenu = :contenu, id_auteur = :auteur, categorie = :categorie, statut = :statut WHERE id_article = :id";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([
-            ':titre' => $data['titre'],
-            ':contenu' => $data['contenu'],
-            ':auteur' => $data['auteur'],
-            ':categorie' => $data['categorie'],
-            ':statut' => $data['statut'],
-            ':id' => $id
-        ]);
-    }
+public function updateArticle($id, $data) {
+    $sql = "UPDATE article SET titre = :titre, contenu = :contenu, id_auteur = :auteur,
+            categorie = :categorie, statut = :statut, image = :image WHERE id_article = :id";
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute([
+        ':titre' => $data['titre'],
+        ':contenu' => $data['contenu'],
+        ':auteur' => $data['auteur'],
+        ':categorie' => $data['categorie'],
+        ':statut' => $data['statut'],
+        ':image' => $data['image'],
+        ':id' => $id
+    ]);
+}
+
     
     public function deleteArticle($id) {
         $sql = "DELETE FROM article WHERE id_article = :id";
