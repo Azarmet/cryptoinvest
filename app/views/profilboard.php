@@ -8,6 +8,7 @@ require_once RACINE . "app/views/templates/header.php";
 <!-- SECTION 1 : Graphique du portefeuille + indicateurs -->
 <div id="portfolio-section" style="margin-bottom: 30px;">
     <h3>Portefeuille</h3>
+    <p><span id="current-portfolio-value">-</span></p>
     <!-- Choix de l'intervalle -->
     <div>
         <button class="interval-btn" data-interval="jour">Jour</button>
