@@ -29,12 +29,13 @@ function showArticleDetail($id) {
 }
 
 function createArticle() {
+    $error = null;
+    $article = []; // utilisé pour préremplir le formulaire
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $imageName = changeImage();
+        $imageName = changeImage($error);
 
-        $articleModel = new \App\Models\Article();
-
-        $data = [
+        $article = [ // On stocke les valeurs déjà tapées par l'utilisateur
             'titre' => $_POST['titre'],
             'contenu' => $_POST['contenu'],
             'auteur' => $_SESSION['user']['id_utilisateur'],
@@ -43,26 +44,32 @@ function createArticle() {
             'image' => $imageName
         ];
 
-        $articleModel->createArticle($data);
-        header("Location: index.php?pageback=learn");
-        exit;
+        if (!$error) {
+            $articleModel = new \App\Models\Article();
+            $articleModel->createArticle($article);
+            header("Location: index.php?pageback=learn");
+            exit;
+        }
     }
 
-    require_once RACINE . "app/views/backoffice/formArticle.php";
+    require RACINE . "app/views/backoffice/formArticle.php";
 }
 
 
+
+
 function editArticle($id) {
+    $error = null;
     $articleModel = new \App\Models\Article();
     $article = $articleModel->getById($id);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $imageName = changeImage();
+        $imageName = changeImage($error);
         if (!$imageName) {
-            $imageName = $article['image']; // garde l'ancienne image
+            $imageName = $article['image']; // garder l'image précédente
         }
 
-        $data = [
+        $article = [ // remplacer l'article avec les nouvelles valeurs
             'titre' => $_POST['titre'],
             'contenu' => $_POST['contenu'],
             'auteur' => $_SESSION['user']['id_utilisateur'],
@@ -71,17 +78,36 @@ function editArticle($id) {
             'image' => $imageName
         ];
 
-        $articleModel->updateArticle($id, $data);
-        header("Location: index.php?pageback=learn");
-        exit;
+        if (!$error) {
+            $articleModel->updateArticle($id, $article);
+            header("Location: index.php?pageback=learn");
+            exit;
+        }
     }
 
-    require_once RACINE . "app/views/backoffice/formArticle.php";
+    require RACINE . "app/views/backoffice/formArticle.php";
 }
 
 
-function changeImage() {
+
+function changeImage(&$error = null) {
     if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === 0) {
+        $tmpName = $_FILES['image']['tmp_name'];
+        $fileSize = $_FILES['image']['size'];
+        $mimeType = mime_content_type($tmpName);
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $maxSize = 10 * 1024 * 1024; // 10 Mo
+
+        if ($fileSize > $maxSize) {
+            $error = "Le fichier dépasse la taille maximale autorisée (10 Mo).";
+            return null;
+        }
+
+        if (!in_array($mimeType, $allowedTypes)) {
+            $error = "Type de fichier non autorisé. Seules les images JPEG, PNG, GIF ou WEBP sont acceptées.";
+            return null;
+        }
+
         $targetDir = "public/uploads/article/";
         if (!is_dir($targetDir)) {
             mkdir($targetDir, 0755, true);
@@ -91,12 +117,17 @@ function changeImage() {
         $imageName = uniqid() . "." . $extension;
         $targetFile = $targetDir . $imageName;
 
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+        if (move_uploaded_file($tmpName, $targetFile)) {
             return $imageName;
+        } else {
+            $error = "Erreur lors de l'upload du fichier.";
         }
     }
     return null;
 }
+
+
+
 
 
 

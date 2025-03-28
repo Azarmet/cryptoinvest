@@ -25,6 +25,25 @@ require_once RACINE . "app/views/templates/header.php";
     <?php endif; ?>
     <button id="btn-modify">Modifier Profil</button>
 </div>
+<?php if (isset($_GET['error'])): ?>
+    <div class="alert alert-danger">
+        <?php
+            switch ($_GET['error']) {
+                case 'type':
+                    echo "❌ Format de fichier non autorisé. Seules les images JPEG, PNG, GIF ou WEBP sont acceptées.";
+                    break;
+                case 'size':
+                    echo "❌ L'image dépasse la taille maximale autorisée (10 Mo).";
+                    break;
+                case 'upload':
+                    echo "❌ Une erreur est survenue lors du transfert du fichier.";
+                    break;
+                default:
+                    echo "❌ Une erreur inconnue est survenue.";
+            }
+        ?>
+    </div>
+<?php endif; ?>
 
 <!-- Formulaire de modification, initialement caché -->
 <div id="profile-edit" style="display: none;">
@@ -35,8 +54,13 @@ require_once RACINE . "app/views/templates/header.php";
             <textarea name="bio" id="bio" rows="5" cols="50"><?php echo isset($_SESSION['user']['bio']) ? htmlspecialchars($_SESSION['user']['bio']) : ''; ?></textarea>
         </div>
         <div>
-            <label for="image_profil">Image de Profil :</label><br>
-            <input type="file" name="image_profil" id="image_profil">
+        <input type="file" name="image_profil" id="image_profil" accept="image/*"><br><br>
+
+<!-- Zone d'aperçu -->
+<div id="preview-container" style="margin-bottom: 15px;">
+    <img id="preview-image" src="#" alt="Aperçu de l'image" style="display: none; max-width: 150px;">
+</div>
+
             <?php if(isset($_SESSION['user']['image_profil']) && !empty($_SESSION['user']['image_profil'])): ?>
                 <div>
                     <img src="<?php echo htmlspecialchars($_SESSION['user']['image_profil']); ?>" alt="Image de Profil" width="100">
