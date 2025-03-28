@@ -31,8 +31,18 @@
 </div>
 
 
-    <label for="categorie">Catégorie :</label><br>
-    <input type="text" name="categorie" id="categorie" required value="<?= isset($article['categorie']) ? htmlspecialchars($article['categorie']) : '' ?>"><br><br>
+<label for="categorie">Catégorie :</label><br>
+<select name="categorie" id="categorie" required>
+    <?php
+    $categories = ['Analyses', 'Guide', 'Tutoriels', 'Crypto News'];
+    $selected = isset($article['categorie']) ? $article['categorie'] : '';
+    foreach ($categories as $cat):
+        ?>
+        <option value="<?= $cat ?>" <?= $selected === $cat ? 'selected' : '' ?>>
+            <?= $cat ?>
+        </option>
+    <?php endforeach; ?>
+</select><br><br>
 
     <label for="statut">Statut :</label><br>
     <select name="statut" id="statut">

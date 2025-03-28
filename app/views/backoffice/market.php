@@ -29,7 +29,18 @@
 
     <form method="POST" action="index.php?pageback=createCryptoMarket">
         <input type="text" name="code" placeholder="Code (ex: BTC)" required>
-        <input type="text" name="categorie" placeholder="Catégorie (ex: DeFi, Layer 1...)" required>
+        <?php
+$categories = ["top10", "layer1", "new", "layer2", "web3", "meme", "ai", "defi", "nft"];
+?>
+
+<label>Catégories :</label><br>
+<?php foreach ($categories as $cat): ?>
+    <label style="margin-right: 10px;">
+        <input type="checkbox" name="categories[]" value="<?= $cat ?>"> <?= $cat ?>
+    </label>
+<?php endforeach; ?>
+<br><br>
+
         <button type="submit">➕ Ajouter</button>
     </form>
 

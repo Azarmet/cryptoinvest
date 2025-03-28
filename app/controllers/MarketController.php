@@ -49,7 +49,10 @@ function createCryptoMarket()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $code = trim($_POST['code']);
-        $categorie = trim($_POST['categorie']);
+        $categorie = '';
+        if (isset($_POST['categories']) && is_array($_POST['categories'])) {
+            $categorie = implode(' ', array_map('trim', $_POST['categories']));
+        }
 
         if (!empty($code) && !empty($categorie)) {
             $model = new CryptoMarket();
