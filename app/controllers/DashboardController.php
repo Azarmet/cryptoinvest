@@ -106,7 +106,6 @@ function refreshPositions() {
  */
 function refreshPortfolioData() {
     header('Content-Type: application/json');
-    session_start();
     if (!isset($_SESSION['user'])) {
         echo json_encode([]);
         exit();

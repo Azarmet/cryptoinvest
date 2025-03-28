@@ -2,7 +2,6 @@
 namespace App\Controllers;
 
 use App\Models\User;
-use App\Models\Transaction;
 use App\Models\Portefeuille;
 
 function showProfile() {
@@ -21,7 +20,6 @@ function showProfileByPseudo($pseudo){
 
 function refreshPortfolioDataPseudo($pseudo) {
     header('Content-Type: application/json');
-    session_start();
   
     $userModel = new User();
     $userprofile =  $userModel -> getByPseudo($pseudo);
