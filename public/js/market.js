@@ -19,8 +19,13 @@ function refreshMarketData(category = currentCategory) {
                 htmlContent += "<td class='" + colorClass + "'>" + variation + "%" + "</td>";
                 htmlContent += "<td>" + crypto.date_maj + "</td>";
                 if (isLoggedIn) {
-                    htmlContent += "<td><a href=\"index.php?page=watchlist&action=add&id=" + crypto.id_crypto_market + "\">Add</a></td>";
+                    if (crypto.in_watchlist) {
+                        htmlContent += `<td><button class="watchlist-toggle" data-action="remove" data-id="${crypto.id_crypto_market}">Remove</button></td>`;
+                    } else {
+                        htmlContent += `<td><button class="watchlist-toggle" data-action="add" data-id="${crypto.id_crypto_market}">Add</button></td>`;
+                    }
                 }
+                
                 htmlContent += "</tr>";
             });
             tbody.innerHTML = htmlContent;
@@ -88,6 +93,23 @@ window.onload = function() {
     updateTradingViewSymbol("BTCUSDT");
     
 };
+
+document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("watchlist-toggle")) {
+        const action = e.target.getAttribute("data-action");
+        const id = e.target.getAttribute("data-id");
+
+        fetch(`index.php?page=watchlist&action=${action}&id=${id}`, {
+            method: "GET"
+        })
+        .then(response => response.text())
+        .then(() => {
+            refreshMarketData(); // Rafraîchir juste le tableau, pas la page
+        })
+        .catch(error => console.error("Erreur AJAX :", error));
+    }
+});
+
 
 // Rafraîchir toutes les 5 secondes avec la catégorie courante
 setInterval(function() {

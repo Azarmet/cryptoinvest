@@ -37,9 +37,6 @@
             <td><?php echo htmlspecialchars($crypto['date_maj']); ?></td>
             <?php if (isset($_SESSION['user'])): ?>
                 <td>
-                    <a href="index.php?page=watchlist&action=add&id=<?php echo $crypto['id_crypto_market']; ?>">
-                        Add
-                    </a>
                 </td>
             <?php endif; ?>
         </tr>

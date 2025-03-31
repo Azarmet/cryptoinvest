@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\CryptoMarket;
 use App\Models\CryptoTrans;
+use App\Models\Watchlist;
 
 function showMarket()
 {
@@ -18,10 +19,14 @@ function showMarket()
 function refreshMarket()
 {
     header('Content-Type: application/json');
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
     $cryptoModel = new CryptoMarket();
-    // Mettre à jour les données en temps réel via l'API Binance
     $cryptoModel->updateFromBinance();
-    $cryptos = $cryptoModel->getAll();
+
     $categorie = $_GET['categorie'] ?? 'top';
 
     if ($categorie === 'all') {
@@ -30,9 +35,23 @@ function refreshMarket()
         $cryptos = $cryptoModel->getAllFromCat($categorie);
     }
 
+    // Ajout de la logique watchlist si utilisateur connecté
+    if (isset($_SESSION['user'])) {
+        $watchlistModel = new Watchlist();
+        $watchlist = $watchlistModel->getWatchlist($_SESSION['user']['id_utilisateur']);
+        $watchlistIds = array_map(function($crypto) {
+            return $crypto['id_crypto_market'];
+        }, $watchlist);
+
+        foreach ($cryptos as &$crypto) {
+            $crypto['in_watchlist'] = in_array($crypto['id_crypto_market'], $watchlistIds);
+        }
+    }
+
     echo json_encode($cryptos);
     exit;
 }
+
 
 function showBackMarket()
 {
@@ -100,5 +119,24 @@ function deleteCryptoTrans($id)
     header('Location: index.php?pageback=market&success=4');
     exit;
 }
+
+
+function getWatchlistCrypto()
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    // L'utilisateur doit être connecté
+    if (!isset($_SESSION['user'])) {
+        header('Location: index.php?page=login');
+        exit();
+    }
+    $userId = $_SESSION['user']['id_utilisateur'];
+
+    $watchlistModel = new Watchlist();
+    $cryptos = $watchlistModel->getWatchlist($userId);
+    return $cryptos;
+}
+
 
 ?>
