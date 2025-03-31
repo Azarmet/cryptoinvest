@@ -12,10 +12,11 @@ function refreshMarketData(category = currentCategory) {
             var htmlContent = "";
             cryptos.forEach(function(crypto) {
                 var variation = parseFloat(crypto.variation_24h).toFixed(2);
+                let colorClass = variation >= 0 ? 'positive' : 'negative';
                 htmlContent += "<tr>";
                 htmlContent += "<td><a href='javascript:void(0);' class='crypto-link' data-symbol='" + crypto.code + "'>" + crypto.code + "</a></td>";
-                htmlContent += "<td>" + crypto.prix_actuel + "</td>";
-                htmlContent += "<td>" + variation + "%" + "</td>";
+                htmlContent += "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>";
+                htmlContent += "<td class='" + colorClass + "'>" + variation + "%" + "</td>";
                 htmlContent += "<td>" + crypto.date_maj + "</td>";
                 if (isLoggedIn) {
                     htmlContent += "<td><a href=\"index.php?page=watchlist&action=add&id=" + crypto.id_crypto_market + "\">Add</a></td>";
@@ -83,8 +84,9 @@ document.addEventListener("click", function(e) {
 });
 
 window.onload = function() {
-    updateTradingViewSymbol("BTCUSDT");
     refreshMarketData(); // ou "top10" par défaut
+    updateTradingViewSymbol("BTCUSDT");
+    
 };
 
 // Rafraîchir toutes les 5 secondes avec la catégorie courante

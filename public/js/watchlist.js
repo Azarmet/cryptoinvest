@@ -11,10 +11,11 @@ function refreshWatchlistData() {
             if (cryptos.length > 0) {
                 cryptos.forEach(function(crypto) {
                     var variation = parseFloat(crypto.variation_24h).toFixed(2);
+                    let colorClass = variation >= 0 ? 'positive' : 'negative';
                     var row = "<tr>" +
                               "<td><a href='#' class='crypto-link' data-symbol='" + crypto.code + "'>" + crypto.code + "</a></td>"+
-                              "<td>" + crypto.prix_actuel + "</td>" +
-                              "<td>" + variation +"%" + "</td>" +
+                              "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>" +
+                              "<td class='" + colorClass + "'>" + variation + "%" + "</td>" +
                               "<td>" + crypto.date_maj + "</td>" +
                               "<td><a href='index.php?page=watchlist&action=remove&id=" + crypto.id_crypto_market + "'>Remove</a></td>" +
                               "</tr>";

@@ -9,6 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <title>CryptoInvest</title>
+    <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/style.css'?>">
 </head>
 <body>
     <header>
