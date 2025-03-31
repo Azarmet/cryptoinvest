@@ -1,23 +1,27 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
 
-<h2>Foire aux Questions</h2>
-<!-- Barre de recherche -->
-<input type="text" id="faq-search" placeholder="Rechercher dans la FAQ...">
+<div class="faq-container">
+    <h2>Foire aux Questions</h2>
 
-<!-- Conteneur pour afficher les FAQ -->
-<div id="faq-results">
-    <?php if (!empty($faqs)): ?>
-        <?php foreach ($faqs as $faq): ?>
-            <div class="faq-item">
-                <h3><?php echo htmlspecialchars($faq['question']); ?></h3>
-                <p><?php echo nl2br(htmlspecialchars($faq['reponse'])); ?></p>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Aucun résultat trouvé.</p>
-    <?php endif; ?>
+    <!-- Barre de recherche -->
+    <div class="faq-search-container">
+        <input type="text" id="faq-search" class="faq-search-input" placeholder="Rechercher dans la FAQ...">
+    </div>
+
+    <!-- Conteneur pour afficher les FAQ -->
+    <div id="faq-results" class="faq-results">
+        <?php if (!empty($faqs)): ?>
+            <?php foreach ($faqs as $faq): ?>
+                <div class="faq-item">
+                    <h3 class="faq-question"><?php echo htmlspecialchars($faq['question']); ?></h3>
+                    <p class="faq-answer"><?php echo nl2br(htmlspecialchars($faq['reponse'])); ?></p>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucun résultat trouvé.</p>
+        <?php endif; ?>
+    </div>
 </div>
-
 
 <script src="<?php echo RACINE_URL; ?>public/js/faq.js"></script>
 

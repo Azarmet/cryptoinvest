@@ -1,7 +1,1518 @@
+/* =================== Utilities & Reset =================== */
+
+/* --- Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Classes utilitaires */
+.error-msg {
+    color: #E74C3C;
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
 .positive {
-    color:rgb(3, 131, 67); /* vert */
+    color: #27AE60;
+    font-weight: bold;
 }
 
 .negative {
-    color:rgb(207, 56, 56); /* rouge */
+    color: #E74C3C;
+    font-weight: bold;
 }
+
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+/* =================== Base =================== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #2C2C2C; /* Fond sombre */
+    color: #F8F9FA;
+}
+
+/* =================== Header =================== */
+.site-header {
+    background-color: #2C3E50; /* Couleur dominante */
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* --- Logo --- */
+.logo a {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F1C40F; /* Couleur contrastante */
+    text-decoration: none;
+}
+
+/* --- Menu Burger --- */
+.burger {
+    display: block;
+    cursor: pointer;
+    z-index: 2;
+}
+.burger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #F1C40F;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* --- Navigation Links --- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #2C3E50;
+    border-top: 1px solid rgba(241, 196, 15, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.nav-links li {
+    text-align: center;
+    border-bottom: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.nav-links li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #F1C40F;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #27AE60; /* Accent pour les interactions */
+}
+
+/* Profil dans le menu */
+.nav-links li.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-links li.profile img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+}
+
+/* --- Menu actif --- */
+.nav-links.nav-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Animation du burger */
+.burger.toggle .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.burger.toggle .bar:nth-child(2) {
+    opacity: 0;
+}
+.burger.toggle .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* --- Desktop --- */
+@media (min-width: 768px) {
+    .burger {
+        display: none;
+    }
+    .nav-links {
+        flex-direction: row;
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        width: auto;
+        border: none;
+    }
+    .nav-links li {
+        border: none;
+        margin-left: 20px;
+    }
+    .nav-links li a {
+        padding: 0;
+    }
+}
+
+/* =================== Home Page =================== */
+
+/* Container global de la page d'accueil */
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Titres et textes */
+.home-container h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5rem;
+    color: #F1C40F;  /* Couleur contrastante */
+    text-align: center;
+    margin: 20px 0 10px;
+}
+
+.home-container p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #F8F9FA;
+}
+
+/* Image de l'indice Fear & Greed */
+.fear-index {
+    display: block;
+    margin: 0 auto 30px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Section Top 10 Cryptos */
+.market-top10 {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
+}
+
+.market-top10 h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8rem;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Table styling */
+.market-top10 table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.market-top10 th,
+.market-top10 td {
+    padding: 12px 8px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.market-top10 thead {
+    background-color: #2C3E50;
+}
+
+.market-top10 th {
+    font-size: 1.1rem;
+    color: #F1C40F;
+}
+
+.market-top10 tbody tr:nth-child(even) {
+    background-color: #3B4A59;
+}
+
+.market-top10 tbody tr:nth-child(odd) {
+    background-color: #2C3E50;
+}
+
+.market-top10 tbody tr:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* Ajustements responsive */
+@media (min-width: 768px) {
+    .home-container {
+        padding: 40px;
+    }
+}
+
+/* =================== Footer =================== */
+.site-footer {
+    background-color: #2C3E50; /* Fond assorti au header */
+    padding: 20px 10px;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 40px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.site-footer p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #F8F9FA;
+    margin: 0;
+}
+
+.site-footer a {
+    color: #F1C40F; /* Lien en couleur contrastante */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #27AE60; /* Accent au survol */
+}
+
+/* =================== Dashboard Styles =================== */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #F8F9FA;
+}
+
+/* --- Section d'accueil --- */
+.welcome-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.welcome-section h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    color: #F1C40F;
+    margin-bottom: 10px;
+}
+
+.welcome-section h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    color: #F8F9FA;
+}
+
+/* --- Portefeuille --- */
+.portfolio-section {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-section h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F1C40F;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.interval-buttons {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.interval-btn {
+    background-color: #2C3E50;
+    color: #F1C40F;
+    border: 1px solid #F1C40F;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.interval-btn:hover,
+.interval-btn.active {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#portfolioChart {
+    max-width: 100%;
+    height: auto;
+}
+
+.portfolio-stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.portfolio-stats .stat-item {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin: 10px;
+}
+
+.portfolio-stats .stat-item p {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* --- Trading --- */
+.trading-section {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.trading-section h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F1C40F;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.trading-section p {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.order-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.order-form .form-group {
+    margin-bottom: 15px;
+}
+
+.order-form label {
+    font-family: 'Poppins', sans-serif;
+    display: block;
+    margin-bottom: 5px;
+    color: #F8F9FA;
+}
+
+.order-form input[type="number"],
+.order-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.radio-group {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+}
+
+.order-form input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Bouton "Passer ordre" */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #F1C40F;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #2C3E50;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.submit-btn:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* --- Positions en cours --- */
+.positions-section {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.positions-section h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F1C40F;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#positions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+}
+
+#positions-table th,
+#positions-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #2C3E50;
+}
+
+#positions-table thead {
+    background-color: #2C3E50;
+}
+
+#positions-table th {
+    color: #F1C40F;
+    font-weight: bold;
+}
+
+#positions-table tbody tr:nth-child(even) {
+    background-color: #3B4A59;
+}
+
+#positions-table tbody tr:nth-child(odd) {
+    background-color: #2C3E50;
+}
+
+#positions-table tbody tr:hover {
+    background-color: #4d64578c;
+    color: #fff;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .portfolio-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+    .radio-group {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* =================== Learn Page Styles =================== */
+.learn-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    color: #F8F9FA;
+}
+
+.learn-container h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Onglets de catégories */
+.tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tab-button {
+    background-color: #2C3E50;
+    color: #F1C40F;
+    border: 1px solid #F1C40F;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-button:hover,
+.tab-button.active {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+/* Barre de recherche */
+.search-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    width: 300px;
+    padding: 8px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+}
+
+.search-button {
+    padding: 8px 12px;
+    background-color: #F1C40F;
+    color: #2C3E50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #27AE60;
+}
+
+/* Articles container */
+.articles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.article-item {
+    border: 1px solid #3B4A59;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #2C3E50;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.article-item h3 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    margin-bottom: 10px;
+}
+
+.article-item p {
+    font-family: 'Poppins', sans-serif;
+    color: #F8F9FA;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.article-item img {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.article-item a {
+    color: #F1C40F;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.article-item a:hover {
+    color: #27AE60;
+}
+
+/* Pagination */
+.pagination-container ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 0;
+}
+
+.pagination-container ul li {
+    padding: 5px 10px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+}
+
+.pagination-container ul li a {
+    color: #F1C40F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.pagination-container ul li a:hover {
+    color: #27AE60;
+}
+
+.pagination-container ul li strong {
+    color: #F1C40F;
+}
+
+/* =================== Detail Article Styles =================== */
+.detail-article-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #2C3E50; /* Fond en accord avec le dark mode */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #F8F9FA;
+}
+
+.detail-article-container h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F; /* Couleur contrastante pour le titre */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.article-meta {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.article-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.article-info {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #F8F9FA;
+}
+
+.article-content {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.back-link a {
+    display: inline-block;
+    background-color: #F1C40F;
+    color: #2C3E50;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-link a:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* =================== FAQ Page Styles =================== */
+.faq-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #2C3E50; /* Fond en dark mode */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #F8F9FA;
+}
+
+.faq-container h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    color: #F1C40F; /* Couleur contrastante */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.faq-search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.faq-search-input {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+}
+
+.faq-results {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-item {
+    border: 1px solid #3B4A59;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #34495E;
+}
+
+.faq-question {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #F1C40F;
+    margin-bottom: 10px;
+}
+
+.faq-answer {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #F8F9FA;
+    line-height: 1.6;
+}
+
+/* =================== Leaderboard Styles =================== */
+.leaderboard-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #2C3E50; /* Fond en dark mode */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #F8F9FA;
+}
+
+.leaderboard-container h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F; /* Couleur contrastante */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #3B4A59;
+}
+
+.leaderboard-table thead {
+    background-color: #2C3E50;
+}
+
+.leaderboard-table th {
+    color: #F1C40F;
+    font-family: 'Roboto', sans-serif;
+}
+
+.leaderboard-table tbody tr:nth-child(even) {
+    background-color: #3B4A59;
+}
+
+.leaderboard-table tbody tr:nth-child(odd) {
+    background-color: #2C3E50;
+}
+
+.leaderboard-table tbody tr:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+.leaderboard-table a {
+    color: #F1C40F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.leaderboard-table a:hover {
+    color: #27AE60;
+}
+
+/* =================== Login Page Styles =================== */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #2C3E50; /* Fond sombre */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    color: #F8F9FA;
+}
+
+.login-container h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F; /* Couleur contrastante */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-form .form-group {
+    margin-bottom: 15px;
+}
+
+.login-form label {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 5px;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Réutilise .submit-btn */
+.register-link {
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.register-link a {
+    color: #F1C40F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #27AE60;
+}
+
+/* =================== Market Page Styles =================== */
+.market-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px;
+    color: #F8F9FA;
+}
+
+/* Titre de la page */
+.market-container h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Onglets de catégories */
+.market-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.market-tabs .tab-button {
+    background-color: #2C3E50;
+    color: #F1C40F;
+    border: 1px solid #F1C40F;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+}
+
+.market-tabs .tab-button:hover,
+.market-tabs .tab-button.active {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+/* Tableau */
+.market-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+}
+
+.market-table th, 
+.market-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #3B4A59;
+}
+
+.market-table thead {
+    background-color: #2C3E50;
+}
+
+.market-table th {
+    color: #F1C40F;
+}
+
+.market-table tbody tr:nth-child(even) {
+    background-color: #3B4A59;
+}
+
+.market-table tbody tr:nth-child(odd) {
+    background-color: #2C3E50;
+}
+
+.market-table tbody tr:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* Style pour les liens de crypto dans le tableau */
+.crypto-link {
+    color: #F1C40F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.crypto-link:hover {
+    color: #27AE60;
+}
+
+/* TradingView widget container */
+.tradingview-widget-container {
+    margin-top: 20px;
+}
+
+/* Lien Watchlist */
+.watchlist-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.watchlist-link a {
+    font-family: 'Poppins', sans-serif;
+    color: #F1C40F;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.watchlist-link a:hover {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+/* Boutons pour la Watchlist */
+.watchlist-toggle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Bouton "Add" : fond jaune et texte sombre */
+.watchlist-toggle[data-action="add"] {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+/* Bouton "Remove" : fond rouge et texte en blanc */
+.watchlist-toggle[data-action="remove"] {
+    background-color: #E74C3C;
+    color: #fff;
+}
+
+/* Hover pour "Add" : passage au vert */
+.watchlist-toggle[data-action="add"]:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* Hover pour "Remove" : teinte plus sombre de rouge */
+.watchlist-toggle[data-action="remove"]:hover {
+    background-color: #C0392B;
+}
+
+/* =================== Profil Page Styles =================== */
+.profile-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #2C3E50;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile-container h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Affichage du profil */
+.profile-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-info p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.profile-image {
+    margin: 15px auto;
+}
+
+.profile-image img {
+    border-radius: 50%;
+    max-width: 150px;
+}
+
+/* Bouton Modifier */
+.btn-modify {
+    background-color: #F1C40F;
+    color: #2C3E50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.btn-modify:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* Message d'erreur profil (différent de .error-msg plus générique) */
+.alert.alert-danger {
+    background-color: #E74C3C;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Formulaire de modification */
+.profile-edit {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.profile-edit h3 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.profile-form .form-group {
+    margin-bottom: 15px;
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile-form textarea,
+.profile-form input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.preview-container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.preview-container img {
+    max-width: 150px;
+    border-radius: 4px;
+}
+
+.current-image {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.current-image img {
+    max-width: 100px;
+    border-radius: 4px;
+}
+
+/* Boutons d'actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Règles unifiées pour les boutons du form en flex */
+.btn-submit, .btn-cancel {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-submit {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+.btn-submit:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+.btn-cancel {
+    background-color: #E74C3C;
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background-color: #C0392B;
+}
+
+/* =================== ProfilBoard Page Styles =================== */
+.profilboard-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profilboard-container h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Portfolio Section */
+#portfolio-section {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+}
+
+#portfolio-section h3 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#current-portfolio-value {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Boutons d'intervalle */
+#portfolio-section .interval-btn {
+    background-color: #2C3E50;
+    color: #F1C40F;
+    border: 1px solid #F1C40F;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+}
+
+#portfolio-section .interval-btn:hover,
+#portfolio-section .interval-btn.active {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+/* Graphique */
+#portfolioChart {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Indicateurs clés */
+#portfolio-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#portfolio-stats p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin: 5px 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #portfolio-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+    #portfolioChart {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* =================== Register Page Styles =================== */
+.register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #2C3E50; /* Fond sombre */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.register-container h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F; /* Couleur contrastante */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register-form .form-group {
+    margin-bottom: 15px;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.register-form input[type="email"],
+.register-form input[type="text"],
+.register-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* On réutilise .submit-btn */
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #F1C40F;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #2C3E50;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 10px;
+}
+.btn-submit:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* Critères de mot de passe */
+.password-criteria ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 10px 0 0;
+}
+
+.password-criteria li {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+/* Icône pour les critères validés */
+.password-criteria li.valid::before {
+    content: '✔';
+    color: #27AE60;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Icône pour les critères non validés */
+.password-criteria li.invalid::before {
+    content: '✖';
+    color: #E74C3C;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Lien vers la connexion */
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-link a {
+    color: #F1C40F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #27AE60;
+}
+
+/* =================== Watchlist Page Styles =================== */
+.watchlist-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Titre de la page */
+.watchlist-container h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Tableau */
+.watchlist-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+}
+
+.watchlist-table th, 
+.watchlist-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #3B4A59;
+}
+
+.watchlist-table thead {
+    background-color: #2C3E50;
+}
+
+.watchlist-table th {
+    color: #F1C40F;
+}
+
+.watchlist-table tbody tr:nth-child(even) {
+    background-color: #3B4A59;
+}
+
+.watchlist-table tbody tr:nth-child(odd) {
+    background-color: #2C3E50;
+}
+
+.watchlist-table tbody tr:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* Liens dans le tableau */
+.watchlist-table a {
+    color: #F1C40F;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.watchlist-table a:hover {
+    color: #27AE60;
+}
+
+/* TradingView widget container */
+.tradingview-widget-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Lien vers la page Market */
+.market-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.market-link a {
+    font-family: 'Poppins', sans-serif;
+    color: #F1C40F;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.market-link a:hover {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+/* =================== Fin du Fichier Harmonisé =================== */
