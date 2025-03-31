@@ -55,7 +55,7 @@ body {
 .logo a {
     font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
-    color: #F1C40F; /* Couleur contrastante */
+    color: #F8F9FA; /* Couleur contrastante */
     text-decoration: none;
 }
 
@@ -63,7 +63,7 @@ body {
 .burger {
     display: block;
     cursor: pointer;
-    z-index: 2;
+    z-index: 100;
 }
 .burger .bar {
     width: 25px;
@@ -79,16 +79,16 @@ body {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
+    top: 40px;
+    right: -20px;
+    width: 50%;
     background-color: #2C3E50;
     border-top: 1px solid rgba(241, 196, 15, 0.3);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);
     transition: all 0.3s ease;
-    z-index: 1;
+    z-index: 100;
 }
 
 .nav-links li {
@@ -100,13 +100,13 @@ body {
     display: block;
     padding: 15px;
     text-decoration: none;
-    color: #F1C40F;
+    color: #F8F9FA;
     font-size: 1rem;
     transition: color 0.3s ease;
 }
 
 .nav-links li a:hover {
-    color: #27AE60; /* Accent pour les interactions */
+    color: #F1C40F; /* Accent pour les interactions */
 }
 
 /* Profil dans le menu */
@@ -163,6 +163,11 @@ body {
     }
 }
 
+
+
+
+
+
 /* =================== Home Page =================== */
 
 /* Container global de la page d'accueil */
@@ -172,71 +177,148 @@ body {
     padding: 20px;
 }
 
-/* Titres et textes */
-.home-container h1 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 2.5rem;
-    color: #F1C40F;  /* Couleur contrastante */
+/* === Section Hero (accroche) === */
+.hero {
+    position: relative;
+    background-image: url('../image/background-hero.png');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
     text-align: center;
-    margin: 20px 0 10px;
-}
-
-.home-container p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1rem;
-    text-align: center;
-    margin-bottom: 30px;
     color: #F8F9FA;
-}
-
-/* Image de l'indice Fear & Greed */
-.fear-index {
-    display: block;
-    margin: 0 auto 30px;
-    max-width: 90%;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-}
-
-/* Section Top 10 Cryptos */
-.market-top10 {
-    background-color: #34495E;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
     margin-bottom: 40px;
+    border-radius: 12px;
+    box-shadow:
+        0 0 16px 8px rgba(14, 14, 14, 0.6),
+        0 0 16px 8px rgba(24, 24, 24, 0.9);
+}
+
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.377); /* overlay sombre pour améliorer la lisibilité */
+    z-index: 0;
+    border-radius: 8px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 3rem;
+    color: #F8F9FA;
+    margin-bottom: 20px;
+}
+
+.orange {
+    color: #F1C40F ;
+}
+
+.hero-content p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.btn-get-started {
+    display: inline-block;
+    background-color: #F1C40F;
+    color: #2C3E50;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-get-started:hover {
+    background-color: #27AE60;
+    color: #fff;
+}
+
+/* === Section Market & Fear Index === */
+.market-fear {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.market-data, .fear-image {
+    width: 100%;
+}
+
+/* En version desktop, affichage côte à côte */
+@media (min-width: 768px) {
+    .market-fear {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+    .market-data, .fear-image {
+        width: 48%;
+    }
+}
+
+/* =================== Top 10 Cryptos (Amélioration) =================== */
+.market-top10 {
+    /* On peut opter pour un léger dégradé en fond */
+    background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%);
+    padding: 20px;
+    border-radius: 10px;
+    /* Accentuez l'ombre pour un aspect plus "carte" */
+    box-shadow:
+        0 0 16px 8px rgba(14, 14, 14, 0.6),
+        0 0 16px 8px rgba(24, 24, 24, 0.9);
+    margin-bottom: 40px;
+    max-width: 100%; /* Adaptation responsive */
+    overflow-x: auto; /* Gère le scroll horizontal sur mobiles si nécessaire */
 }
 
 .market-top10 h2 {
     font-family: 'Roboto', sans-serif;
     font-size: 1.8rem;
-    color: #F1C40F;
+    color: #F8F9FA;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    letter-spacing: 1px; /* Petit style supplémentaire pour la police */
 }
 
-/* Table styling */
 .market-top10 table {
     width: 100%;
     border-collapse: collapse;
-}
-
-.market-top10 th,
-.market-top10 td {
-    padding: 12px 8px;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
+    /* On ajoute une légère ombre au tableau lui-même */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .market-top10 thead {
     background-color: #2C3E50;
 }
 
-.market-top10 th {
-    font-size: 1.1rem;
-    color: #F1C40F;
+.market-top10 th,
+.market-top10 td {
+    padding: 14px 10px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
 }
 
+/* Couleur des entêtes de colonne */
+.market-top10 th {
+    font-size: 1.1rem;
+    color: #b9b9b9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Lignes paires et impaires (striped rows) */
 .market-top10 tbody tr:nth-child(even) {
     background-color: #3B4A59;
 }
@@ -245,17 +327,52 @@ body {
     background-color: #2C3E50;
 }
 
-.market-top10 tbody tr:hover {
-    background-color: #27AE60;
-    color: #fff;
+/* Effet de survol (hover) */
+.market-top10 tbody tr {
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Ajustements responsive */
-@media (min-width: 768px) {
-    .home-container {
-        padding: 40px;
+.market-top10 tbody tr:hover {
+    background-color: #f1c40f75; /* On conserve la teinte mais on peut l’assouplir */
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* On peut ajouter un fin séparateur vertical pour mieux structurer les colonnes */
+.market-top10 th:not(:last-child),
+.market-top10 td:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Amélioration de la lisibilité sur mobile */
+@media screen and (max-width: 600px) {
+    .market-top10 th,
+    .market-top10 td {
+        font-size: 0.9rem;
+        padding: 10px;
     }
 }
+
+/* =================== Image Fear & Greed =================== */
+.fear-index {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* =================== Footer =================== */
 .site-footer {
@@ -305,7 +422,7 @@ body {
 .welcome-section h2 {
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
-    color: #F1C40F;
+    color: #F8F9FA;
     margin-bottom: 10px;
 }
 
@@ -537,7 +654,7 @@ body {
 
 .learn-container h2 {
     font-family: 'Roboto', sans-serif;
-    color: #F1C40F;
+    color: #F8F9FA;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -745,7 +862,7 @@ body {
 .faq-container h2 {
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
-    color: #F1C40F; /* Couleur contrastante */
+    color: #F8F9FA; /* Couleur contrastante */
     text-align: center;
     margin-bottom: 20px;
 }
@@ -867,7 +984,7 @@ body {
 
 .login-container h2 {
     font-family: 'Roboto', sans-serif;
-    color: #F1C40F; /* Couleur contrastante */
+    color: #F8F9FA; /* Couleur contrastante */
     text-align: center;
     margin-bottom: 20px;
 }
@@ -921,7 +1038,7 @@ body {
 /* Titre de la page */
 .market-container h2 {
     font-family: 'Roboto', sans-serif;
-    color: #F1C40F;
+    color: #F8F9FA;
     text-align: center;
     margin-bottom: 20px;
 }
