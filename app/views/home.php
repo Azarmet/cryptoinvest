@@ -6,7 +6,11 @@
         <div class="hero-content">
             <h1>Votre <span class="orange">avenir</span>  crypto commence<span class="orange"> ici</span> </h1>
             <p>Rejoignez-nous pour explorer le monde passionnant de la crypto-monnaie</p>
-            <a href="getstarted.php" class="btn-get-started">Get Started</a>
+            <?php if (isset($_SESSION['user'])): ?>
+            <a href="index.php?page=dashboard" class="btn-get-started">Get Started</a>
+                <?php else: ?>
+                <a href="index.php?page=login" class="btn-get-started">Get Started</a>
+                <?php endif; ?>
         </div>
     </section>
 
@@ -27,24 +31,28 @@
                         <!-- Rempli dynamiquement en JS -->
                     </tbody>
                 </table>
-            </section>
+                <a href="index.php?page=market" class="btn-go-market">Go To Market</a>    
+            </section> 
         </div>
-        <section class="fear-widget">
-    <h2>Crypto Fear & Greed Index</h2>
-    <div class="gauge-container">
-        <div class="gauge">
-            <div class="needle" id="needle"></div>
-        </div>
-        <div class="legend">
-            <span id="index-value">--</span> / 100
-            <div id="index-label" class="label">Chargement...</div>
-        </div>
-    </div>
+        <section class="fear-leader">
+            <div class="fear">
+                <h2>Crypto Fear & Greed Index</h2>
+                <div class="gauge-container">
+                    <div class="gauge">
+                    <div class="needle" id="needle"></div>
+                </div>
+                    <div class="legend">
+                        <span id="index-value">--</span> / 100
+                        <div id="index-label" class="label">Chargement...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="leader">
+                <h2>Leaderboard</h2>
+                
+            </div>
+        </section>
 </section>
-
-   
-
-    </section>
 </div>
 
 <?php require_once RACINE . 'app/views/templates/footer.php'; ?>
