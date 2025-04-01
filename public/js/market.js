@@ -17,7 +17,6 @@ function refreshMarketData(category = currentCategory) {
                 htmlContent += "<td><a href='javascript:void(0);' class='crypto-link' data-symbol='" + crypto.code + "'>" + crypto.code + "</a></td>";
                 htmlContent += "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>";
                 htmlContent += "<td class='" + colorClass + "'>" + variation + "%" + "</td>";
-                htmlContent += "<td>" + crypto.date_maj + "</td>";
                 if (isLoggedIn) {
                     if (crypto.in_watchlist) {
                         htmlContent += `<td><button class="watchlist-toggle" data-action="remove" data-id="${crypto.id_crypto_market}">Remove</button></td>`;
@@ -114,4 +113,4 @@ document.addEventListener("click", function(e) {
 // Rafraîchir toutes les 5 secondes avec la catégorie courante
 setInterval(function() {
     refreshMarketData(currentCategory);
-}, 5000);
+}, 10000);

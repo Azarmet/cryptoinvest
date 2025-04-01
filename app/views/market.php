@@ -26,7 +26,6 @@
           <th>Crypto</th>
           <th>Actual Price</th>
           <th>Variation 24H</th>
-          <th>Last Update</th>
           <?php if (isset($_SESSION['user'])): ?>
             <th>Watchlist</th>
           <?php endif; ?>
@@ -38,7 +37,6 @@
           <td><?php echo htmlspecialchars($crypto['code']); ?></td>
           <td><?php echo htmlspecialchars($crypto['prix_actuel']); ?></td>
           <td><?php echo number_format($crypto['variation_24h'], 2, '.', '') . '%'; ?></td>
-          <td><?php echo htmlspecialchars($crypto['date_maj']); ?></td>
           <?php if (isset($_SESSION['user'])): ?>
             <td></td>
           <?php endif; ?>

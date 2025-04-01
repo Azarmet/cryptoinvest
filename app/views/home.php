@@ -46,10 +46,10 @@
                         <div id="index-label" class="label">Chargement...</div>
                     </div>
                 </div>
-            </div>
-            <div class="leader">
-                <h2>Leaderboard</h2>
-                
+            </div >
+                <div class="leader">
+                    <?php require_once RACINE . 'app/views/templates/leaderboard.php'; ?>
+                </div>
             </div>
         </section>
 </section>
