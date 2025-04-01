@@ -16,10 +16,12 @@ document.getElementById('faq-search').addEventListener('input', function(){
                     div.className = "faq-item";
                     
                     var question = document.createElement('h3');
+                    question.className ="faq-question";
                     question.textContent = faq.question;
                     
                     var reponse = document.createElement('p');
                     // Remplacer les sauts de ligne par <br>
+                    reponse.className ="faq-answer";
                     reponse.innerHTML = faq.reponse.replace(/\n/g, "<br>");
                     
                     div.appendChild(question);

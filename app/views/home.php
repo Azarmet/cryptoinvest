@@ -19,9 +19,13 @@
     <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/trade-bg.jpg');"></div>
     <div class="feature-overlay"></div>
     <div class="feature-content">
-      <h2>Trade Virtual Funds</h2>
+      <h2><span class="orange">Trade</span> Virtual Funds</h2>
       <p>Simulez des transactions en temps réel avec des fonds virtuels pour tester vos stratégies sans risque.</p>
-      <a href="#" class="btn-get-started">Let's go</a>
+      <?php if (isset($_SESSION['user'])): ?>
+            <a href="index.php?page=dashboard" class="btn-get-started">Let's go</a>
+                <?php else: ?>
+                <a href="index.php?page=login" class="btn-get-started">Let's go</a>
+                <?php endif; ?>
     </div>
   </div>
 
@@ -30,9 +34,9 @@
     <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/learn-bg.jpg');"></div>
     <div class="feature-overlay"></div>
     <div class="feature-content">
-      <h2>Learn about Crypto and Trading</h2>
+      <h2><span class="orange">Learn </span>about Crypto and <span class="orange">Trading</span></h2>
       <p>Découvrez des tutoriels et articles pour comprendre le trading et l'univers des cryptomonnaies.</p>
-      <a href="#" class="btn-get-started">Let's learn</a>
+      <a href="index.php?page=learn" class="btn-get-started">Let's learn</a>
     </div>
   </div>
 </section>
