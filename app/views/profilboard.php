@@ -4,9 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once RACINE . 'app/views/templates/header.php';
 ?>
-<h1>Profil de <?= $profiluser['pseudo'] ?> </h1>
+<h1 class="profilboard-h1">Profil de <?= $profiluser['pseudo'] ?> </h1>
 <!-- SECTION 1 : Graphique du portefeuille + indicateurs -->
-<section id="portfolio-section" class="portfolio-section">
+<section id="portfolio-section" class="portfolio-section2">
     <h3>Portefeuille</h3>
     <div class="portfolio-content">
         <div class="portfolio-left">
@@ -27,10 +27,9 @@ require_once RACINE . 'app/views/templates/header.php';
             <p><span id="current-portfolio-value">-</span></p>
             <!-- Indicateurs clés -->
             <div id="portfolio-stats" class="portfolio-stats">
-                
-                <p>ROI Total : <span id="roi-total">-</span></p>
-                <p>PnL Total : <span id="pnl-total">-</span></p>
-                <p>Nombre de transactions : <span id="tx-count">-</span></p>
+                <p>ROI Total : <span id="roi-total">-</span><br><br>
+                PnL Total : <span id="pnl-total">-</span><br><br>
+                Nombre de transactions : <span id="tx-count">-</span></p>
             </div>
         </div>
     </div>

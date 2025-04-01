@@ -628,6 +628,31 @@ body {
     text-align: center;
 }
 
+.profilboard-h1 {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.portfolio-section2 {
+    background-color: #34495E;
+    padding: 20px;
+    max-width: 90%;
+    margin: auto;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow:
+        0 0 16px 8px rgba(14, 14, 14, 0.6),
+        0 0 16px 8px rgba(24, 24, 24, 0.9);
+}
+
+.portfolio-section2 h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F8F9FA;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
 /* Conteneur global pour les deux parties */
 .portfolio-content {
     display: flex;
