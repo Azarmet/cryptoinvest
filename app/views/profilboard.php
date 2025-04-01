@@ -6,27 +6,35 @@ require_once RACINE . 'app/views/templates/header.php';
 ?>
 <h1>Profil de <?= $profiluser['pseudo'] ?> </h1>
 <!-- SECTION 1 : Graphique du portefeuille + indicateurs -->
-<div id="portfolio-section" style="margin-bottom: 30px;">
+<section id="portfolio-section" class="portfolio-section">
     <h3>Portefeuille</h3>
-    <p><span id="current-portfolio-value">-</span></p>
-    <!-- Choix de l'intervalle -->
-    <div>
-        <button class="interval-btn" data-interval="jour">Jour</button>
-        <button class="interval-btn" data-interval="semaine">Semaine</button>
-        <button class="interval-btn" data-interval="mois">Mois</button>
-        <button class="interval-btn" data-interval="annee">Année</button>
+    <div class="portfolio-content">
+        <div class="portfolio-left">
+            
+            <!-- Choix de l'intervalle -->
+            <div class="interval-buttons">
+                <button class="interval-btn" data-interval="jour">Jour</button>
+                <button class="interval-btn" data-interval="semaine">Semaine</button>
+                <button class="interval-btn" data-interval="mois">Mois</button>
+                <button class="interval-btn" data-interval="annee">Année</button>
+            </div>
+            <!-- Graphique (Canvas pour Chart.js) -->
+            <div class="chart-container">
+                <canvas id="portfolioChart" style="border:1px solid #ccc;"></canvas>
+            </div>
+        </div>
+        <div class="portfolio-right">
+            <p><span id="current-portfolio-value">-</span></p>
+            <!-- Indicateurs clés -->
+            <div id="portfolio-stats" class="portfolio-stats">
+                
+                <p>ROI Total : <span id="roi-total">-</span></p>
+                <p>PnL Total : <span id="pnl-total">-</span></p>
+                <p>Nombre de transactions : <span id="tx-count">-</span></p>
+            </div>
+        </div>
     </div>
-
-    <!-- Graphique (Canvas pour Chart.js) -->
-    <canvas id="portfolioChart" width="600" height="300" style="border:1px solid #ccc;"></canvas>
-
-    <!-- Indicateurs clés -->
-    <div id="portfolio-stats" style="margin-top: 15px;">
-        <p>ROI Total : <span id="roi-total">-</span></p>
-        <p>PnL Total : <span id="pnl-total">-</span></p>
-        <p>Nombre de transactions : <span id="tx-count">-</span></p>
-    </div>
-</div>
+</section>
 <?php require_once RACINE . 'app/views/templates/footer.php'; ?>
 <script>
     var pseudoleaderboard = "<?= $profiluser['pseudo'] ?>";

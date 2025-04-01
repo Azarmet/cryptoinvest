@@ -5,15 +5,39 @@ let currentInterval = 'jour';
 // Rafraîchissement du portefeuille (graphique, stats, valeur actuelle et solde disponible)
 function refreshPortfolioData() {
     fetch(`index.php?page=profilboard&action=refreshPortfolioData&pseudo=${pseudoleaderboard}&interval=${currentInterval}`)
-        .then(res => res.json())
-        .then(data => {
-            updatePortfolioChart(data.chartData);
-            document.getElementById('roi-total').textContent = data.stats.roiTotal + ' %';
-            document.getElementById('pnl-total').textContent = data.stats.pnlTotal + ' USDT';
-            document.getElementById('tx-count').textContent = data.stats.txCount;
-            document.getElementById('current-portfolio-value').textContent = "Valeur actuelle : " + data.currentValue + " USDT";
-        })
-        .catch(err => console.error(err));
+    .then(res => res.json())
+    .then(data => {
+        updatePortfolioChart(data.chartData);
+
+        // Sélection des éléments
+        const roiElement = document.getElementById('roi-total');
+        const pnlElement = document.getElementById('pnl-total');
+
+        // Mise à jour du contenu
+        roiElement.textContent = data.stats.roiTotal + ' %';
+        pnlElement.textContent = data.stats.pnlTotal + ' USDT';
+
+        // Réinitialisation des classes
+        roiElement.classList.remove('positive', 'negative');
+        pnlElement.classList.remove('positive', 'negative');
+
+        // Ajout des classes en fonction des valeurs
+        if (parseFloat(data.stats.roiTotal) >= 0) {
+            roiElement.classList.add('positive');
+        } else {
+            roiElement.classList.add('negative');
+        }
+
+        if (parseFloat(data.stats.pnlTotal) >= 0) {
+            pnlElement.classList.add('positive');
+        } else {
+            pnlElement.classList.add('negative');
+        }
+
+        document.getElementById('tx-count').textContent = data.stats.txCount;
+        document.getElementById('current-portfolio-value').textContent = "Valeur actuelle : " + data.currentValue + " USDT";
+    })
+    .catch(err => console.error(err));
 }
 
 
