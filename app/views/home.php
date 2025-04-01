@@ -13,6 +13,29 @@
                 <?php endif; ?>
         </div>
     </section>
+    <section class="home-features">
+  <!-- Section 1 : Trade Virtual Funds -->
+  <div class="feature trade">
+    <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/trade-bg.jpg');"></div>
+    <div class="feature-overlay"></div>
+    <div class="feature-content">
+      <h2>Trade Virtual Funds</h2>
+      <p>Simulez des transactions en temps réel avec des fonds virtuels pour tester vos stratégies sans risque.</p>
+      <a href="#" class="btn-get-started">Let's go</a>
+    </div>
+  </div>
+
+  <!-- Section 2 : Learn about Crypto and Trading -->
+  <div class="feature learn">
+    <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/learn-bg.jpg');"></div>
+    <div class="feature-overlay"></div>
+    <div class="feature-content">
+      <h2>Learn about Crypto and Trading</h2>
+      <p>Découvrez des tutoriels et articles pour comprendre le trading et l'univers des cryptomonnaies.</p>
+      <a href="#" class="btn-get-started">Let's learn</a>
+    </div>
+  </div>
+</section>
 
     <!-- Section regroupant les données de marché et l'image Fear & Greed -->
     <section class="market-fear">

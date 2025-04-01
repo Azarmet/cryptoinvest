@@ -268,6 +268,94 @@ body {
     }
 }
 
+/* Section Features */
+.home-features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 40px 0;
+  }
+  
+  .feature {
+    position: relative;
+    min-height: 250px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 16px 8px rgba(14, 14, 14, 0.6),
+                0 0 16px 8px rgba(24, 24, 24, 0.9);
+  }
+  
+  /* Fond d'image */
+  .feature-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+  }
+  
+  /* Overlay sombre pour améliorer la lisibilité */
+  .feature-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+  
+  /* Contenu de la feature */
+  .feature-content {
+    position: relative;
+    z-index: 3;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .feature-content h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #F8F9FA;
+  }
+  
+  .feature-content p {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 20px;
+    color: #F8F9FA;
+  }
+  
+  /* Réutilisation du style du bouton existant */
+  .feature-content a.btn-get-started {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Hover du bouton */
+  .feature-content a.btn-get-started:hover {
+    background-color: #f1c40f75;
+    color: #fff;
+  }
+  
+  /* En version desktop : affichage côte à côte */
+  @media (min-width: 768px) {
+    .home-features {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .feature {
+      width: 48%;
+    }
+  }
+  
+
 /* =================== Top 10 Cryptos (Amélioration) =================== */
 .market-top10 {
     /* On peut opter pour un léger dégradé en fond */
