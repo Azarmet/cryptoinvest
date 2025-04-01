@@ -1,10 +1,15 @@
 <div class="leaderboard-container">
-    <h1>Leaderboard</h1>
-    <?php $tableRows = ''; ?>
     
-<?php if (isset($_SESSION['user'])): ?>
-                    
-    <?php
+    
+    
+<?php
+    $tableRows = '';
+    $page = $_GET['page'];
+    if ($page === 'home'): ?>
+    <h1>Leaderboard Top 3</h1>
+    <?php else:?>
+    <h1>Leaderboard</h1>         
+    <?php endif;
     foreach ($usersWithSolde as $user):
         $photoProfil = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"25\">";
         $pseudo = htmlspecialchars($user['pseudo']);
@@ -19,25 +24,6 @@
     ";
     endforeach;
     ?>
-
-        <?php else: ?>
-
-            <?php
-            foreach ($usersWithSolde as $user):
-                $photoProfil = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"25\">";
-                $pseudo = htmlspecialchars($user['pseudo']);
-                $solde = number_format($user['solde'], 2, ',', ' ');
-                $tableRows .= "
-        <tr>
-            <td>$photoProfil</td>
-            <td>$pseudo</td>
-            <td>$solde</td>
-        </tr>
-    ";
-            endforeach;
-            ?>
-
-        <?php endif; ?>
     
     <div class="table-responsive">
         <table class="leaderboard-table">
@@ -45,7 +31,7 @@
                 <tr>
                     <th>Photo</th>
                     <th>Pseudo</th>
-                    <th>Solde (€)</th>
+                    <th>Solde ($)</th>
                 </tr>
             </thead>
             <tbody>

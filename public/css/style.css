@@ -351,7 +351,7 @@ body {
     color: #2C3E50;
     padding: 10px 20px;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 32px;
     text-align: center;
     border-radius: 4px;
     text-decoration: none;
@@ -1002,21 +1002,27 @@ body {
 
 .leaderboard-container h1 {
     font-family: 'Roboto', sans-serif;
-    color: #F1C40F; /* Couleur contrastante */
+    font-size: 1.8rem;
+    color: #F8F9FA;
     text-align: center;
     margin-bottom: 20px;
+    letter-spacing: 1px; /* Petit style supplémentaire pour la police */
 }
 
 .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
+    /* On ajoute une légère ombre au tableau lui-même */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .leaderboard-table th,
 .leaderboard-table td {
-    padding: 10px;
+    padding: 14px 10px;
     text-align: center;
-    border: 1px solid #3B4A59;
+    font-family: 'Poppins', sans-serif;
 }
 
 .leaderboard-table thead {
@@ -1024,8 +1030,10 @@ body {
 }
 
 .leaderboard-table th {
-    color: #F1C40F;
-    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    color: #b9b9b9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .leaderboard-table tbody tr:nth-child(even) {
@@ -1037,8 +1045,9 @@ body {
 }
 
 .leaderboard-table tbody tr:hover {
-    background-color: #27AE60;
-    color: #fff;
+    background-color: #f1c40f75; /* On conserve la teinte mais on peut l’assouplir */
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .leaderboard-table a {
@@ -1048,9 +1057,13 @@ body {
 }
 
 .leaderboard-table a:hover {
-    color: #27AE60;
+    color: #F1C40F;
 }
 
+.leaderboard-table th:not(:last-child),
+.leaderboard-table td:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
 /* =================== Login Page Styles =================== */
 .login-container {
     max-width: 400px;

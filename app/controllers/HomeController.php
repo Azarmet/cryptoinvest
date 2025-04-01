@@ -43,7 +43,7 @@ function GetExtractLeaderboard()
     });
 
     // 3. Limiter aux 10 premiers résultats
-    $usersWithSolde = array_slice($usersWithSolde, 0, 10);
+    $usersWithSolde = array_slice($usersWithSolde, 0, 3);
     return $usersWithSolde;
 }
 ?>
