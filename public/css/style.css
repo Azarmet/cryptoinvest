@@ -61,6 +61,11 @@ body {
     text-decoration: none;
 }
 
+.logo img {
+    max-width: 20px;
+    margin: 0;
+}
+
 /* --- Menu Burger --- */
 .burger {
     display: block;
