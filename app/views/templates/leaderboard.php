@@ -39,4 +39,8 @@
             </tbody>
         </table>
     </div>
+    <?php if ($page === 'home'): ?>
+    <a href="index.php?page=leaderboard" class="btn-go-market">View Learderboard</a>       
+    <?php endif;?>
+    
 </div>
