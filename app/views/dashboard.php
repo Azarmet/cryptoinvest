@@ -15,32 +15,39 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
     </section>
 
     <!-- SECTION 1 : Portefeuille -->
-    <section id="portfolio-section" class="portfolio-section">
-        <h3>Mon Portefeuille</h3>
-        <div class="interval-buttons">
-            <button class="interval-btn" data-interval="jour">Jour</button>
-            <button class="interval-btn" data-interval="semaine">Semaine</button>
-            <button class="interval-btn" data-interval="mois">Mois</button>
-            <button class="interval-btn" data-interval="annee">Année</button>
-        </div>
-        <div class="chart-container">
-            <canvas id="portfolioChart"></canvas>
-        </div>
-        <div id="portfolio-stats" class="portfolio-stats">
-            <div class="stat-item">
-                <p>ROI Total :</p>
-                <span id="roi-total">-</span>
+<section id="portfolio-section" class="portfolio-section">
+    <h3>Mon Portefeuille</h3>
+    <div class="portfolio-content">
+        <div class="portfolio-left">
+            <div class="interval-buttons">
+                <button class="interval-btn" data-interval="jour">Jour</button>
+                <button class="interval-btn" data-interval="semaine">Semaine</button>
+                <button class="interval-btn" data-interval="mois">Mois</button>
+                <button class="interval-btn" data-interval="annee">Année</button>
             </div>
-            <div class="stat-item">
-                <p>PnL Total :</p>
-                <span id="pnl-total">-</span>
-            </div>
-            <div class="stat-item">
-                <p>Nombre de transactions :</p>
-                <span id="tx-count">-</span>
+            <div class="chart-container">
+                <canvas id="portfolioChart"></canvas>
             </div>
         </div>
-    </section>
+        <div class="portfolio-right">
+            <div id="portfolio-stats" class="portfolio-stats">
+                <div class="stat-item">
+                    <p>ROI Total :</p>
+                    <span id="roi-total">-</span>
+                </div>
+                <div class="stat-item">
+                    <p>PnL Total :</p>
+                    <span id="pnl-total">-</span>
+                </div>
+                <div class="stat-item">
+                    <p>Nombre de transactions :</p>
+                    <span id="tx-count">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
     <!-- SECTION 2 : Trading -->
     <section id="trading-section" class="trading-section">

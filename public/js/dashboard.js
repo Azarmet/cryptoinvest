@@ -8,14 +8,39 @@ function refreshPortfolioData() {
         .then(res => res.json())
         .then(data => {
             updatePortfolioChart(data.chartData);
-            document.getElementById('roi-total').textContent = data.stats.roiTotal + ' %';
-            document.getElementById('pnl-total').textContent = data.stats.pnlTotal + ' USDT';
+
+            // Sélection des éléments
+            const roiElement = document.getElementById('roi-total');
+            const pnlElement = document.getElementById('pnl-total');
+
+            // Mise à jour du contenu
+            roiElement.textContent = data.stats.roiTotal + ' %';
+            pnlElement.textContent = data.stats.pnlTotal + ' USDT';
+
+            // Réinitialisation des classes
+            roiElement.classList.remove('positive', 'negative');
+            pnlElement.classList.remove('positive', 'negative');
+
+            // Ajout des classes en fonction des valeurs
+            if (parseFloat(data.stats.roiTotal) >= 0) {
+                roiElement.classList.add('positive');
+            } else {
+                roiElement.classList.add('negative');
+            }
+
+            if (parseFloat(data.stats.pnlTotal) >= 0) {
+                pnlElement.classList.add('positive');
+            } else {
+                pnlElement.classList.add('negative');
+            }
+
             document.getElementById('tx-count').textContent = data.stats.txCount;
             document.getElementById('current-portfolio-value').textContent = "Valeur actuelle : " + data.currentValue + " USDT";
             document.getElementById('available-balance').textContent = "Solde disponible : " + data.availableBalance + " USDT";
         })
         .catch(err => console.error(err));
 }
+
 
 // Rafraîchissement des positions
 function refreshPositions() {
@@ -99,50 +124,6 @@ document.querySelectorAll('.interval-btn').forEach(btn => {
     });
 });
 
-let tvWidget = null;
-
-// Fonction d'initialisation du widget TradingView avec allow_symbol_change activé
-function initTradingViewWidget(initialSymbol) {
-    tvWidget = new TradingView.widget({
-        container_id: "tradingview_graph",
-        autosize: true,
-        symbol: "BINANCE:" + initialSymbol,
-        interval: "D",
-        timezone: "Etc/UTC",
-        theme: "dark",
-        style: "1",
-        locale: "fr",
-        toolbar_bg: "#f1f3f6",
-        enable_publishing: false,
-        allow_symbol_change: false, // Autorise le changement de symbole
-        hideideas: true
-    });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialisation du widget sur BTCUSDT
-    initTradingViewWidget('BTCUSDT');
-
-    // Ajouter l'écouteur sur le select une fois que le DOM est prêt
-    const selectCrypto = document.getElementById('crypto_code');
-    if (selectCrypto) {
-        selectCrypto.addEventListener('change', function () {
-            const newSymbol = this.value;
-
-            // Option 1 : Utiliser setSymbol si disponible
-            if (tvWidget && tvWidget.activeChart && typeof tvWidget.activeChart().setSymbol === "function") {
-                tvWidget.activeChart().setSymbol("BINANCE:" + newSymbol, function () {
-                    console.log("Symbol changed to BINANCE:" + newSymbol);
-                });
-            } else {
-                // Option 2 : Réinitialiser complètement le widget avec le nouveau symbole
-                document.getElementById("tradingview_graph").innerHTML = "";
-                initTradingViewWidget(newSymbol);
-                console.log("Widget reinitialized with BINANCE:" + newSymbol);
-            }
-        });
-    }
-});
 
 
 // ------------------ INITIALISATION ------------------
