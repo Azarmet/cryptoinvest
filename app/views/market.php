@@ -32,17 +32,28 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($cryptos as $crypto): ?>
-        <tr>
-          <td><?php echo htmlspecialchars($crypto['code']); ?></td>
-          <td><?php echo htmlspecialchars($crypto['prix_actuel']); ?></td>
-          <td><?php echo number_format($crypto['variation_24h'], 2, '.', '') . '%'; ?></td>
-          <?php if (isset($_SESSION['user'])): ?>
-            <td></td>
+  <?php foreach ($cryptos as $crypto): ?>
+    <tr>
+      <td><?php echo htmlspecialchars($crypto['code']); ?></td>
+      <td class="<?php echo $crypto['variation_24h'] >= 0 ? 'positive' : 'negative'; ?>">
+          <?php echo htmlspecialchars($crypto['prix_actuel']); ?>
+      </td>
+      <td class="<?php echo $crypto['variation_24h'] >= 0 ? 'positive' : 'negative'; ?>">
+          <?php echo number_format($crypto['variation_24h'], 2, '.', '') . '%'; ?>
+      </td>
+      <?php if (isset($_SESSION['user'])): ?>
+        <td>
+          <?php if (!empty($crypto['in_watchlist'])): ?>
+              <button class="watchlist-toggle" data-action="remove" data-id="<?php echo $crypto['id_crypto_market']; ?>">✅</button>
+          <?php else: ?>
+              <button class="watchlist-toggle" data-action="add" data-id="<?php echo $crypto['id_crypto_market']; ?>">❌</button>
           <?php endif; ?>
-        </tr>
-        <?php endforeach; ?>
-      </tbody>
+        </td>
+      <?php endif; ?>
+    </tr>
+  <?php endforeach; ?>
+</tbody>
+
     </table>
   </div>
     <div class="tradingwidget-order">

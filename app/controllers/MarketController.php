@@ -15,8 +15,22 @@ function showMarket()
     $cryptos = $cryptoModel->getAllFromCat($categorie);
     $cryptosTrans = cryptoTrans();
 
+    // Ajout de la logique watchlist si utilisateur connecté
+    if (isset($_SESSION['user'])) {
+        $watchlistModel = new Watchlist();
+        $watchlist = $watchlistModel->getWatchlist($_SESSION['user']['id_utilisateur']);
+        $watchlistIds = array_map(function($crypto) {
+            return $crypto['id_crypto_market'];
+        }, $watchlist);
+
+        foreach ($cryptos as &$crypto) {
+            $crypto['in_watchlist'] = in_array($crypto['id_crypto_market'], $watchlistIds);
+        }
+    }
+
     require_once RACINE . 'app/views/market.php';
 }
+
 
 function cryptoTrans()
 {

@@ -1385,10 +1385,9 @@ body {
 }
 
 /* Style pour les liens de crypto dans le tableau */
-.crypto-link {
-    color: #F8F9FA;
-    text-decoration: none;
-    transition: color 0.3s ease;
+a.crypto-link {
+    color: inherit;         /* hérite la couleur du parent (ex: vert/rouge) */
+    text-decoration: none;  /* enlève le soulignement */
 }
 .crypto-link:hover {
     color: #f1c40f75;
@@ -1433,25 +1432,25 @@ body {
 
 /* Bouton "Add" : fond jaune et texte sombre */
 .watchlist-toggle[data-action="add"] {
-    background-color: #F1C40F;
+    background-color: #2c2c2c00;
     color: #2C3E50;
 }
 
 /* Bouton "Remove" : fond rouge et texte en blanc */
 .watchlist-toggle[data-action="remove"] {
-    background-color: #E74C3C;
+    background-color: #2c2c2c00;
     color: #fff;
 }
 
 /* Hover pour "Add" : passage au vert */
 .watchlist-toggle[data-action="add"]:hover {
-    background-color: #f1c40f75;
+    background-color: #f1310f75;
     color: #fff;
 }
 
 /* Hover pour "Remove" : teinte plus sombre de rouge */
 .watchlist-toggle[data-action="remove"]:hover {
-    background-color: #C0392B;
+    background-color: #2bc03f;
 }
 
 /* Mobile First (par défaut) */

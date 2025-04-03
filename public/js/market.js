@@ -13,20 +13,23 @@ function refreshMarketData(category = currentCategory) {
             cryptos.forEach(function(crypto) {
                 var variation = parseFloat(crypto.variation_24h).toFixed(2);
                 let colorClass = variation >= 0 ? 'positive' : 'negative';
-                htmlContent += "<tr>";
-                htmlContent += "<td><a href='javascript:void(0);' class='crypto-link' data-symbol='" + crypto.code + "'>" + crypto.code + "</a></td>";
-                htmlContent += "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>";
-                htmlContent += "<td class='" + colorClass + "'>" + variation + "%" + "</td>";
+            
+                htmlContent += `<tr class="crypto-link" data-symbol="${crypto.code}">`; // <--- ici
+                htmlContent += `<td>${crypto.code}</td>`;
+                htmlContent += `<td class="${colorClass}">${crypto.prix_actuel}</td>`;
+                htmlContent += `<td class="${colorClass}">${variation}%</td>`;
+            
                 if (isLoggedIn) {
                     if (crypto.in_watchlist) {
-                        htmlContent += `<td><button class="watchlist-toggle" data-action="remove" data-id="${crypto.id_crypto_market}">Remove</button></td>`;
+                        htmlContent += `<td><button class="watchlist-toggle" data-action="remove" data-id="${crypto.id_crypto_market}">✅</button></td>`;
                     } else {
-                        htmlContent += `<td><button class="watchlist-toggle" data-action="add" data-id="${crypto.id_crypto_market}">Add</button></td>`;
+                        htmlContent += `<td><button class="watchlist-toggle" data-action="add" data-id="${crypto.id_crypto_market}">❌</button></td>`;
                     }
                 }
-                
-                htmlContent += "</tr>";
+            
+                htmlContent += `</tr>`;
             });
+            
             tbody.innerHTML = htmlContent;
         }
     };
@@ -80,9 +83,10 @@ document.querySelectorAll(".tab-button").forEach(button => {
 
 // Gérer le clic sur un code de crypto
 document.addEventListener("click", function(e) {
-    if (e.target.classList.contains("crypto-link")) {
+    const row = e.target.closest(".crypto-link");
+    if (row && !e.target.classList.contains("watchlist-toggle")) {
         e.preventDefault(); 
-        const newSymbol = e.target.getAttribute("data-symbol");
+        const newSymbol = row.getAttribute("data-symbol");
 
         // Mettre à jour le widget TradingView
         updateTradingViewSymbol(newSymbol);
@@ -90,7 +94,6 @@ document.addEventListener("click", function(e) {
         // Mettre à jour le <select> du tradingOrder si présent
         const select = document.getElementById("crypto_code");
         if (select) {
-            // On cherche l'option correspondante (ex : BTCUSDT)
             for (let i = 0; i < select.options.length; i++) {
                 if (select.options[i].value === newSymbol) {
                     select.selectedIndex = i;
@@ -98,7 +101,6 @@ document.addEventListener("click", function(e) {
                 }
             }
 
-            // Déclenche manuellement un event `change` si tu as des listeners liés
             const event = new Event("change");
             select.dispatchEvent(event);
         }
@@ -106,11 +108,7 @@ document.addEventListener("click", function(e) {
 });
 
 
-window.onload = function() {
-    refreshMarketData(); // ou "top10" par défaut
-    updateTradingViewSymbol("BTCUSDT");
-    
-};
+
 
 document.addEventListener("click", function(e) {
     if (e.target.classList.contains("watchlist-toggle")) {
@@ -183,6 +181,9 @@ function refreshPortfolioData() {
         })
         .catch(err => console.error(err));
 }
-refreshPortfolioData();
 refreshPositions();
-setInterval(refreshPositions, 3000);
+refreshMarketData(); // ou "top10" par défaut
+updateTradingViewSymbol("BTCUSDT");
+refreshPortfolioData();
+
+setInterval(refreshPositions, 10000);
