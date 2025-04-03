@@ -14,17 +14,11 @@ function showDashboard()
         header('Location: index.php?page=login');
         exit();
     }
-    $cryptos = cryptoTrans();
     // Afficher la vue du dashboard
     require_once RACINE . 'app/views/dashboard.php';
 }
 
-function cryptoTrans()
-{
-    $transactionnModel = new Transaction();
-    $cryptos = $transactionnModel->getCryptoTrans();
-    return $cryptos;
-}
+
 
 
 

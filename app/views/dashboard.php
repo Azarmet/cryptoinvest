@@ -49,9 +49,6 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 </section>
 
 
-    <!-- SECTION 2 : Trading -->
-    <?php require_once RACINE . 'app/views/templates/tradingOrder.php'; ?>
-
 
     <!-- SECTION 3 : Positions en cours -->
     <?php require_once RACINE . 'app/views/templates/positions.php'; ?>

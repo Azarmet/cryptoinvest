@@ -36,7 +36,6 @@ function refreshPortfolioData() {
 
             document.getElementById('tx-count').textContent = data.stats.txCount;
             document.getElementById('current-portfolio-value').textContent = "Valeur actuelle : " + data.currentValue + " USDT";
-            document.getElementById('available-balance').textContent = "Solde disponible : " + data.availableBalance + " USDT";
         })
         .catch(err => console.error(err));
 }

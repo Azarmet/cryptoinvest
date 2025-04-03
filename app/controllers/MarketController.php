@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\CryptoMarket;
 use App\Models\CryptoTrans;
 use App\Models\Watchlist;
+use App\Models\Transaction;
 
 function showMarket()
 {
@@ -12,8 +13,16 @@ function showMarket()
     $cryptoModel->updateFromBinance();
     $categorie = $_GET['categorie'] ?? 'top';
     $cryptos = $cryptoModel->getAllFromCat($categorie);
+    $cryptosTrans = cryptoTrans();
 
     require_once RACINE . 'app/views/market.php';
+}
+
+function cryptoTrans()
+{
+    $transactionnModel = new Transaction();
+    $cryptos = $transactionnModel->getCryptoTrans();
+    return $cryptos;
 }
 
 function refreshMarket()

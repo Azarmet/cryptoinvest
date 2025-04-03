@@ -95,11 +95,32 @@ function routeur()
 
         case 'market':
             require_once RACINE . 'app/controllers/MarketController.php';
+            require_once RACINE . 'app/controllers/PositionsController.php';
+            require_once RACINE . 'app/controllers/PortefeuilleController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
-            if ($action == 'refresh') {
-                \App\Controllers\refreshMarket();
-            } else {
-                \App\Controllers\showMarket();
+            switch ($action) {
+                case 'refresh': 
+                    \App\Controllers\refreshMarket();
+                    \App\Controllers\refreshPositions();
+                break;
+                case 'available-balance':
+                    \App\Controllers\refreshPortfolioData();
+                    break;
+                case 'show':
+                    \App\Controllers\showMarket();
+                    break;
+                case 'openPosition':
+                    \App\Controllers\openPosition();
+                    break;
+                case 'closePosition':
+                    \App\Controllers\closePosition();
+                    break;
+                case 'refreshPositions':
+                    \App\Controllers\refreshPositions();
+                    break;
+                 default:
+                    // 404 ou redirection
+                    echo 'Erreur 404 : action inconnue.';
             }
             break;
 

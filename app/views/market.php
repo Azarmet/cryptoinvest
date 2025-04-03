@@ -48,7 +48,17 @@
   
   <!-- Widget TradingView intégré -->
   <div id="tradingview-widget-container" class="tradingview-widget-container"></div>
+    
+<?php if (isset($_SESSION['user'])): ?>
+    <?php require_once RACINE . 'app/views/templates/tradingOrder.php'; ?>
+    
   
+    <!-- SECTION 3 : Positions en cours -->
+    <?php require_once RACINE . 'app/views/templates/positions.php'; ?>
+    
+<?php endif; ?>
+
+
   <?php if (isset($_SESSION['user'])): ?>
     <div class="watchlist-link">
       <a href="index.php?page=watchlist">Go to Watchlist</a>

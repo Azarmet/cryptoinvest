@@ -48,7 +48,7 @@ function openPosition()
         $pfModel = new Portefeuille();
         $soldeDisponible = $pfModel->getSoldeDisponible($userId);
         if ($montant <= 0 || $montant > $soldeDisponible) {
-            header('Location: index.php?page=dashboard&error=solde_insuffisant');
+            header('Location: index.php?page=market&error=solde_insuffisant');
             exit();
         }
 
@@ -56,7 +56,7 @@ function openPosition()
         $transactionModel = new Transaction();
         $transactionModel->openPosition($userId, $montant, $type, $cryptoCode);
 
-        header('Location: index.php?page=dashboard&success=position_opened');
+        header('Location: index.php?page=market&success=position_opened');
         exit();
     }
 }
@@ -79,6 +79,7 @@ function closePosition()
         $transactionModel->closePosition($idTransaction, $userId);
     }
 
-    header('Location: index.php?page=dashboard');
+    header('Location: index.php?page='. $_GET['page']);
     exit();
+   
 }

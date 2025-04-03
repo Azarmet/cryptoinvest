@@ -114,3 +114,55 @@ document.addEventListener("click", function(e) {
 setInterval(function() {
     refreshMarketData(currentCategory);
 }, 10000);
+
+// Rafraîchissement des positions
+function refreshPositions() {
+    fetch("index.php?page=market&action=refreshPositions")
+        .then(res => res.json())
+        .then(positions => {
+            const tbody = document.querySelector("#positions-table tbody");
+            tbody.innerHTML = "";
+            positions.forEach(pos => {
+                let tr = document.createElement('tr');
+            
+                // Couleur selon le sens
+                let sensClass = pos.sens.toLowerCase() === 'long' ? 'positive' : 'negative';
+            
+                // Couleur PnL
+                let pnl = parseFloat(pos.pnl);
+                let pnlClass = pnl >= 0 ? 'positive' : 'negative';
+            
+                // Couleur ROI
+                let roi = parseFloat(pos.roi);
+                let roiClass = roi >= 0 ? 'positive' : 'negative';
+            
+                tr.innerHTML = `
+                    <td>${pos.code}</td>
+                    <td class="${sensClass}">${pos.sens}</td>
+                    <td>${pos.prix_ouverture}</td>
+                    <td>${pos.taille}</td>
+                    <td>${pos.prix_actuel}</td>
+                    <td>${pos.date_ouverture}</td>
+                    <td class="${pnlClass}">${pnl.toFixed(2)}</td>
+                    <td class="${roiClass}">${roi.toFixed(2)}%</td>
+                    <td><a href="index.php?page=market&action=closePosition&id=${pos.id_transaction}">Clôturer</a></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+        })
+        .catch(err => console.error(err));
+}
+
+// Rafraîchissement du portefeuille (graphique, stats, valeur actuelle et solde disponible)
+function refreshPortfolioData() {
+    fetch(`index.php?page=market&action=available-balance`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('available-balance').textContent = "Solde disponible : " + data.availableBalance + " USDT";
+        })
+        .catch(err => console.error(err));
+}
+refreshPortfolioData();
+refreshPositions();
+setInterval(refreshPositions, 3000);

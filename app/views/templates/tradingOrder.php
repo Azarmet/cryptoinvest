@@ -5,14 +5,14 @@
         <?php if (isset($_GET['error']) && $_GET['error'] === 'solde_insuffisant'): ?>
             <p class="error-msg">Solde insuffisant pour ouvrir cette position.</p>
         <?php endif; ?>
-        <form action="index.php?page=dashboard&action=openPosition" method="POST" class="order-form">
+        <form action="index.php?page=market&action=openPosition" method="POST" class="order-form">
             <div class="form-group">
                 <label for="crypto_code">Crypto :</label>
                 <select name="crypto_code" id="crypto_code">
                   <?php
                   // $cryptos a été défini dans showDashboard()
                   // On crée une option pour chaque code disponible
-                  foreach ($cryptos as $code) {
+                  foreach ($cryptosTrans as $code) {
                       echo '<option value="' . htmlspecialchars($code) . '">' . htmlspecialchars($code) . '</option>';
                   }
                   ?>
