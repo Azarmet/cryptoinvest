@@ -18,9 +18,17 @@ function showDashboard()
     require_once RACINE . 'app/views/dashboard.php';
 }
 
+function getStats() {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (!isset($_SESSION['user'])) {
+        echo json_encode(['error' => 'Non connecté']);
+        exit;
+    }
 
+    $userId = $_SESSION['user']['id_utilisateur'];
+    $transactionModel = new \App\Models\Transaction();
+    $stats = $transactionModel->getDashboardStats($userId);
 
-
-
-
-
+    echo json_encode($stats);
+    exit;
+}

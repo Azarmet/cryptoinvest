@@ -195,4 +195,40 @@ class Transaction
         }
         return $positions;
     }
+
+    public function getDashboardStats($userId) {
+        // 1. Trouver l'id_portefeuille correspondant
+        $stmt = $this->pdo->prepare("SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1");
+        $stmt->execute(['userId' => $userId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if (!$result) {
+            return null; // ou [] pour éviter les erreurs plus loin
+        }
+    
+        $portefeuilleId = $result['id_portefeuille'];
+    
+        // 2. Calcul des stats à partir de l'id_portefeuille
+        $sql = "
+            SELECT 
+                COUNT(*) as total,
+                SUM(CASE WHEN pnl > 0 THEN 1 ELSE 0 END) as gagnantes,
+                SUM(CASE WHEN pnl <= 0 THEN 1 ELSE 0 END) as perdantes,
+                SUM(pnl) / COUNT(*) as pnl_moyen,
+                AVG(TIMESTAMPDIFF(HOUR, date_ouverture, NOW())) as temps_moyen_heures,
+                SUM(CASE WHEN sens = 'long' THEN 1 ELSE 0 END) as total_long,
+                SUM(CASE WHEN sens = 'short' THEN 1 ELSE 0 END) as total_short,
+                SUM(CASE WHEN sens = 'long' AND pnl > 0 THEN 1 ELSE 0 END) as longs_gagnants,
+                SUM(CASE WHEN sens = 'short' AND pnl > 0 THEN 1 ELSE 0 END) as shorts_gagnants,
+                COUNT(*) / GREATEST(TIMESTAMPDIFF(MONTH, MIN(date_ouverture), NOW()), 1) as tx_par_mois
+            FROM transaction
+            WHERE id_portefeuille = :pid AND date_cloture IS NOT NULL
+        ";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['pid' => $portefeuilleId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    
 }

@@ -36,6 +36,24 @@ function refreshPortfolioData() {
 
             document.getElementById('tx-count').textContent = data.stats.txCount;
             document.getElementById('current-portfolio-value').textContent = "Valeur actuelle : " + data.currentValue + " USDT";
+            
+        })
+        .catch(err => console.error(err));
+}
+
+function refreshDashboardStats() {
+    fetch("index.php?page=dashboard&action=getStats")
+        .then(res => res.json())
+        .then(stats => {
+            document.getElementById("stat-gagnantes").textContent = stats.gagnantes;
+            document.getElementById("stat-perdantes").textContent = stats.perdantes;
+            document.getElementById("stat-long").textContent = stats.total_long;
+            document.getElementById("stat-long-win").textContent = stats.longs_gagnants;
+            document.getElementById("stat-short").textContent = stats.total_short;
+            document.getElementById("stat-short-win").textContent = stats.shorts_gagnants;
+            document.getElementById("stat-pnl-moyen").textContent = parseFloat(stats.pnl_moyen).toFixed(2);
+            document.getElementById("stat-temps-moyen").textContent = parseFloat(stats.temps_moyen_heures).toFixed(1);
+            document.getElementById("stat-tx-mois").textContent = parseFloat(stats.tx_par_mois).toFixed(2);
         })
         .catch(err => console.error(err));
 }
@@ -127,6 +145,7 @@ document.querySelectorAll('.interval-btn').forEach(btn => {
 
 
 // ------------------ INITIALISATION ------------------
+refreshDashboardStats();
 refreshPortfolioData();
 refreshPositions();
 setInterval(refreshPositions, 3000);

@@ -44,9 +44,20 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
                     <span id="tx-count">-</span>
                 </div>
             </div>
+            <div class="portfolio-extra-stats">
+                <ul>
+                    <li>✅ Gagnantes : <span id="stat-gagnantes"></span> | ❌ Perdantes : <span id="stat-perdantes"></span></li>
+                    <li>📈 Longs : <span id="stat-long"></span> (✅ <span id="stat-long-win"></span>)</li>
+                    <li>📉 Shorts : <span id="stat-short"></span> (✅ <span id="stat-short-win"></span>)</li>
+                    <li>💸 PnL moyen : <span id="stat-pnl-moyen"></span> USDT</li>
+                    <li>⏱️ Temps moyen de position : <span id="stat-temps-moyen"></span> h</li>
+                    <li>📊 Transactions / mois : <span id="stat-tx-mois"></span></li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
+
 
 
 

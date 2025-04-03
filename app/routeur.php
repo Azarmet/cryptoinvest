@@ -33,9 +33,6 @@ function routeur()
                 case 'show':
                     \App\Controllers\showDashboard();
                     break;
-                case 'openPosition':
-                    \App\Controllers\openPosition();
-                    break;
                 case 'closePosition':
                     \App\Controllers\closePosition();
                     break;
@@ -45,6 +42,10 @@ function routeur()
                 case 'refreshPortfolioData':
                     \App\Controllers\refreshPortfolioData();
                     break;
+                case 'getStats':
+                    \App\Controllers\getStats();
+                    break;
+                    
                 default:
                     // 404 ou redirection
                     echo 'Erreur 404 : action inconnue.';
