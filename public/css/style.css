@@ -1313,6 +1313,50 @@ body {
     color: #F8F9FA;
 }
 
+
+/* Barre de recherche */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    width: 300px;
+    padding: 8px 12px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #F1C40F;
+}
+
+.search-button {
+    padding: 8px 16px;
+    background-color: #F1C40F;
+    color: #2C3E50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #f1c40f75;
+}
+
+
 /* Titre de la page */
 .market-container h2 {
     font-family: 'Roboto', sans-serif;

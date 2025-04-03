@@ -31,6 +31,9 @@ function refreshMarketData(category = currentCategory) {
             });
             
             tbody.innerHTML = htmlContent;
+
+            // Réappliquer le filtre de recherche sur le nouveau contenu
+            applySearchFilter();
         }
     };
     xhr.send();
@@ -171,6 +174,34 @@ function refreshPositions() {
         })
         .catch(err => console.error(err));
 }
+
+document.getElementById("searchInput").addEventListener("keyup", function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#market-table tbody tr");
+    
+    rows.forEach(function(row) {
+        // On cherche si le texte de la ligne contient le terme recherché
+        if (row.textContent.toLowerCase().includes(searchTerm)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+});
+
+function applySearchFilter() {
+    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+    const rows = document.querySelectorAll("#market-table tbody tr");
+    
+    rows.forEach(function(row) {
+        if (row.textContent.toLowerCase().includes(searchTerm)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
 
 // Rafraîchissement du portefeuille (graphique, stats, valeur actuelle et solde disponible)
 function refreshPortfolioData() {

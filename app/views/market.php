@@ -17,7 +17,11 @@
     <button class="tab-button" data-category="web3">Web3</button>
     <button class="tab-button" data-category="new">Nouveautés</button>
   </div>
-  
+  <div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="Rechercher une crypto...">
+    <button type="button" id="searchButton" class="search-button">Rechercher</button>
+</div>
+
   <!-- Tableau du marché -->
   <div class="table-responsive-market">
     <table id="market-table" class="market-table">
