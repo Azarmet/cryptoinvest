@@ -26,6 +26,8 @@ function routeur()
 
         case 'dashboard':
             require_once RACINE . 'app/controllers/DashboardController.php';
+            require_once RACINE . 'app/controllers/PortefeuilleController.php';
+            require_once RACINE . 'app/controllers/PositionsController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             switch ($action) {
                 case 'show':
