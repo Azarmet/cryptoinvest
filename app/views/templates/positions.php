@@ -1,6 +1,6 @@
 <!-- SECTION 3 : Positions en cours -->
 <section id="positions-section" class="positions-section">
-        <h3>Mes Positions en cours</h3>
+        <h3>Mes Positions en cours <span id="positions-number"></span></h3>
         <div class="table-responsive">
             <table id="positions-table">
                 <thead>

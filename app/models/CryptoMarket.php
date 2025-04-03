@@ -116,7 +116,7 @@ class CryptoMarket
 
     public function createCrypto($code, $categorie)
     {
-        $stmt = $this->pdo->prepare('INSERT INTO cryptomarket (code, categorie) VALUES (:code, :categorie)');
+        $stmt = $this->pdo->prepare('INSERT INTO cryptomarket (code, categorie) VALUES (:code, :categorie); INSERT INTO cryptotrans (code) VALUES (:code)');
         return $stmt->execute([
             ':code' => $code,
             ':categorie' => $categorie

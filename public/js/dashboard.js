@@ -61,7 +61,8 @@ function refreshPositions() {
                 // Couleur ROI
                 let roi = parseFloat(pos.roi);
                 let roiClass = roi >= 0 ? 'positive' : 'negative';
-            
+                document.getElementById('positions-number').textContent = "(" + positions.length + ")" ;
+
                 tr.innerHTML = `
                     <td>${pos.code}</td>
                     <td class="${sensClass}">${pos.sens}</td>

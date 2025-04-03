@@ -83,9 +83,28 @@ document.addEventListener("click", function(e) {
     if (e.target.classList.contains("crypto-link")) {
         e.preventDefault(); 
         const newSymbol = e.target.getAttribute("data-symbol");
+
+        // Mettre à jour le widget TradingView
         updateTradingViewSymbol(newSymbol);
+
+        // Mettre à jour le <select> du tradingOrder si présent
+        const select = document.getElementById("crypto_code");
+        if (select) {
+            // On cherche l'option correspondante (ex : BTCUSDT)
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === newSymbol) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+
+            // Déclenche manuellement un event `change` si tu as des listeners liés
+            const event = new Event("change");
+            select.dispatchEvent(event);
+        }
     }
 });
+
 
 window.onload = function() {
     refreshMarketData(); // ou "top10" par défaut
@@ -121,6 +140,7 @@ function refreshPositions() {
         .then(res => res.json())
         .then(positions => {
             const tbody = document.querySelector("#positions-table tbody");
+            document.getElementById('positions-number').textContent = "(" + positions.length + ")" ;
             tbody.innerHTML = "";
             positions.forEach(pos => {
                 let tr = document.createElement('tr');
@@ -159,7 +179,7 @@ function refreshPortfolioData() {
     fetch(`index.php?page=market&action=available-balance`)
         .then(res => res.json())
         .then(data => {
-            document.getElementById('available-balance').textContent = "Solde disponible : " + data.availableBalance + " USDT";
+            document.getElementById('available-balance').textContent = "Solde disponible : " + data.availableBalance.toFixed(2) + " USDT";
         })
         .catch(err => console.error(err));
 }

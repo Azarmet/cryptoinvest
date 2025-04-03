@@ -19,7 +19,7 @@
   </div>
   
   <!-- Tableau du marché -->
-  <div class="table-responsive">
+  <div class="table-responsive-market">
     <table id="market-table" class="market-table">
       <thead>
         <tr>
@@ -45,18 +45,24 @@
       </tbody>
     </table>
   </div>
-  
-  <!-- Widget TradingView intégré -->
-  <div id="tradingview-widget-container" class="tradingview-widget-container"></div>
-    
-<?php if (isset($_SESSION['user'])): ?>
-    <?php require_once RACINE . 'app/views/templates/tradingOrder.php'; ?>
-    
-  
+    <div class="tradingwidget-order">
+        <!-- Widget TradingView intégré -->
+        <div id="tradingview-widget-container" class="tradingview-widget-container feature-trade"></div>
+        <?php if (isset($_SESSION['user'])): ?>
+        <div class="trading-order">
+            <?php require_once RACINE . 'app/views/templates/tradingOrder.php'; ?>
+        </div>
+        <?php else:?>
+            <div class="trading-order trading-order2" style="background-image: url('<?= RACINE_URL ?>public/image/order-img.jpg');">
+            <p>Vous devez être connecté pour trader</p>
+        </div> 
+        <?php endif; ?>
+    </div>
+    <?php if (isset($_SESSION['user'])): ?>
     <!-- SECTION 3 : Positions en cours -->
     <?php require_once RACINE . 'app/views/templates/positions.php'; ?>
-    
-<?php endif; ?>
+    <?php endif; ?>
+
 
 
   <?php if (isset($_SESSION['user'])): ?>
