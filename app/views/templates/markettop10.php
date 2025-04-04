@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/markettop10.css'?>">
 <section class="market-top10">
                 <h2>Top 10</h2>
-                <table>
+                <table class="table-responsive">
                     <thead>
                         <tr>
                             <th>Symbole</th>

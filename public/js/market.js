@@ -212,9 +212,15 @@ function refreshPortfolioData() {
         })
         .catch(err => console.error(err));
 }
-refreshPositions();
-refreshMarketData(); // ou "top10" par défaut
-updateTradingViewSymbol("BTCUSDT");
-refreshPortfolioData();
+if(isLoggedIn){
+    refreshPositions();
+}
 
-setInterval(refreshPositions, 10000);
+refreshMarketData();
+
+updateTradingViewSymbol("BTCUSDT");
+
+if(isLoggedIn){
+refreshPortfolioData();
+}
+if(isLoggedIn){setInterval(refreshPositions, 10000);}

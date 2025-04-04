@@ -6,12 +6,14 @@
     
 <?php
     $tableRows = '';
-    $page = $_GET['page'];
-    if ($page === 'home'): ?>
-    <h1>Leaderboard Top 3</h1>
-    <?php else:?>
-    <h1>Leaderboard</h1>         
-    <?php endif;
+    if(isset($_GET['page'])):
+        $page = $_GET['page'];
+        if ($page === 'home'): ?>
+            <h1>Leaderboard Top 3</h1>
+<?php else:?>
+        <h1>Leaderboard</h1>         
+<?php endif;
+endif;
     foreach ($usersWithSolde as $user):
         $photoProfil = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"25\">";
         $pseudo = htmlspecialchars($user['pseudo']);
@@ -41,6 +43,8 @@
             </tbody>
         </table>
     </div>
+    <?php if(!isset($page)): $page = 'home'; 
+    endif; ?>
     <?php if ($page === 'home'): ?>
     <a href="index.php?page=leaderboard" class="btn-go-market">View Learderboard</a>       
     <?php endif;?>

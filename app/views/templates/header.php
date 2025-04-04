@@ -10,11 +10,15 @@ if (session_status() == PHP_SESSION_NONE) {
     <title>CryptoInvest</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/style.css'?>">
+    <link rel="stylesheet" href="<?= RACINE_URL . "public/css/page/home.css"?>">
     <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/header.css'?>">
-<?php if($_GET['page']==='leaderboard'):?>    
+<?php if(isset($_GET['page']) && $_GET['page']==='leaderboard'):?>    
     
-<?php else: ?>
+<?php elseif((isset($_GET['page'])) && $_GET['page'] !== 'home'): ?>
     <link rel="stylesheet" href="<?= RACINE_URL . "public/css/page/" . $_GET["page"] .".css"?>">
+
+<?php else: ?>
+    <link rel="stylesheet" href="<?= RACINE_URL . "public/css/page/home.css"?>">
 <?php endif; ?>
     <!-- Import des polices -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@700&display=swap" rel="stylesheet">

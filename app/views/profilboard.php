@@ -6,6 +6,7 @@ require_once RACINE . 'app/views/templates/header.php';
 ?>
 
 <h1 class="profilboard-h1">Profil de <?= $profiluser['pseudo'] ?> </h1>
+<h3 id="current-portfolio-value">Valeur actuelle : Loading...</h3>
     <?php require_once RACINE . 'app/views/templates/portfolio.php'; ?>
 
     </div>

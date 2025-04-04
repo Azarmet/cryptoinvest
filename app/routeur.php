@@ -175,8 +175,10 @@ function routeur()
             break;
 
         default:
-            echo 'Erreur 404 : page introuvable.';
-            break;
+            require_once RACINE . 'app/controllers/HomeController.php';
+            \App\Controllers\showHome();
+        break;
+            
     }
 }
 
