@@ -1,61 +1,108 @@
-
-/* =================== FAQ Page Styles =================== */
-.faq-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #2C3E50; /* Fond en dark mode */
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    color: #F8F9FA;
+/* ========== FAQ - Mobile First ========== */
+.faq-wrapper {
+    padding: 1.5rem;
+    background-color: #1E1E2F;
+    color: #fff;
 }
 
-.faq-container h2 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
-    color: #F8F9FA; /* Couleur contrastante */
+.faq-title {
+    font-size: 1.8rem;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
+    color: #F1C40F;
 }
 
 .faq-search-container {
-    text-align: center;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .faq-search-input {
-    width: 80%;
+    width: 100%;
     max-width: 400px;
-    padding: 10px;
-    border: 1px solid #F1C40F;
-    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
     background-color: #2C3E50;
-    color: #F8F9FA;
+    color: #fff;
+    border: 1px solid #F1C40F;
+    transition: box-shadow 0.3s ease;
+}
+
+.faq-search-input:focus {
+    box-shadow: 0 0 10px #f1c40f88;
 }
 
 .faq-results {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem;
 }
 
 .faq-item {
+    background-color: #2C3E50;
+    border-radius: 8px;
+    overflow: hidden;
     border: 1px solid #3B4A59;
-    border-radius: 4px;
-    padding: 15px;
-    background-color: #34495E;
+    transition: all 0.3s ease;
 }
 
 .faq-question {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    padding: 1rem;
     color: #F1C40F;
-    margin-bottom: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.faq-toggle-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-toggle-icon {
+    transform: rotate(45deg);
+}
+
+
 .faq-answer {
-    font-family: 'Poppins', sans-serif;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.4s ease;
+    background-color: #34495E;
+    padding: 0 1rem;
+}
+
+.faq-item.active .faq-answer {
+    padding: 1rem;
+}
+.no-results {
+    text-align: center;
     font-size: 1rem;
-    color: #F8F9FA;
-    line-height: 1.6;
+    opacity: 0.7;
+}
+
+/* ======== Responsive Desktop ======== */
+@media (min-width: 768px) {
+    .faq-title {
+        font-size: 2.2rem;
+    }
+
+    .faq-search-input {
+        font-size: 1.1rem;
+    }
+
+    .faq-question {
+        font-size: 1.2rem;
+    }
 }
