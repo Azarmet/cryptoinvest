@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Rediriger tout vers index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Optionnel : Forcer UTF-8
+AddDefaultCharset UTF-8
+
+# Optionnel : Augmenter certaines limites
+php_value memory_limit 256M
+php_value upload_max_filesize 50M
+php_value post_max_size 50M
+php_value max_execution_time 180
