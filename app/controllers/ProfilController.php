@@ -11,6 +11,13 @@ function showProfile()
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+    if(!$_SESSION['user']['id_utilisateur']):
+        // Détruire la session
+    session_destroy();
+    // Rediriger vers la page d'accueil (ou la page de connexion)
+    header('Location: index.php?page=login');
+    exit();
+    endif;
     // Afficher la vue du profil
     require_once RACINE . 'app/views/profil.php';
 }
