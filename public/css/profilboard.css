@@ -1,0 +1,16 @@
+
+/* =================== ProfilBoard Page Styles =================== */
+.profilboard-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profilboard-container h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 20px;
+}
