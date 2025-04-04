@@ -1,4 +1,5 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/faq.css'?>">
 
 <div class="faq-container">
     <h2>Foire aux Questions</h2>

@@ -1,4 +1,5 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/register.css'?>">
 <div class="register-container">
     <h2>Inscription</h2>
     <?php if (isset($error)): ?>

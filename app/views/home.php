@@ -1,4 +1,5 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/home.css'?>">
 
 <div class="home-container">
     <!-- Section Hero avec phrase d'accroche, image de fond et bouton -->

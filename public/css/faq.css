@@ -1,0 +1,61 @@
+
+/* =================== FAQ Page Styles =================== */
+.faq-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #2C3E50; /* Fond en dark mode */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #F8F9FA;
+}
+
+.faq-container h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 2rem;
+    color: #F8F9FA; /* Couleur contrastante */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.faq-search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.faq-search-input {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+}
+
+.faq-results {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-item {
+    border: 1px solid #3B4A59;
+    border-radius: 4px;
+    padding: 15px;
+    background-color: #34495E;
+}
+
+.faq-question {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #F1C40F;
+    margin-bottom: 10px;
+}
+
+.faq-answer {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #F8F9FA;
+    line-height: 1.6;
+}

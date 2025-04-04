@@ -1,4 +1,6 @@
 </main>
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/footer.css'?>">
+
     <footer class="site-footer">
         <div class="footer-container">
             <p>© 2025 - CryptoInvest - Tous droits réservés.

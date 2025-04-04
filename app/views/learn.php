@@ -1,4 +1,5 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/learn.css'?>">
 
 <div class="learn-container">
   <h2>Learn - Articles</h2>
