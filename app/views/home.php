@@ -44,22 +44,7 @@
     <!-- Section regroupant les données de marché et l'image Fear & Greed -->
     <section class="market-fear">
         <div class="market-data">
-            <section class="market-top10">
-                <h2>Top 10</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Symbole</th>
-                            <th>Prix (USD)</th>
-                            <th>Variation (24h)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="top10-market">
-                        <!-- Rempli dynamiquement en JS -->
-                    </tbody>
-                </table>
-                <a href="index.php?page=market" class="btn-go-market">Go To Market</a>    
-            </section> 
+            <?php require_once RACINE . 'app/views/templates/markettop10.php'; ?>
         </div>
         <section class="fear-leader">
             <div class="fear">
