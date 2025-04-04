@@ -1,5 +1,4 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/detailArticle.css'?>">
 
 <div class="detail-article-container">
     <h1><?= htmlspecialchars($article['titre']) ?></h1>

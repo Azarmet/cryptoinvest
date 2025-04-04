@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/portfolio.css'?>">
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/portfolio.css'?>">
     <!-- SECTION 1 : Portefeuille -->
     <section id="portfolio-section" class="portfolio-section">
     

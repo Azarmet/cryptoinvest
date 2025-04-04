@@ -19,11 +19,6 @@ function routeur()
             }
             break;
 
-        case 'articles':
-            require_once RACINE . 'app/controllers/ArticleController.php';
-            \App\Controllers\showArticles();
-            break;
-
         case 'dashboard':
             require_once RACINE . 'app/controllers/DashboardController.php';
             require_once RACINE . 'app/controllers/PortefeuilleController.php';

@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once RACINE . 'app/views/templates/header.php';
 ?>
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/profilboard.css'?>">
 
 <h1 class="profilboard-h1">Profil de <?= $profiluser['pseudo'] ?> </h1>
     <?php require_once RACINE . 'app/views/templates/portfolio.php'; ?>

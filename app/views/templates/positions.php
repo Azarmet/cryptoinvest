@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/positions.css'?>">
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/positions.css'?>">
 
 <!-- SECTION 3 : Positions en cours -->
 <section id="positions-section" class="positions-section">

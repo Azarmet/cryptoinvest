@@ -1,5 +1,4 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/market.css'?>">
 
 <div class="market-container">
   <h2>Marché des Cryptomonnaies</h2>

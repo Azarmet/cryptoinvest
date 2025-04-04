@@ -1,5 +1,4 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/watchlist.css'?>">
 
 <div class="watchlist-container">
   <h2>Ma Watchlist</h2>

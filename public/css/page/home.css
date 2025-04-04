@@ -12,7 +12,7 @@
 /* === Section Hero (accroche) === */
 .hero {
     position: relative;
-    background-image: url('../image/background-hero.png');
+    background-image: url('../../image/background-hero.png');
     background-size: cover;
     background-position: center;
     padding: 100px 20px;

@@ -6,7 +6,6 @@ require_once RACINE . 'app/views/templates/header.php';
 
 $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 ?>
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/dashboard.css'?>">
 
 <div class="dashboard-container">
     <!-- Section d'accueil / Bienvenue -->

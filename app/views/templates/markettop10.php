@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/markettop10.css'?>">
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/markettop10.css'?>">
 <section class="market-top10">
                 <h2>Top 10</h2>
                 <table>

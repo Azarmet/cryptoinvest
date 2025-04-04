@@ -1,5 +1,4 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/login.css'?>">
 <div class="login-container">
     <h2>Connexion</h2>
     <?php if (isset($error)): ?>
