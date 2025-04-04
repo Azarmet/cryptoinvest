@@ -1,0 +1,51 @@
+/* --- Positions en cours --- */
+.positions-section {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.positions-section h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F1C40F;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#positions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+}
+
+#positions-table th,
+#positions-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #2C3E50;
+}
+
+#positions-table thead {
+    background-color: #2C3E50;
+}
+
+#positions-table th {
+    color: #F1C40F;
+    font-weight: bold;
+}
+
+#positions-table tbody tr:nth-child(even) {
+    background-color: #3B4A59;
+}
+
+#positions-table tbody tr:nth-child(odd) {
+    background-color: #2C3E50;
+}
+
+#positions-table tbody tr:hover {
+    background-color: #4d64578c;
+    color: #fff;
+}
