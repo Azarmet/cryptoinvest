@@ -60,15 +60,19 @@ function routeur()
         case 'profilboard':
             require_once RACINE . 'app/controllers/ProfilController.php';
             // On regarde s'il y a 'action' dans l'URL
-            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
             $pseudo = $_GET['pseudo'] ?? '';
-            if ($action === 'refreshPortfolioData') {
-                // Renvoie du JSON seulement
-                \App\Controllers\refreshPortfolioDataPseudo($pseudo);
-            } else {
-                // Affiche la page HTML
-                \App\Controllers\showProfileByPseudo($pseudo);
-            }
+            $action = isset($_GET['action']) ? $_GET['action'] : 'show';
+            switch ($action) {
+                case 'show':
+                    \App\Controllers\showProfileByPseudo($pseudo);
+                    break;
+                case 'refreshPortfolioData':
+                    \App\Controllers\refreshPortfolioDataPseudo($pseudo);
+                    break;
+                case 'getStats':
+                    \App\Controllers\getStats($pseudo);
+                    break;
+                }
             break;
 
         case 'article':

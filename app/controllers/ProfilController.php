@@ -3,6 +3,8 @@ namespace App\Controllers;
 
 use App\Models\Portefeuille;
 use App\Models\User;
+use App\Models\Transaction;
+
 
 function showProfile()
 {
@@ -19,6 +21,17 @@ function showProfileByPseudo($pseudo)
     $profiluser = $userModel->getByPseudo($pseudo);
     require_once RACINE . 'app/views/profilboard.php';
 }
+
+
+function getStats($pseudo) {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    $transactionModel = new \App\Models\Transaction();
+    $stats = $transactionModel->getProfilboardStatsByPseudo($pseudo);
+
+    echo json_encode($stats);
+    exit;
+}
+
 
 function refreshPortfolioDataPseudo($pseudo)
 {

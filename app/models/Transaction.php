@@ -212,15 +212,15 @@ class Transaction
         $sql = "
             SELECT 
                 COUNT(*) as total,
-                SUM(CASE WHEN pnl > 0 THEN 1 ELSE 0 END) as gagnantes,
-                SUM(CASE WHEN pnl <= 0 THEN 1 ELSE 0 END) as perdantes,
-                SUM(pnl) / COUNT(*) as pnl_moyen,
-                AVG(TIMESTAMPDIFF(HOUR, date_ouverture, NOW())) as temps_moyen_heures,
-                SUM(CASE WHEN sens = 'long' THEN 1 ELSE 0 END) as total_long,
-                SUM(CASE WHEN sens = 'short' THEN 1 ELSE 0 END) as total_short,
-                SUM(CASE WHEN sens = 'long' AND pnl > 0 THEN 1 ELSE 0 END) as longs_gagnants,
-                SUM(CASE WHEN sens = 'short' AND pnl > 0 THEN 1 ELSE 0 END) as shorts_gagnants,
-                COUNT(*) / GREATEST(TIMESTAMPDIFF(MONTH, MIN(date_ouverture), NOW()), 1) as tx_par_mois
+                IFNULL(SUM(CASE WHEN pnl > 0 THEN 1 ELSE 0 END), 0) as gagnantes,
+                IFNULL(SUM(CASE WHEN pnl <= 0 THEN 1 ELSE 0 END), 0) as perdantes,
+                IFNULL(SUM(pnl) / NULLIF(COUNT(*), 0), 0) as pnl_moyen,
+                IFNULL(AVG(TIMESTAMPDIFF(HOUR, date_ouverture, NOW())), 0) as temps_moyen_heures,
+                IFNULL(SUM(CASE WHEN sens = 'long' THEN 1 ELSE 0 END), 0) as total_long,
+                IFNULL(SUM(CASE WHEN sens = 'short' THEN 1 ELSE 0 END), 0) as total_short,
+                IFNULL(SUM(CASE WHEN sens = 'long' AND pnl > 0 THEN 1 ELSE 0 END), 0) as longs_gagnants,
+                IFNULL(SUM(CASE WHEN sens = 'short' AND pnl > 0 THEN 1 ELSE 0 END), 0) as shorts_gagnants,
+                IFNULL(COUNT(*) / NULLIF(TIMESTAMPDIFF(DAY, MIN(date_ouverture), NOW()) / 30.0, 0), 0) as tx_par_mois
             FROM transaction
             WHERE id_portefeuille = :pid AND date_cloture IS NOT NULL
         ";
@@ -228,6 +228,54 @@ class Transaction
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['pid' => $portefeuilleId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function getProfilboardStatsByPseudo($pseudo) {
+        // 1. Trouver l'id_utilisateur via le pseudo
+        $stmt = $this->pdo->prepare("SELECT id_utilisateur FROM utilisateur WHERE pseudo = :pseudo LIMIT 1");
+        $stmt->execute(['pseudo' => $pseudo]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if (!$user) {
+            return null; // Aucun utilisateur trouvé
+        }
+    
+        $userId = $user['id_utilisateur'];
+    
+        // 2. Trouver l'id_portefeuille lié à cet utilisateur
+        $stmt = $this->pdo->prepare("SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1");
+        $stmt->execute(['userId' => $userId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if (!$result) {
+            return null;
+        }
+    
+        $portefeuilleId = $result['id_portefeuille'];
+    
+        // 3. Récupérer les stats sur les transactions de ce portefeuille
+        $sql = "
+            SELECT 
+                COUNT(*) as total,
+                IFNULL(SUM(CASE WHEN pnl > 0 THEN 1 ELSE 0 END), 0) as gagnantes,
+                IFNULL(SUM(CASE WHEN pnl <= 0 THEN 1 ELSE 0 END), 0) as perdantes,
+                IFNULL(SUM(pnl) / NULLIF(COUNT(*), 0), 0) as pnl_moyen,
+                IFNULL(AVG(TIMESTAMPDIFF(HOUR, date_ouverture, NOW())), 0) as temps_moyen_heures,
+                IFNULL(SUM(CASE WHEN sens = 'long' THEN 1 ELSE 0 END), 0) as total_long,
+                IFNULL(SUM(CASE WHEN sens = 'short' THEN 1 ELSE 0 END), 0) as total_short,
+                IFNULL(SUM(CASE WHEN sens = 'long' AND pnl > 0 THEN 1 ELSE 0 END), 0) as longs_gagnants,
+                IFNULL(SUM(CASE WHEN sens = 'short' AND pnl > 0 THEN 1 ELSE 0 END), 0) as shorts_gagnants,
+                IFNULL(COUNT(*) / NULLIF(TIMESTAMPDIFF(DAY, MIN(date_ouverture), NOW()) / 30.0, 0), 0) as tx_par_mois
+            FROM transaction
+            WHERE id_portefeuille = :pid AND date_cloture IS NOT NULL
+
+        ";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['pid' => $portefeuilleId]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        
+
     }
     
     
