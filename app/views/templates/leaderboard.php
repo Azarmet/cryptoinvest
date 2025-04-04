@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/leaderboard.css'?>">
+
 <div class="leaderboard-container">
     
     

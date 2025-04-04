@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/tradingOrder.css'?>">
 <!-- SECTION 2 : Trading -->
 <section id="trading-section" class="trading-section">
         <h3>Passer un ordre</h3>
