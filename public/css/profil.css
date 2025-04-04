@@ -1,0 +1,161 @@
+
+/* =================== Profil Page Styles =================== */
+.profile-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #2C3E50;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile-container h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Affichage du profil */
+.profile-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-info p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.profile-image {
+    margin: 15px auto;
+}
+
+.profile-image img {
+    border-radius: 50%;
+    max-width: 150px;
+}
+
+/* Bouton Modifier */
+.btn-modify {
+    background-color: #F1C40F;
+    color: #2C3E50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.btn-modify:hover {
+    background-color: #f1c40f75;
+    color: #fff;
+}
+
+/* Message d'erreur profil (différent de .error-msg plus générique) */
+.alert.alert-danger {
+    background-color: #E74C3C;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Formulaire de modification */
+.profile-edit {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.profile-edit h3 {
+    font-family: 'Roboto', sans-serif;
+    color: #F1C40F;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.profile-form .form-group {
+    margin-bottom: 15px;
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profile-form textarea,
+.profile-form input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #F1C40F;
+    border-radius: 4px;
+    background-color: #2C3E50;
+    color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+.preview-container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.preview-container img {
+    max-width: 150px;
+    border-radius: 4px;
+}
+
+.current-image {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.current-image img {
+    max-width: 100px;
+    border-radius: 4px;
+}
+
+/* Boutons d'actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Règles unifiées pour les boutons du form en flex */
+.btn-submit, .btn-cancel {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-submit {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+.btn-submit:hover {
+    background-color: #f1c40f75;
+    color: #fff;
+}
+
+.btn-cancel {
+    background-color: #E74C3C;
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background-color: #C0392B;
+}

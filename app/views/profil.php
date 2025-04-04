@@ -3,7 +3,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once RACINE . 'app/views/templates/header.php';
+
 ?>
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/profil.css'?>">
 
 <div class="profile-container">
     <h2>Mon Profil</h2>
