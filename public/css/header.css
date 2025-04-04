@@ -1,0 +1,132 @@
+/* =================== Header =================== */
+.site-header {
+    background-color: #2C3E50; /* Couleur dominante */
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-bottom: #F1C40F solid 2px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* --- Logo --- */
+.logo a {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F8F9FA; /* Couleur contrastante */
+    text-decoration: none;
+}
+
+.logo img {
+    max-width: 20px;
+    margin: 0;
+}
+
+/* --- Menu Burger --- */
+.burger {
+    display: block;
+    cursor: pointer;
+    z-index: 100;
+}
+.burger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #F1C40F;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* --- Navigation Links --- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 40px;
+    right: -20px;
+    width: 50%;
+    background-color: #2C3E50;
+    border-top: 1px solid rgba(241, 196, 15, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.nav-links li {
+    text-align: center;
+    border-bottom: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.nav-links li a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #F8F9FA;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #F1C40F; /* Accent pour les interactions */
+}
+
+/* Profil dans le menu */
+.nav-links li.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-links li.profile img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+}
+
+/* --- Menu actif --- */
+.nav-links.nav-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Animation du burger */
+.burger.toggle .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.burger.toggle .bar:nth-child(2) {
+    opacity: 0;
+}
+.burger.toggle .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* --- Desktop --- */
+@media (min-width: 768px) {
+    .burger {
+        display: none;
+    }
+    .nav-links {
+        flex-direction: row;
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        width: auto;
+        border: none;
+    }
+    .nav-links li {
+        border: none;
+        margin-left: 20px;
+    }
+    .nav-links li a {
+        padding: 0;
+    }
+}
+
