@@ -1,0 +1,138 @@
+
+/* --- Portefeuille --- */
+.portfolio-section {
+    background-color: #34495E;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow:
+        0 0 16px 8px rgba(14, 14, 14, 0.6),
+        0 0 16px 8px rgba(24, 24, 24, 0.9);
+}
+
+.portfolio-section h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F8F9FA;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.profilboard-h1 {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.portfolio-section2 {
+    background-color: #34495E;
+    padding: 20px;
+    max-width: 90%;
+    margin: auto;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    box-shadow:
+        0 0 16px 8px rgba(14, 14, 14, 0.6),
+        0 0 16px 8px rgba(24, 24, 24, 0.9);
+}
+
+.portfolio-section2 h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    color: #F8F9FA;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Conteneur global pour les deux parties */
+.portfolio-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Boutons d'intervalle centrés */
+.interval-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.interval-btn {
+    background-color: #2C3E50;
+    color: #F1C40F;
+    border: 1px solid #F1C40F;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.interval-btn:hover,
+.interval-btn.active {
+    background-color: #F1C40F;
+    color: #2C3E50;
+}
+
+/* Zone graphique */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#portfolioChart {
+    max-width: 100%;
+    min-height: 300px;
+}
+
+/* Statistiques */
+.portfolio-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    letter-spacing: 1px; /* Petit style supplémentaire pour la police */
+}
+
+.portfolio-stats .stat-item {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin: 10px;
+}
+
+.portfolio-stats .stat-item p {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.portfolio-extra-stats ul {
+    list-style: none;         /* supprime les puces */
+    padding-left: 0;          /* supprime l'indentation */
+    margin: 0;                /* optionnel : supprime la marge */
+}
+
+.portfolio-extra-stats li {
+    margin-bottom: 8px;       /* un petit espacement entre les lignes */
+    font-family: 'Poppins', sans-serif;
+    color: #F8F9FA;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* --- Desktop --- */
+@media (min-width: 768px) {
+    .portfolio-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .portfolio-left,
+    .portfolio-right {
+        width: 48%;
+    }
+    .portfolio-stats {
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
+    }
+}
