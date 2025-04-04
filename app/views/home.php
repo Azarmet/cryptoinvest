@@ -47,18 +47,8 @@
             <?php require_once RACINE . 'app/views/templates/markettop10.php'; ?>
         </div>
         <section class="fear-leader">
-            <div class="fear">
-                <h2>Crypto Fear & Greed Index</h2>
-                <div class="gauge-container">
-                    <div class="gauge">
-                    <div class="needle" id="needle"></div>
-                </div>
-                    <div class="legend">
-                        <span id="index-value">--</span> / 100
-                        <div id="index-label" class="label">Chargement...</div>
-                    </div>
-                </div>
-            </div >
+                <?php require_once RACINE . 'app/views/templates/fearGreed.php'; ?>
+
                 <div class="leader">
                     <?php require_once RACINE . 'app/views/templates/leaderboard.php'; ?>
                 </div>
