@@ -14,24 +14,28 @@ function showLeaderboard()
     $ListUserID = $userModel->getAllIdUsers();
     $usersWithSolde = [];
 
-    // 1. Récupérer tous les utilisateurs avec leur solde
     foreach ($ListUserID as $user) {
         $userID = $user['id_utilisateur'];
         $profil = $userModel->getById($userID);
         $solde = $pfUser->getSoldeActuel($userID);
+        $pnl24h = $pfUser->getPnL24h($userID);
+        $pnl7j = $pfUser->getPnL7j($userID);
 
         $usersWithSolde[] = [
             'id' => $userID,
             'pseudo' => $profil['pseudo'],
             'image' => $profil['image_profil'],
-            'solde' => $solde
+            'solde' => $solde,
+            'pnl_24h' => $pnl24h,
+            'pnl_7j' => $pnl7j
         ];
     }
 
-    // 2. Trier par solde décroissant
     usort($usersWithSolde, function ($a, $b) {
-        return $b['solde'] <=> $a['solde'];  // tri décroissant
+        return $b['solde'] <=> $a['solde'];
     });
+
     require_once RACINE . 'app/views/leaderboard.php';
 }
+
 ?>
