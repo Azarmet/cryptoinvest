@@ -1,6 +1,6 @@
 /* --- Trading --- */
 .trading-section {
-    background-color: #34495E;
+    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
     padding: 20px;
     border-radius: 8px;
     margin: auto;
@@ -46,6 +46,11 @@
     background-color: #2C3E50;
     color: #F8F9FA;
     font-family: 'Poppins', sans-serif;
+}
+
+.order-form input:focus{
+    outline: none;
+    box-shadow: 0 0 10px #f1c40f88;
 }
 
 .radio-group {
