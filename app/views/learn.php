@@ -5,7 +5,7 @@
 
   <!-- Onglets de catégories -->
   <div id="category-tabs" class="tabs-container">
-      <button class="tab-button" data-category="Tous">Tous</button>
+      <button class="tab-button active" data-category="Tous">Tous</button>
       <button class="tab-button" data-category="Tutoriels">Tutoriels</button>
       <button class="tab-button" data-category="Crypto News">Crypto News</button>
       <button class="tab-button" data-category="Analyses">Analyses</button>

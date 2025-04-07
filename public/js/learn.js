@@ -118,25 +118,51 @@ function buildPagination(current, total) {
   }
   
 
-// Gestion des onglets de catégorie
-document.querySelectorAll(".tab-button").forEach(function (button) {
-  button.addEventListener("click", function () {
-    // Récupère la catégorie depuis l'attribut data-category
-    currentCategory = this.getAttribute("data-category");
+// Gestion des onglets de catégorie avec scroll
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("category-tabs");
+  const tabButtons = container.querySelectorAll(".tab-button");
 
-    // Retire la classe active sur tous les onglets
-    document.querySelectorAll(".tab-button").forEach(function (btn) {
-      btn.classList.remove("active");
+  // Scroll automatique vers l'onglet actif au chargement
+  const activeTab = container.querySelector(".tab-button.active");
+  if (activeTab) {
+    setTimeout(() => {
+      activeTab.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest"
+      });
+    }, 100);
+  }
+
+  // Gestion du clic
+  tabButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      // Met à jour la catégorie
+      currentCategory = this.getAttribute("data-category");
+
+      // Supprime la classe active
+      tabButtons.forEach(function (btn) {
+        btn.classList.remove("active");
+      });
+
+      // Ajoute la classe active au bouton cliqué
+      this.classList.add("active");
+
+      // Scroll jusqu'au bouton
+      this.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest"
+      });
+
+      // Réinitialise la recherche
+      currentSearch = "";
+      document.getElementById("learn-search").value = "";
+
+      // Recharge les articles
+      loadArticles(1);
     });
-    // Ajoute la classe active sur l'onglet cliqué
-    this.classList.add("active");
-
-    // Réinitialise la recherche
-    currentSearch = "";
-    document.getElementById("learn-search").value = "";
-
-    // Charge la page 1 pour la catégorie sélectionnée
-    loadArticles(1);
   });
 });
 
