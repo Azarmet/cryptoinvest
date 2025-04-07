@@ -105,9 +105,14 @@ let chart;
 function updatePortfolioChart(chartData) {
     const labels = chartData.map(d => d.date);
     const dataSolde = chartData.map(d => d.solde);
+    const ctx = document.getElementById('portfolioChart').getContext('2d');
+
+    // Création d'un dégradé vertical pour le remplissage
+    let gradientStroke = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke.addColorStop(0, "rgba(241, 196, 15, 0.8)");
+    gradientStroke.addColorStop(1, "rgba(241, 196, 15, 0.2)");
 
     if (!chart) {
-        const ctx = document.getElementById('portfolioChart').getContext('2d');
         chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -115,15 +120,57 @@ function updatePortfolioChart(chartData) {
                 datasets: [{
                     label: 'Solde du Portefeuille',
                     data: dataSolde,
-                    borderColor: 'blue',
-                    fill: false
+                    borderColor: "rgba(241, 196, 15, 1)",
+                    backgroundColor: gradientStroke,
+                    fill: true,
+                    tension: 0.4,               // Courbes lisses
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: "rgba(241, 196, 15, 1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(241, 196, 15, 1)"
                 }]
             },
             options: {
-                responsive: false,
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
-                    x: { display: true },
-                    y: { display: true }
+                    x: {
+                        display: false,
+                        grid: {
+                            color: "rgba(255,255,255,0.1)"
+                        },
+                        ticks: {
+                            color: "#F8F9FA",
+                            font: { family: "'Poppins', sans-serif", size: 12 }
+                        }
+                    },
+                    y: {
+                        display: true,
+                        grid: {
+                            color: "rgba(255,255,255,0.1)"
+                        },
+                        ticks: {
+                            color: "#F8F9FA",
+                            font: { family: "'Poppins', sans-serif", size: 12 }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: "rgba(0,0,0,0.7)",
+                        titleFont: { family: "'Poppins', sans-serif", size: 14 },
+                        bodyFont: { family: "'Poppins', sans-serif", size: 12 },
+                        padding: 10,
+                        cornerRadius: 8
+                    },
+                    legend: {
+                        labels: {
+                            font: { family: "'Roboto', sans-serif", size: 14 },
+                            color: "#F8F9FA"
+                        }
+                    }
                 }
             }
         });
@@ -134,18 +181,34 @@ function updatePortfolioChart(chartData) {
     }
 }
 
-// Changement d'intervalle
+
+// ------------------ GESTION DES INTERVALLES ------------------
 document.querySelectorAll('.interval-btn').forEach(btn => {
     btn.addEventListener('click', () => {
+        // 1. Supprime la classe "active" de tous les boutons
+        document.querySelectorAll('.interval-btn').forEach(b => b.classList.remove('active'));
+
+        // 2. Ajoute la classe "active" au bouton cliqué
+        btn.classList.add('active');
+
+        // 3. Met à jour l’intervalle actuel
         currentInterval = btn.getAttribute('data-interval');
+
+        // 4. Rafraîchit les données
         refreshPortfolioData();
     });
 });
 
-
-
 // ------------------ INITIALISATION ------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const defaultBtn = document.querySelector('.interval-btn[data-interval="jour"]');
+    if (defaultBtn) {
+        defaultBtn.classList.add('active');
+    }
+    refreshPortfolioData();
+});
+
+
 refreshDashboardStats();
-refreshPortfolioData();
 refreshPositions();
 setInterval(refreshPositions, 3000);

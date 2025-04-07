@@ -52,7 +52,7 @@ function loadArticles(page) {
           const imageSrc =
             article.image && article.image !== ""
               ? `public/uploads/article/${article.image}`
-              : "public/images/default-article.jpg"; // chemin image par défaut
+              : "public/image/default-article.jpg"; // chemin image par défaut
 
           var html = `
     <div class="article-image-container">

@@ -1,10 +1,9 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/portfolio.css'?>">
-    <!-- SECTION 1 : Portefeuille -->
-    <section id="portfolio-section" class="portfolio-section">
-    
-    <?php if ($_GET['page'] !== "profilboard"):?>
+<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/portfolio.css' ?>">
+<!-- SECTION 1 : Portefeuille -->
+<section id="portfolio-section" class="portfolio-section">
+    <?php if ($_GET['page'] !== 'profilboard'): ?>
         <h3>Mon Portefeuille</h3>
-        <?php endif;?>
+    <?php endif; ?>
     <div class="portfolio-content">
         <div class="portfolio-left">
             <div class="interval-buttons">
@@ -18,15 +17,15 @@
             </div>
         </div>
         <div class="portfolio-right">
-            <div id="portfolio-stats" class="portfolio-stats">
-                <div class="stat-item">
+            <div id="portfolio-stats" class="portfolio-stats"><div class="roi-pnl"><div class="stat-item">
                     <p>ROI Total :</p>
                     <span id="roi-total">-</span>
                 </div>
                 <div class="stat-item">
                     <p>PnL Total :</p>
                     <span id="pnl-total">-</span>
-                </div>
+                </div></div>
+                
                 <div class="stat-item">
                     <p>Nombre de transactions :</p>
                     <span id="tx-count">-</span>

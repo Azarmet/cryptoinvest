@@ -1,138 +1,163 @@
-
-/* --- Portefeuille --- */
+/* =================== Portefeuille - Modern & Ergonomique =================== */
 .portfolio-section {
-    background-color: #34495E;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-    box-shadow:
-        0 0 16px 8px rgba(14, 14, 14, 0.6),
-        0 0 16px 8px rgba(24, 24, 24, 0.9);
+    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .portfolio-section h3 {
     font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    color: #F8F9FA;
-    margin-bottom: 15px;
+    font-size: 2rem;
+    color: #F1C40F;
     text-align: center;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
 }
 
-.profilboard-h1 {
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-}
-
-.portfolio-section2 {
-    background-color: #34495E;
-    padding: 20px;
-    max-width: 90%;
-    margin: auto;
-    border-radius: 8px;
-    margin-bottom: 40px;
-    box-shadow:
-        0 0 16px 8px rgba(14, 14, 14, 0.6),
-        0 0 16px 8px rgba(24, 24, 24, 0.9);
-}
-
-.portfolio-section2 h3 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
-    color: #F8F9FA;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-/* Conteneur global pour les deux parties */
+/* Conteneur global */
 .portfolio-content {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
 }
 
-/* Boutons d'intervalle centrés */
+/* Partie gauche : Graphique & Boutons d'intervalle */
+.portfolio-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .interval-buttons {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .interval-btn {
-    background-color: #2C3E50;
+    background-color: #2c3e50;
     color: #F1C40F;
-    border: 1px solid #F1C40F;
-    padding: 8px 12px;
-    margin: 0 5px;
-    border-radius: 4px;
+    border: none;
     font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .interval-btn:hover,
 .interval-btn.active {
     background-color: #F1C40F;
-    color: #2C3E50;
+    color: #2c3e50;
+    transform: translateY(-3px);
 }
 
 /* Zone graphique */
 .chart-container {
+    width: 100%;
+    background-color: #2c3e50;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
 }
-
 #portfolioChart {
     max-width: 100%;
-    min-height: 300px;
+    height: 300px;
 }
 
-/* Statistiques */
+/* Partie droite : Statistiques & Extra stats */
+.portfolio-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.roi-pnl {
+    display: flex;
+    flex-direction:row;
+    gap: 2rem;
+    text-wrap:nowrap;
+}
+
+/* Statistiques principales */
 .portfolio-stats {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
-    letter-spacing: 1px; /* Petit style supplémentaire pour la police */
+    gap: 1rem;
 }
 
-.portfolio-stats .stat-item {
+.stat-item {
+    background-color: #2c3e50;
+    padding: 1rem 2rem;
+    border-radius: 12px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    margin: 10px;
+    color: #F8F9FA;
+    min-width: 150px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.portfolio-stats .stat-item p {
-    margin-bottom: 5px;
-    font-weight: bold;
+.stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
 
+.stat-item p {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Statistiques additionnelles */
 .portfolio-extra-stats ul {
-    list-style: none;         /* supprime les puces */
-    padding-left: 0;          /* supprime l'indentation */
-    margin: 0;                /* optionnel : supprime la marge */
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .portfolio-extra-stats li {
-    margin-bottom: 8px;       /* un petit espacement entre les lignes */
     font-family: 'Poppins', sans-serif;
     color: #F8F9FA;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
-/* --- Desktop --- */
+#current-portfolio-value{
+    font-size: 1.1em;
+    display: block;
+    text-align: center;
+}
+/* =================== Responsive Desktop =================== */
 @media (min-width: 768px) {
     .portfolio-content {
         flex-direction: row;
         justify-content: space-between;
+        gap: 2rem;
     }
     .portfolio-left,
     .portfolio-right {
         width: 48%;
     }
     .portfolio-stats {
+        flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-around;
-        flex-direction: column;
-        align-items: center;
+    }
+    .interval-btn {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
     }
 }
