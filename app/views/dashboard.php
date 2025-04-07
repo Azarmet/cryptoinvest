@@ -24,6 +24,11 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
     <!-- SECTION 3 : Positions en cours -->
     <?php require_once RACINE . 'app/views/templates/positions.php'; ?>
 
+    <!-- SECTION 3 : Historique des transactions -->
+    <?php require_once RACINE . 'app/views/templates/history.php'; ?>
+
+
+
 </div>
 
 <?php require_once RACINE . 'app/views/templates/footer.php'; ?>

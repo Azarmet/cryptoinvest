@@ -14,6 +14,7 @@ function showDashboard()
         header('Location: index.php?page=login');
         exit();
     }
+    $transactions = getHistoryTransaction();
     // Afficher la vue du dashboard
     require_once RACINE . 'app/views/dashboard.php';
 }
@@ -31,4 +32,20 @@ function getStats() {
 
     echo json_encode($stats);
     exit;
+}
+
+function getHistoryTransaction(){
+// Vérifier la session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header('Location: index.php?page=login');
+    exit();
+}
+$userId = $_SESSION['user']['id_utilisateur'];
+
+$transactionModel = new Transaction();
+$transactions = $transactionModel->getTransactionsByUserId($userId);
+return $transactions;
 }

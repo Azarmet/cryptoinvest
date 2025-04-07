@@ -72,7 +72,6 @@ function processRegister()
             exit();
         }
 
-        // Vous pouvez ajouter ici un contrôle de la robustesse du mot de passe (longueur, complexité, etc.)
 
         $userModel = new User();
         $result = $userModel->register($email, $pseudo, $password);

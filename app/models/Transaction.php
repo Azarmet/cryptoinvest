@@ -196,18 +196,19 @@ class Transaction
         return $positions;
     }
 
-    public function getDashboardStats($userId) {
+    public function getDashboardStats($userId)
+    {
         // 1. Trouver l'id_portefeuille correspondant
-        $stmt = $this->pdo->prepare("SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1");
+        $stmt = $this->pdo->prepare('SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1');
         $stmt->execute(['userId' => $userId]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if (!$result) {
-            return null; // ou [] pour éviter les erreurs plus loin
+            return null;  // ou [] pour éviter les erreurs plus loin
         }
-    
+
         $portefeuilleId = $result['id_portefeuille'];
-    
+
         // 2. Calcul des stats à partir de l'id_portefeuille
         $sql = "
             SELECT 
@@ -224,35 +225,36 @@ class Transaction
             FROM transaction
             WHERE id_portefeuille = :pid AND date_cloture IS NOT NULL
         ";
-    
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['pid' => $portefeuilleId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    
-    public function getProfilboardStatsByPseudo($pseudo) {
+
+    public function getProfilboardStatsByPseudo($pseudo)
+    {
         // 1. Trouver l'id_utilisateur via le pseudo
-        $stmt = $this->pdo->prepare("SELECT id_utilisateur FROM utilisateur WHERE pseudo = :pseudo LIMIT 1");
+        $stmt = $this->pdo->prepare('SELECT id_utilisateur FROM utilisateur WHERE pseudo = :pseudo LIMIT 1');
         $stmt->execute(['pseudo' => $pseudo]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if (!$user) {
-            return null; // Aucun utilisateur trouvé
+            return null;  // Aucun utilisateur trouvé
         }
-    
+
         $userId = $user['id_utilisateur'];
-    
+
         // 2. Trouver l'id_portefeuille lié à cet utilisateur
-        $stmt = $this->pdo->prepare("SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1");
+        $stmt = $this->pdo->prepare('SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1');
         $stmt->execute(['userId' => $userId]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if (!$result) {
             return null;
         }
-    
+
         $portefeuilleId = $result['id_portefeuille'];
-    
+
         // 3. Récupérer les stats sur les transactions de ce portefeuille
         $sql = "
             SELECT 
@@ -270,13 +272,25 @@ class Transaction
             WHERE id_portefeuille = :pid AND date_cloture IS NOT NULL
 
         ";
-    
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['pid' => $portefeuilleId]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
-        
-
     }
-    
-    
+
+    public function getTransactionsByUserId($user_id)
+{
+    $stmt = $this->pdo->prepare('
+        SELECT t.*, c.code AS crypto_code
+        FROM transaction t
+        JOIN portefeuille p ON t.id_portefeuille = p.id_portefeuille
+        JOIN cryptotrans c ON t.id_crypto_trans = c.id_crypto_trans
+        WHERE p.id_utilisateur = :user_id
+        ORDER BY t.date_ouverture DESC
+    ');
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }
