@@ -13,7 +13,7 @@ function refreshWatchlistData() {
                     var variation = parseFloat(crypto.variation_24h).toFixed(2);
                     let colorClass = variation >= 0 ? 'positive' : 'negative';
                     var row = "<tr class='crypto-link'  data-symbol='" + crypto.code + "'>" +
-                              "<td><a href='#'>" + crypto.code + "</a></td>"+
+                              "<td>" + crypto.code + "</td>"+
                               "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>" +
                               "<td class='" + colorClass + "'>" + variation + "%" + "</td>" +
                               "<td>" + crypto.date_maj + "</td>" +

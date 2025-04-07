@@ -19,8 +19,11 @@
                 <?php foreach ($cryptos as $crypto): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($crypto['code']); ?></td>
-                        <td><?php echo htmlspecialchars($crypto['prix_actuel']); ?></td>
-                        <td><?php echo number_format($crypto['variation_24h'], 2, '.', '') . '%'; ?></td>
+                        <td class="<?php echo $crypto['variation_24h'] >= 0 ? 'positive' : 'negative'; ?>">
+          <?php echo htmlspecialchars($crypto['prix_actuel']); ?></td>
+          <td class="<?php echo $crypto['variation_24h'] >= 0 ? 'positive' : 'negative'; ?>">
+          <?php echo number_format($crypto['variation_24h'], 2, '.', '') . '%'; ?>
+      </td>
                         <td><?php echo htmlspecialchars($crypto['date_maj']); ?></td>
                         <td>
                             <a href="index.php?page=watchlist&action=remove&id=<?php echo $crypto['id_crypto_market']; ?>">Remove</a>
