@@ -62,7 +62,11 @@
 /* =================== Base =================== */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #2C2C2C; /* Fond sombre */
+    background-color: #2C2C2C;
+    background-image: url('../image/mainbackground.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* <-- ligne magique */
     color: #F8F9FA;
 }
 
