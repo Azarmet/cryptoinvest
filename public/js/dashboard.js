@@ -90,7 +90,7 @@ function refreshPositions() {
                     <td>${pos.date_ouverture}</td>
                     <td class="${pnlClass}">${pnl.toFixed(2)}</td>
                     <td class="${roiClass}">${roi.toFixed(2)}%</td>
-                    <td><a href="index.php?page=dashboard&action=closePosition&id=${pos.id_transaction}">Clôturer</a></td>
+                    <td><a href="index.php?page=dashboard&action=closePosition&id=${pos.id_transaction}" class="close-btn">Close</a></td>
                 `;
                 tbody.appendChild(tr);
             });
