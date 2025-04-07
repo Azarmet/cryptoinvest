@@ -12,8 +12,8 @@ function refreshWatchlistData() {
                 cryptos.forEach(function(crypto) {
                     var variation = parseFloat(crypto.variation_24h).toFixed(2);
                     let colorClass = variation >= 0 ? 'positive' : 'negative';
-                    var row = "<tr>" +
-                              "<td><a href='#' class='crypto-link' data-symbol='" + crypto.code + "'>" + crypto.code + "</a></td>"+
+                    var row = "<tr class='crypto-link'  data-symbol='" + crypto.code + "'>" +
+                              "<td><a href='#'>" + crypto.code + "</a></td>"+
                               "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>" +
                               "<td class='" + colorClass + "'>" + variation + "%" + "</td>" +
                               "<td>" + crypto.date_maj + "</td>" +
@@ -30,7 +30,7 @@ function refreshWatchlistData() {
 }
 
 function updateTradingViewSymbol(symbol) {
-    const container = document.querySelector("#tradingview-widget-container-watch");
+    const container = document.querySelector("#tradingview-widget-container");
     container.innerHTML = ""; // Nettoyer l'ancien widget
 
     const widgetDiv = document.createElement("div");
@@ -62,12 +62,30 @@ function updateTradingViewSymbol(symbol) {
 }
 
 
+
 // Gérer le clic sur un code de crypto
 document.addEventListener("click", function(e) {
-    if (e.target.classList.contains("crypto-link")) {
-        e.preventDefault();
-        const newSymbol = e.target.getAttribute("data-symbol");
+    const row = e.target.closest(".crypto-link");
+    if (row && !e.target.classList.contains("watchlist-toggle")) {
+        e.preventDefault(); 
+        const newSymbol = row.getAttribute("data-symbol");
+
+        // Mettre à jour le widget TradingView
         updateTradingViewSymbol(newSymbol);
+
+        // Mettre à jour le <select> du tradingOrder si présent
+        const select = document.getElementById("crypto_code");
+        if (select) {
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === newSymbol) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+
+            const event = new Event("change");
+            select.dispatchEvent(event);
+        }
     }
 });
 

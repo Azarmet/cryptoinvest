@@ -146,6 +146,7 @@ a.crypto-link {
 
 /* Lien Watchlist */
 .watchlist-link {
+    display: none;
     text-align: center;
     margin-top: 15px;
 }
@@ -289,6 +290,10 @@ a.crypto-link {
         font-size: 1rem;
         transition: background-color 0.3s ease;
     }
+    
+    .watchlist-link {
+        display: block;
+    }
 }
 
 @media (max-width: 768px) {
@@ -308,5 +313,7 @@ a.crypto-link {
     .market-table td:nth-child(4) {
       display: none;
     }
+
+    
   }
   

@@ -37,7 +37,7 @@
   </div>
 
   <!-- Widget TradingView intégré -->
-  <div id="tradingview-widget-container-watch" class="tradingview-widget-container"></div>
+  <div id="tradingview-widget-container" class="tradingview-widget-container feature-trade"></div>
   
   <div class="market-link">
       <a href="index.php?page=market">Go to Market</a>
