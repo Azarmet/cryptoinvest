@@ -17,20 +17,19 @@
 }
 
 .search-input {
-    width: 300px;
-    padding: 8px 12px;
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
     border: 1px solid #F1C40F;
-    border-radius: 4px;
     background-color: #2C3E50;
-    color: #F8F9FA;
-    font-family: 'Poppins', sans-serif;
+    color: #fff;
     font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease;
 }
 
 .search-input:focus {
-    border-color: #F1C40F;
+    outline: none;
+    box-shadow: 0 0 10px #f1c40f88;
 }
 
 .search-button {
