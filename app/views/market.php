@@ -28,7 +28,7 @@
       <thead>
         <tr>
           <th>Crypto</th>
-          <th>Actual Price</th>
+          <th>Price</th>
           <th>Variation 24H</th>
           <?php if (isset($_SESSION['user'])): ?>
             <th>Watchlist</th>

@@ -73,16 +73,44 @@ function updateTradingViewSymbol(symbol) {
 }
 
 // Gestion des onglets
-document.querySelectorAll(".tab-button").forEach(button => {
-    button.addEventListener("click", function() {
-        document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-        this.classList.add("active");
-        // Met à jour la catégorie globale
-        currentCategory = this.getAttribute("data-category");
-        refreshMarketData(currentCategory);
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector(".market-tabs");
+    const tabButtons = container.querySelectorAll(".tab-button");
+
+    // Scroll automatique vers l'onglet actif au chargement
+    const activeTab = container.querySelector(".tab-button.active");
+    if (activeTab) {
+        activeTab.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+            block: "nearest"
+        });
+    }
+
+    // Gestion du clic sur chaque onglet
+    tabButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            // Désactiver tous les onglets
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+
+            // Activer l'onglet cliqué
+            this.classList.add("active");
+
+            // Met à jour la catégorie globale
+            currentCategory = this.getAttribute("data-category");
+            refreshMarketData(currentCategory);
+
+            // Scroll vers le bouton actif
+            this.scrollIntoView({
+                behavior: "smooth",
+                inline: "center",
+                block: "nearest"
+            });
+        });
     });
 });
 
+  
 
 // Gérer le clic sur un code de crypto
 document.addEventListener("click", function(e) {
