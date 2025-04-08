@@ -3,9 +3,12 @@
 <section id="portfolio-section" class="portfolio-section">
     <?php if ($_GET['page'] !== 'profilboard'): ?>
         <h3>Mon Portefeuille</h3>
-    <?php endif; ?>
+    <?php endif;?>
+    <h3 id="current-portfolio-value">Valeur actuelle : Loading...</h3>
+
     <div class="portfolio-content">
-        <div class="portfolio-left">
+      
+    <div class="portfolio-left">
             <div class="interval-buttons">
                 <button class="interval-btn" data-interval="jour">Jour</button>
                 <button class="interval-btn" data-interval="semaine">Semaine</button>

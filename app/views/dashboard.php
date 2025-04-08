@@ -10,8 +10,7 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
 <div class="dashboard-container">
     <!-- Section d'accueil / Bienvenue -->
     <section class="welcome-section">
-        <h2>Welcome <?php echo $userName; ?></h2>
-        <h3 id="current-portfolio-value">Valeur actuelle : Loading...</h3>
+        <h2>Welcome <?=$userName; ?></h2>
     </section>
 
     <!-- SECTION 1 : Portefeuille -->
