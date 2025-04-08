@@ -8,9 +8,9 @@ if (isset($_GET['page'])):
     $page = $_GET['page'];
     if ($page === 'home'):
         ?>
-        <h1>Leaderboard Top 3</h1>
+        <h1>Leaderboard <span class="orange">Top 3</span></h1>
     <?php else: ?>
-        <h1>Leaderboard</h1>   
+        <h1>Leader<span class="orange">board</span></h1>   
         <div class="search-container">
             <input type="text" class="search-input" id="search-input" placeholder="Rechercher un utilisateur...">
         </div>  
