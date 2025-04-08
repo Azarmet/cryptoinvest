@@ -4,7 +4,7 @@
 
 
 .fear {
-    background-color: #2c3e50;
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
     color: #f8f9fa;
     padding: 30px 20px;
     border-radius: 12px;

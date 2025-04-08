@@ -3,7 +3,7 @@
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #2C3E50; /* Fond en dark mode */
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     color: #F8F9FA;
@@ -22,8 +22,8 @@
     width: 100%;
     border-collapse: collapse;
     /* On ajoute une légère ombre au tableau lui-même */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+    border-radius: 12px;
     overflow: hidden;
 }
 
@@ -35,12 +35,13 @@
 }
 
 .leaderboard-table thead {
-    background-color: #2C3E50;
+    background-color: #26333f;
 }
 
 .leaderboard-table th {
     font-size: 1.1rem;
-    color: #b9b9b9;
+    color: #f1c40f;
+    padding: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -83,10 +84,11 @@
 }
 
 .td-pseudo img {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
     object-fit: cover;
+    border: 2px solid #f1c40f66;
 }
 
 .search-container {
@@ -111,4 +113,18 @@
 
 .search-input:focus {
     box-shadow: 0 0 10px #f1c40f88;
+}
+
+/* === Rang top 3 stylisé === */
+.leaderboard-table td.rank-1 {
+    color: gold;
+    font-weight: bold;
+}
+.leaderboard-table td.rank-2 {
+    color: silver;
+    font-weight: bold;
+}
+.leaderboard-table td.rank-3 {
+    color: #cd7f32; /* Bronze */
+    font-weight: bold;
 }

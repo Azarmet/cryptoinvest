@@ -21,12 +21,23 @@ $rank = 0;
 foreach ($usersWithSolde as $user):
     $photoProfil = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"25\">";
     $pseudo = htmlspecialchars($user['pseudo']);
+    
+
     $solde = number_format($user['solde'], 2, ',', ' ');
     $lienProfil = "index.php?page=profilboard&pseudo=$pseudo";
     $rank += 1;
+    $trophee = '';
+
+    if ($rank === 1) {
+        $trophee = ' 🥇';
+    } elseif ($rank === 2) {
+        $trophee = ' 🥈';
+    } elseif ($rank === 3) {
+        $trophee = ' 🥉';
+    }
     $tableRows .= "
     <tr onclick=\"window.location.href='{$lienProfil}';\" style=\"cursor:pointer;\">
-        <td>$rank</td>
+        <td class=\"rank-$rank\">$trophee$rank</td>
         <td class=\"td-pseudo\">$photoProfil $pseudo</td>
         <td>$solde</td>";
 

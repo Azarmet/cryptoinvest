@@ -38,45 +38,55 @@ function showLeaderboard()
     require_once RACINE . 'app/views/leaderboard.php';
 }
 
-function search_user(){
-
+function search_user() {
     if (isset($_GET['action']) && $_GET['action'] === 'search') {
         header('Content-Type: application/json');
-    
+
         $query = $_GET['term'] ?? '';
         $userModel = new User();
         $pfModel = new Portefeuille();
-    
+
         $allUsers = $userModel->getAllIdUsers();
         $result = [];
-        $rank = 1;
-    
+
         foreach ($allUsers as $user) {
             $userID = $user['id_utilisateur'];
             $profil = $userModel->getById($userID);
-    
+
             if (stripos($profil['pseudo'], $query) !== false) {
                 $solde = $pfModel->getSoldeActuel($userID);
                 $pnl24h = $pfModel->getPnL24h($userID);
                 $pnl7j = $pfModel->getPnL7j($userID);
-    
+
                 $result[] = [
-                    'rank' => $rank,
+                    'id' => $userID,
                     'pseudo' => $profil['pseudo'],
                     'image' => $profil['image_profil'],
-                    'solde' => number_format($solde, 2, ',', ' '),
-                    'pnl_24h' => number_format($pnl24h, 2, ',', ' '),
-                    'pnl_7j' => number_format($pnl7j, 2, ',', ' ')
+                    'solde_val' => $solde,
+                    'pnl24h_val' => $pnl24h,
+                    'pnl7j_val' => $pnl7j
                 ];
-                $rank++;
             }
         }
-    
+
+        // Trier par solde décroissant
+        usort($result, fn($a, $b) => $b['solde_val'] <=> $a['solde_val']);
+
+        // Réattribuer les ranks + formater les nombres pour affichage
+        foreach ($result as $index => &$row) {
+            $row['rank'] = $index + 1;
+            $row['solde'] = number_format($row['solde_val'], 2, ',', ' ');
+            $row['pnl_24h'] = number_format($row['pnl24h_val'], 2, ',', ' ');
+            $row['pnl_7j'] = number_format($row['pnl7j_val'], 2, ',', ' ');
+
+            // Supprimer les valeurs brutes après usage
+            unset($row['solde_val'], $row['pnl24h_val'], $row['pnl7j_val']);
+        }
+
         echo json_encode($result);
         exit;
     }
-    
-
 }
+
 
 ?>

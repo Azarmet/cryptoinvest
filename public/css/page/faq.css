@@ -42,7 +42,7 @@
 }
 
 .faq-item {
-    background-color: #2C3E50;
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid #3B4A59;
@@ -78,7 +78,7 @@
     height: 0;
     overflow: hidden;
     transition: height 0.4s ease;
-    background-color: #34495E;
+    background-color: #34495e9a;
     padding: 0 1rem;
 }
 
