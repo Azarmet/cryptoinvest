@@ -74,5 +74,17 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Style de la colonne pseudo (image + texte) */
 .td-pseudo {
-    color: #F1C40F;}
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.td-pseudo img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
