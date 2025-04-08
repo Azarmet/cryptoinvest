@@ -38,6 +38,10 @@
         text-align: left;
         align-items: center;
     }
+
+    .profil-info h2 {
+        text-align: left;
+    }
 }
 
 .profile-image {
