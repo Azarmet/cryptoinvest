@@ -10,6 +10,39 @@ require_once RACINE . 'app/views/templates/header.php';
     <div class="profile-details">
         <h2 id="profil-pseudo">Profil de <?= $profiluser['pseudo'] ?></h2>
         <p id="profil-bio"><?= $profiluser['bio'] ?></p>
+        <div class="social-links">
+    <?php if (!empty($profiluser['instagram'])): ?>
+        <?php 
+            $instaUrl = htmlspecialchars($profiluser['instagram']);
+            $instaHandle = '@' . basename(parse_url($instaUrl, PHP_URL_PATH));
+        ?>
+        <a href="<?= $instaUrl ?>" target="_blank" class="social-link instagram">
+            <i class="fab fa-instagram"></i> <?= $instaHandle ?>
+        </a>
+    <?php endif; ?>
+
+    <?php if (!empty($profiluser['x'])): ?>
+        <?php 
+            $xUrl = htmlspecialchars($profiluser['x']);
+            $xHandle = '@' . basename(parse_url($xUrl, PHP_URL_PATH));
+        ?>
+        <a href="<?= $xUrl ?>" target="_blank" class="social-link x">
+            <i class="fab fa-x-twitter"></i> <?= $xHandle ?>
+        </a>
+    <?php endif; ?>
+
+    <?php if (!empty($profiluser['telegram'])): ?>
+        <?php 
+            $tgUsername = '@' . ltrim($profiluser['telegram'], '@');
+            $tgLink = 'https://t.me/' . ltrim($profiluser['telegram'], '@');
+        ?>
+        <a href="<?= $tgLink ?>" target="_blank" class="social-link telegram">
+            <i class="fab fa-telegram"></i> <?= $tgUsername ?>
+        </a>
+    <?php endif; ?>
+</div>
+
+
     </div>
 </div>
 <!-- <h3 id="current-portfolio-value">Valeur actuelle : Loading...</h3> -->

@@ -18,6 +18,8 @@ function showProfile()
     header('Location: index.php?page=login');
     exit();
     endif;
+    $userModel = new User();
+    $user = $userModel->getById($_SESSION['user']['id_utilisateur']);
     // Afficher la vue du profil
     require_once RACINE . 'app/views/profil.php';
 }
@@ -88,17 +90,22 @@ function updateProfile()
         session_start();
     }
 
-    // Vérifier que l'utilisateur est connecté
+    // Vérification de connexion
     if (!isset($_SESSION['user'])) {
         header('Location: index.php?page=login');
         exit();
     }
 
     $userId = $_SESSION['user']['id_utilisateur'];
-    $bio = isset($_POST['bio']) ? trim($_POST['bio']) : '';
+    $bio = isset($_POST['bio']) ? trim(strip_tags($_POST['bio'])) : '';
     $imagePath = $_SESSION['user']['image_profil'] ?? '';
 
-    // Gestion de l'upload de l'image de profil
+    // Champs réseaux sociaux (nettoyés)
+    $instagram = isset($_POST['instagram']) ? trim(filter_var($_POST['instagram'], FILTER_SANITIZE_URL)) : null;
+    $x = isset($_POST['x']) ? trim(filter_var($_POST['x'], FILTER_SANITIZE_URL)) : null;
+    $telegram = isset($_POST['telegram']) ? trim(strip_tags($_POST['telegram'])) : null;
+
+    // Upload de l'image de profil
     if (!empty($_FILES['image_profil']['name']) && $_FILES['image_profil']['error'] === 0) {
         $tmpName = $_FILES['image_profil']['tmp_name'];
         $fileSize = $_FILES['image_profil']['size'];
@@ -106,25 +113,21 @@ function updateProfile()
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         $maxSize = 10 * 1024 * 1024;  // 10 Mo
 
-        // Vérification taille
         if ($fileSize > $maxSize) {
             header('Location: index.php?page=profil&error=size');
             exit();
         }
 
-        // Vérification type MIME
         if (!in_array($mimeType, $allowedTypes)) {
             header('Location: index.php?page=profil&error=type');
             exit();
         }
 
-        // Dossier de destination
         $uploadsDir = RACINE . 'public/uploads/profiles/';
         if (!is_dir($uploadsDir)) {
             mkdir($uploadsDir, 0775, true);
         }
 
-        // Nom unique + extension
         $extension = pathinfo($_FILES['image_profil']['name'], PATHINFO_EXTENSION);
         $filename = uniqid() . '.' . $extension;
         $targetFile = $uploadsDir . $filename;
@@ -139,11 +142,16 @@ function updateProfile()
 
     // Mise à jour du profil dans la base
     $userModel = new User();
-    $updated = $userModel->updateProfile($userId, $bio, $imagePath);
+    $updated = $userModel->updateProfile($userId, $bio, $imagePath, $instagram, $x, $telegram);
 
     if ($updated) {
+        // MAJ session
         $_SESSION['user']['bio'] = $bio;
         $_SESSION['user']['image_profil'] = $imagePath;
+        $_SESSION['user']['instagram'] = $instagram;
+        $_SESSION['user']['x'] = $x;
+        $_SESSION['user']['telegram'] = $telegram;
+
         header('Location: index.php?page=profil&success=1');
         exit();
     } else {
@@ -151,5 +159,6 @@ function updateProfile()
         exit();
     }
 }
+
 
 ?>

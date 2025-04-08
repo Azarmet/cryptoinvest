@@ -9,6 +9,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <title>CryptoInvest</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/style.css'?>">
     <link rel="stylesheet" href="<?= RACINE_URL . "public/css/page/home.css"?>">
     <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/header.css'?>">

@@ -10,25 +10,46 @@ require_once RACINE . 'app/views/templates/header.php';
     <h2>Mon Profil</h2>
 
     <!-- Affichage des informations de profil -->
-    <div id="profile-display" class="profile-display">
-        <div class="profile-info">
-            <p><strong>Pseudo :</strong> <?php echo htmlspecialchars($_SESSION['user']['pseudo']); ?></p>
-            <p><strong>Email :</strong> <?php echo htmlspecialchars($_SESSION['user']['email']); ?></p>
-            <p><strong>Biographie :</strong>
-                <?php
-                echo isset($_SESSION['user']['bio']) && !empty($_SESSION['user']['bio'])
-                    ? htmlspecialchars($_SESSION['user']['bio'])
-                    : 'Aucune bio disponible.';
-                ?>
-            </p>
+    <div id="profile-display" class="profil-section">
+    <div class="profil-header">
+        <img src="<?= htmlspecialchars($user['image_profil']) ?>" alt="Photo de profil" class="profile-image">
+        <div class="profil-info">
+            <h2><?= htmlspecialchars($user['pseudo']) ?></h2>
+            <?php if (!empty($user['bio'])): ?>
+                <p class="bio"><?= nl2br(htmlspecialchars($user['bio'])) ?></p>
+            <?php else: ?>
+                <p class="bio muted">Aucune bio pour le moment.</p>
+            <?php endif; ?>
         </div>
-        <?php if (isset($_SESSION['user']['image_profil']) && !empty($_SESSION['user']['image_profil'])): ?>
-            <div class="profile-image">
-                <img src="<?php echo htmlspecialchars($_SESSION['user']['image_profil']); ?>" alt="Image de Profil">
-            </div>
-        <?php endif; ?>
-        <button id="btn-modify" class="btn-modify">Modifier Profil</button>
     </div>
+
+    <div class="social-display">
+        <?php if (!empty($user['instagram'])): ?>
+            <p><strong>Instagram :</strong> 
+                <a href="<?= htmlspecialchars($user['instagram']) ?>" target="_blank">
+                    <?= htmlspecialchars($user['instagram']) ?>
+                </a>
+            </p>
+        <?php endif; ?>
+
+        <?php if (!empty($user['x'])): ?>
+            <p><strong>X :</strong> 
+                <a href="<?= htmlspecialchars($user['x']) ?>" target="_blank">
+                    <?= htmlspecialchars($user['x']) ?>
+                </a>
+            </p>
+        <?php endif; ?>
+
+        <?php if (!empty($user['telegram'])): ?>
+            <p><strong>Telegram :</strong> @<?= htmlspecialchars(ltrim($user['telegram'], '@')) ?></p>
+        <?php endif; ?>
+    </div>
+
+    <div class="profile-actions">
+        <button id="btn-modify" class="btn-modify">Modifier le profil</button>
+    </div>
+</div>
+
 
     <?php if (isset($_GET['error'])): ?>
         <div class="alert alert-danger">
@@ -62,6 +83,24 @@ require_once RACINE . 'app/views/templates/header.php';
                 <label for="image_profil">Changer l'image de profil :</label>
                 <input type="file" name="image_profil" id="image_profil" accept="image/*">
             </div>
+            <div class="form-group">
+    <label for="instagram">Lien Instagram</label>
+    <input type="text" name="instagram" id="instagram" placeholder="https://instagram.com/tonprofil" 
+           value="<?= htmlspecialchars($user['instagram'] ?? '') ?>">
+</div>
+
+<div class="form-group">
+    <label for="x">Lien X (ancien Twitter)</label>
+    <input type="text" name="x" id="x" placeholder="https://x.com/tonprofil" 
+           value="<?= htmlspecialchars($user['x'] ?? '') ?>">
+</div>
+
+<div class="form-group">
+    <label for="telegram">Username Telegram</label>
+    <input type="text" name="telegram" id="telegram" placeholder="@tonpseudo" 
+           value="<?= htmlspecialchars($user['telegram'] ?? '') ?>">
+</div>
+
             <!-- Zone d'aperçu -->
             <div id="preview-container" class="preview-container">
                 <img id="preview-image" src="#" alt="Aperçu de l'image" style="display: none;">

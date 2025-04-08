@@ -54,14 +54,24 @@ class User
         return false;
     }
 
-    // Méthode pour mettre à jour la bio et l'image de profil de l'utilisateur
-    public function updateProfile($userId, $bio, $imagePath)
+    // Méthode pour mettre à jour la bio, réseaux et l'image de profil de l'utilisateur
+    public function updateProfile($userId, $bio, $imagePath, $instagram = null, $x = null, $telegram = null)
     {
-        $sql = 'UPDATE utilisateur SET bio = :bio, image_profil = :image_profil WHERE id_utilisateur = :id';
+        $sql = 'UPDATE utilisateur 
+            SET bio = :bio, 
+                image_profil = :image_profil, 
+                instagram = :instagram, 
+                x = :x, 
+                telegram = :telegram 
+            WHERE id_utilisateur = :id';
+
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             ':bio' => $bio,
             ':image_profil' => $imagePath,
+            ':instagram' => $instagram,
+            ':x' => $x,
+            ':telegram' => $telegram,
             ':id' => $userId
         ]);
     }
@@ -87,7 +97,10 @@ class User
     // Méthode pour récupérer un utilisateur par son pseudo (toutes les infos sauf l'ID)
     public function getByPseudo($pseudo)
     {
-        $sql = 'SELECT pseudo, id_utilisateur, image_profil, bio FROM utilisateur WHERE pseudo = :pseudo';
+        $sql = 'SELECT pseudo, id_utilisateur, image_profil, bio, instagram, x, telegram 
+            FROM utilisateur 
+            WHERE pseudo = :pseudo';
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':pseudo' => $pseudo]);
         return $stmt->fetch(PDO::FETCH_ASSOC);

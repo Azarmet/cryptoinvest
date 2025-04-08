@@ -90,3 +90,39 @@
         font-size: 17px;
     }
 }
+
+.social-links {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.social-link {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    padding: 8px 14px;
+    border-radius: 30px;
+    font-size: 15px;
+    color: #f1c40f;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background-color: #f1c40f;
+    color: #1a1a1a;
+}
+
+.social-link i {
+    font-size: 16px;
+}
+
+/* Optionnel : couleurs spécifiques */
+.social-link.instagram i { color: #e1306c; }
+.social-link.x i { color: #1da1f2; }
+.social-link.telegram i { color: #0088cc; }

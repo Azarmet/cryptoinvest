@@ -1,161 +1,228 @@
-
-/* =================== Profil Page Styles =================== */
+/* === CONTENEUR PRINCIPAL === */
 .profile-container {
-    max-width: 800px;
-    margin: 30px auto;
+    max-width: 680px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #2C3E50;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    color: #F8F9FA;
-    font-family: 'Poppins', sans-serif;
+    border-radius: 16px;
+    color: #f1f1f1;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .profile-container h2 {
-    font-family: 'Roboto', sans-serif;
-    color: #F1C40F;
     text-align: center;
-    margin-bottom: 20px;
+    color: #f1c40f;
+    margin-bottom: 25px;
 }
 
-/* Affichage du profil */
-.profile-display {
-    text-align: center;
-    margin-bottom: 20px;
+/* === AFFICHAGE PROFIL === */
+.profil-section {
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-.profile-info p {
-    margin: 10px 0;
-    font-size: 1rem;
+.profil-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .profil-header {
+        flex-direction: row;
+        text-align: left;
+        align-items: center;
+    }
 }
 
 .profile-image {
-    margin: 15px auto;
-}
-
-.profile-image img {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    max-width: 150px;
+    border: 3px solid #f1c40f;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+    transition: transform 0.3s ease;
 }
 
-/* Bouton Modifier */
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.profil-info h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #f1c40f;
+}
+
+.bio {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #ccc;
+}
+
+.bio.muted {
+    font-style: italic;
+    color: #777;
+}
+
+/* === RÉSEAUX SOCIAUX === */
+.social-display {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 15px;
+}
+
+.social-display p {
+    margin: 0;
+}
+
+.social-display a {
+    color: #f1c40f;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.social-display a:hover {
+    color: #ffe26d;
+    text-decoration: underline;
+}
+
+/* === BOUTON MODIFIER === */
+.profile-actions {
+    margin-top: 25px;
+    text-align: center;
+}
+
 .btn-modify {
-    background-color: #F1C40F;
-    color: #2C3E50;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #f1c40f;
+    color: #111;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 30px;
     cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    transition: background-color 0.3s ease;
-    margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(241, 196, 15, 0.3);
+    transition: all 0.3s ease;
 }
 
 .btn-modify:hover {
-    background-color: #f1c40f75;
-    color: #fff;
+    background-color: #ffe26d;
+    transform: translateY(-2px);
 }
 
-/* Message d'erreur profil (différent de .error-msg plus générique) */
-.alert.alert-danger {
-    background-color: #E74C3C;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Formulaire de modification */
+/* === FORMULAIRE MODIFICATION === */
 .profile-edit {
-    background-color: #34495E;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    margin-bottom: 30px;
 }
 
 .profile-edit h3 {
-    font-family: 'Roboto', sans-serif;
-    color: #F1C40F;
+    margin-top: 0;
+    font-size: 20px;
+    color: #f1c40f;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .profile-form .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .profile-form label {
     display: block;
-    margin-bottom: 5px;
-    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #f1c40f;
 }
 
-.profile-form textarea,
-.profile-form input[type="file"] {
+.profile-form input[type="text"],
+.profile-form input[type="file"],
+.profile-form textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #F1C40F;
-    border-radius: 4px;
-    background-color: #2C3E50;
-    color: #F8F9FA;
-    font-family: 'Poppins', sans-serif;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #f8f9fa;
+    font-size: 14px;
 }
 
-.preview-container {
-    text-align: center;
-    margin: 15px 0;
+.profile-form textarea {
+    resize: vertical;
 }
 
-.preview-container img {
-    max-width: 150px;
-    border-radius: 4px;
-}
-
-.current-image {
-    text-align: center;
-    margin-bottom: 15px;
-}
-
+/* === APERÇU IMAGE === */
+.preview-container img,
 .current-image img {
-    max-width: 100px;
-    border-radius: 4px;
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    border-radius: 50%;
+    border: 2px solid #444;
+    object-fit: cover;
 }
 
-/* Boutons d'actions */
+/* === BOUTONS DU FORMULAIRE === */
 .form-actions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
 }
 
-/* Règles unifiées pour les boutons du form en flex */
-.btn-submit, .btn-cancel {
-    flex: 1;
+.form-actions button {
     padding: 10px;
     border: none;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .btn-submit {
-    background-color: #F1C40F;
-    color: #2C3E50;
+    background-color: #f1c40f;
+    color: #111;
 }
 
 .btn-submit:hover {
-    background-color: #f1c40f75;
-    color: #fff;
+    background-color: #ffe26d;
 }
 
 .btn-cancel {
-    background-color: #E74C3C;
-    color: #fff;
+    background-color: #333;
+    color: #eee;
 }
 
 .btn-cancel:hover {
-    background-color: #C0392B;
+    background-color: #444;
+}
+
+/* === ALERTES ERREURS === */
+.alert {
+    margin: 20px 0;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: #ff4d4d;
+    color: #fff;
 }
