@@ -66,7 +66,7 @@ endforeach;
                 <th>RANK</th>
                 <th>Pseudo</th>
                 <th>Solde ($)</th>
-                <?php if ($page !== 'home'): ?>
+                <?php if (isset($_GET['page']) && $page !== 'home'): ?>
                     <th>PnL 24h ($)</th>
                     <th>PnL 7j ($)</th>
                 <?php endif; ?>
