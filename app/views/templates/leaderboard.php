@@ -10,7 +10,10 @@ if (isset($_GET['page'])):
         ?>
         <h1>Leaderboard Top 3</h1>
     <?php else: ?>
-        <h1>Leaderboard</h1>         
+        <h1>Leaderboard</h1>   
+        <div class="search-container">
+            <input type="text" class="search-input" id="search-input" placeholder="Rechercher un utilisateur...">
+        </div>  
     <?php
     endif;
 endif;
@@ -76,3 +79,4 @@ endif;
 <?php endif; ?>
 
 </div>
+<script src="<?php echo RACINE_URL; ?>public/js/leaderboard.js"></script>

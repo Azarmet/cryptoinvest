@@ -47,11 +47,17 @@ function routeur()
             }
             break;
 
-        case 'leaderboard':
-            require_once RACINE . 'app/controllers/LeaderboardController.php';
-            \App\Controllers\showLeaderboard();
-            break;
-
+            case 'leaderboard':
+                require_once RACINE . 'app/controllers/LeaderboardController.php';
+                $action = $_GET['action'] ?? 'show';
+                if ($action === 'search') {
+                    \App\Controllers\search_user();
+                } else {
+                    \App\Controllers\showLeaderboard();
+                }
+                break;
+            
+            
         case 'profilboard':
             require_once RACINE . 'app/controllers/ProfilController.php';
             // On regarde s'il y a 'action' dans l'URL
