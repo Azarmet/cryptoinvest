@@ -40,8 +40,7 @@ foreach ($usersWithSolde as $user):
         <td class=\"rank-$rank\">$trophee$rank</td>
         <td class=\"td-pseudo\">$photoProfil $pseudo</td>
         <td>$solde</td>";
-
-    if ($page !== 'home') {
+    if (isset($_GET['page']) && $page !== 'home') {
         $pnl24hVal = $user['pnl_24h'];
         $pnl7jVal = $user['pnl_7j'];
 
