@@ -46,3 +46,50 @@ if (searchInput) {
         xhr.send();
     });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tableHeaders = document.querySelectorAll('.leaderboard-table thead th.sortable');
+
+    tableHeaders.forEach(header => {
+        header.addEventListener('click', function () {
+            // Retirer la classe active et l'attribut data-order des autres colonnes
+            tableHeaders.forEach(th => {
+                if (th !== this) {
+                    th.removeAttribute('data-order');
+                    th.classList.remove('active');
+                }
+            });
+
+            // Récupère l'ordre actuel s'il existe, sinon part de "desc"
+            let currentOrder = this.getAttribute('data-order') || 'desc';
+            // Inverse l'ordre
+            let order = currentOrder === 'asc' ? 'desc' : 'asc';
+            this.setAttribute('data-order', order);
+            // Ajoute la classe "active" sur l'en-tête courant
+            this.classList.add('active');
+
+            const table = this.closest('table');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            // Récupère l'index de la colonne cliquée
+            const headerIndex = Array.from(this.parentElement.children).indexOf(this);
+
+            // Trie les lignes du tableau en fonction du contenu numérique de la cellule
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.children[headerIndex].innerText.trim();
+                const cellB = rowB.children[headerIndex].innerText.trim();
+
+                // Extraction et conversion des valeurs numériques,
+                // en retirant les caractères non numériques et en remplaçant la virgule par un point
+                const numA = parseFloat(cellA.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')) || 0;
+                const numB = parseFloat(cellB.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')) || 0;
+
+                return order === 'asc' ? numA - numB : numB - numA;
+            });
+
+            // Réinjecte les lignes triées dans le tbody
+            rows.forEach(row => tbody.appendChild(row));
+        });
+    });
+});

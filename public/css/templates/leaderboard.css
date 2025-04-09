@@ -38,6 +38,48 @@
     background-color: #26333f;
 }
 
+/* En-tête triable : curseur et positionnement */
+.leaderboard-table thead th.sortable {
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+/* Au survol, indication visuelle */
+.leaderboard-table thead th.sortable:hover {
+    background-color: #f1c40fc5;
+}
+
+/* Par défaut, ne pas afficher de flèche */
+.leaderboard-table thead th.sortable::after {
+    content: ''; /* aucun contenu par défaut */
+    position: absolute;
+    right: 8px;
+    font-size: 0.8em;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* En-tête actif avec ordre ascendant : affiche la flèche vers le haut en couleur */
+.leaderboard-table thead th.sortable.active[data-order="asc"]::after {
+    content: '\25B2'; /* flèche vers le haut */
+    opacity: 1;
+    color: #007bff; /* couleur active, à adapter selon vos besoins */
+}
+
+/* En-tête actif avec ordre descendant : affiche la flèche vers le bas en couleur */
+.leaderboard-table thead th.sortable.active[data-order="desc"]::after {
+    content: '\25BC'; /* flèche vers le bas */
+    opacity: 1;
+    color: #007bff;
+}
+
+/* Optionnel : mettre en avant la colonne active */
+.leaderboard-table thead th.sortable.active {
+    background-color: #f1c40fc5;
+}
+
+
 .leaderboard-table th {
     font-size: 1.1rem;
     color: #5c5c5f;

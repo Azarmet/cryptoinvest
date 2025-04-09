@@ -61,17 +61,23 @@ endforeach;
 
 <div class="table-responsive">
     <table class="leaderboard-table">
-        <thead>
-            <tr>
-                <th>RANK</th>
-                <th>Pseudo</th>
-                <th>Solde ($)</th>
-                <?php if (isset($_GET['page']) && $page !== 'home'): ?>
-                    <th>PnL 24h ($)</th>
-                    <th>PnL 7j ($)</th>
-                <?php endif; ?>
-            </tr>
-        </thead>
+    <thead>
+    <tr>
+        <th>RANK</th>
+        <th>Pseudo</th>
+        <?php if (isset($_GET['page']) && $page === 'home'): ?>
+        <th>Solde ($)</th>
+        <?php endif; ?>
+        <!-- Ajout de la classe "sortable" avec un attribut data-sort pour identifier la colonne -->
+        
+        <?php if (isset($_GET['page']) && $page !== 'home'): ?>
+            <th class="sortable active" data-sort="solde" data-order="desc">Solde ($)</th>
+            <th class="sortable" data-sort="pnl_24h">PnL 24h ($)</th>
+            <th class="sortable" data-sort="pnl_7j">PnL 7j ($)</th>
+        <?php endif; ?>
+    </tr>
+</thead>
+
         <tbody>
             <?= $tableRows ?>
         </tbody>
