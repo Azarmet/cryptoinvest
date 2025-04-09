@@ -25,6 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="site-wrapper">
     <header class="site-header">
         <nav class="navbar" id="navbar">
             <div class="logo">
