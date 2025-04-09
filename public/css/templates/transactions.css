@@ -94,3 +94,24 @@
     background: #2C3E50;
   }
   
+  th.sortable {
+    position: relative;
+    user-select: none;
+    padding-right: 20px;
+  }
+  
+  th.sortable::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    font-size: 0.8em;
+  }
+  
+  th.sortable.asc::after {
+    content: '↑';
+  }
+  
+  th.sortable.desc::after {
+    content: '↓';
+  }
+  
