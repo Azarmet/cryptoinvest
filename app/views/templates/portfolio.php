@@ -20,16 +20,19 @@
             </div>
         </div>
         <div class="portfolio-right">
-            <div id="portfolio-stats" class="portfolio-stats"><div class="roi-pnl"><div class="stat-item">
-                    <p>ROI Total :</p>
-                    <span id="roi-total">-</span>
+            <div id="portfolio-stats" class="portfolio-stats">
+                <div class="roi-pnl">
+                    <div class="stat-item">
+                        <p>ROI Total :</p>
+                        <span id="roi-total">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <p>PnL Total :</p>
+                        <span id="pnl-total">-</span>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <p>PnL Total :</p>
-                    <span id="pnl-total">-</span>
-                </div></div>
                 
-                <div class="stat-item">
+                <div class="stat-item transaction-count">
                     <p>Nombre de transactions :</p>
                     <span id="tx-count">-</span>
                 </div>
