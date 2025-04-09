@@ -1,7 +1,9 @@
 /* ========== FAQ - Mobile First ========== */
 .faq-wrapper {
-    padding: 1.5rem;
+    padding: 1.5rem; 
     color: #fff;
+    max-width: 90%;
+    margin: 0 auto;
 }
 
 .faq-title {
@@ -103,5 +105,9 @@
 
     .faq-question {
         font-size: 1.2rem;
+    }
+
+    .faq-wrapper{
+        max-width: 80%;
     }
 }

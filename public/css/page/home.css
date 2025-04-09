@@ -31,7 +31,7 @@
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.377); /* overlay sombre pour améliorer la lisibilité */
+    background-color: rgba(0, 0, 0, 0.281); /* overlay sombre pour améliorer la lisibilité */
     z-index: 0;
     border-radius: 8px;
 }
@@ -134,7 +134,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.212);
     z-index: 2;
   }
   
