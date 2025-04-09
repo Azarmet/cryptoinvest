@@ -7,18 +7,23 @@ if (session_status() == PHP_SESSION_NONE) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>CryptoInvest</title>
+    <title>CryptoInvest - Backoffice</title>
+    <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/styleback.css'?>">
 </head>
 <body>
-    <header>
-        <nav>
+    <header class="back-header">
+        <div class="header-left">
+            <h1 class="logo">CryptoInvest Admin</h1>
+        </div>
+        <nav class="header-nav">
             <ul>
-                <li><a href="index.php?pageback=home">Home</a></li>
-                <li><a href="index.php?pageback=faq">FAQ Manager</a></li>
-                <li><a href="index.php?pageback=learn">Learn Manager</a></li>
-                <li><a href="index.php?pageback=market">Market Manager</a></li>
-                <li><a href="index.php?pageback=users">Users Manager</a></li>
+                <li><a href="index.php?pageback=home">Accueil</a></li>
+                <li><a href="index.php?pageback=faq">FAQ</a></li>
+                <li><a href="index.php?pageback=learn">Learn</a></li>
+                <li><a href="index.php?pageback=market">Market</a></li>
+                <li><a href="index.php?pageback=users">Users</a></li>
             </ul>
         </nav>
     </header>

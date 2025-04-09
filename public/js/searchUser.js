@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(res => res.json())
             .then(users => {
                 let html = `
-                <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; margin-top: 20px;">
+                <table class="users-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -23,23 +23,36 @@ document.addEventListener("DOMContentLoaded", () => {
                     </thead><tbody>`;
 
                 if (users.length === 0) {
-                    html += "<tr><td colspan='7'>Aucun utilisateur trouvé.</td></tr>";
+                    html += "<tr><td colspan='7' class='no-user'>Aucun utilisateur trouvé.</td></tr>";
                 } else {
                     users.forEach(u => {
                         const isCurrent = u.id_utilisateur == window.currentUserId;
+                        const roleBadgeClass = u.role === 'admin' ? 'admin' : 'user';
+
                         html += `
                         <tr>
                             <td>${u.id_utilisateur}</td>
-                            <td>${u.pseudo}</td>
-                            <td>${u.email}</td>
-                            <td>${u.role}</td>
-                            <td>${u.bio ?? ""}</td>
-                            <td>${u.image_profil ? `<img src="${u.image_profil}" style="max-width:60px;">` : '-'}</td>
+                            <td>${escapeHTML(u.pseudo)}</td>
+                            <td>${escapeHTML(u.email)}</td>
+                            <td><span class="role-badge ${roleBadgeClass}">${u.role}</span></td>
+                            <td>${u.bio && u.bio.trim() !== ""? escapeHTML(u.bio).replace(/\n/g, "<br>"): `<span class="no-bio">Pas de bio</span>`}</td>
+                            <td>${
+                                u.image_profil 
+                                ? `<img src="${escapeHTML(u.image_profil)}" alt="Profil" class="user-avatar">` 
+                                : `<span class="no-image">-</span>`
+                            }</td>
                             <td>${
                                 isCurrent 
-                                ? '(vous)' 
-                                : `<a href="index.php?pageback=deleteUser&id=${u.id_utilisateur}" onclick="return confirm('Supprimer ?')">🗑</a> |
-                                   <a href="index.php?pageback=toggleUserRole&id=${u.id_utilisateur}" onclick="return confirm('Changer rôle ?')">🔄</a>`
+                                ? `<span class="self-label">(vous)</span>` 
+                                : `
+                                <a href="index.php?pageback=deleteUser&id=${u.id_utilisateur}" 
+                                   class="action-btn delete" 
+                                   onclick="return confirm('Supprimer cet utilisateur ?')">🗑️</a>
+                                <a href="index.php?pageback=toggleUserRole&id=${u.id_utilisateur}" 
+                                   class="action-btn toggle role-change" 
+                                   onclick="return confirm('Changer le rôle de cet utilisateur ?')">
+                                   ${u.role === 'admin' ? 'Déclasser' : 'Promouvoir'}
+                                </a>`
                             }</td>
                         </tr>`;
                     });
@@ -49,4 +62,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.innerHTML = html;
             });
     });
+
+    // Sécurité : échapper le HTML pour éviter les injections
+    function escapeHTML(str) {
+        return (str || "").replace(/[&<>'"]/g, tag => (
+            {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag]
+        ));
+    }
 });
