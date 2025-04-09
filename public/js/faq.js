@@ -23,8 +23,9 @@ document.getElementById('faq-search').addEventListener('input', function () {
                     answer.innerHTML = "<p>" + faq.reponse.replace(/\n/g, "<br>") + "</p>";
 
                     question.addEventListener('click', function () {
-                        item.classList.toggle("active");
+                        toggleAccordion(item);
                     });
+                    
 
                     item.appendChild(question);
                     item.appendChild(answer);
