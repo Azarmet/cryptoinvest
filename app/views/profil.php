@@ -80,10 +80,6 @@ require_once RACINE . 'app/views/templates/header.php';
                 <textarea name="bio" id="bio" rows="5"><?php echo isset($_SESSION['user']['bio']) ? htmlspecialchars($_SESSION['user']['bio']) : ''; ?></textarea>
             </div>
             <div class="form-group">
-                <label for="image_profil">Changer l'image de profil :</label>
-                <input type="file" name="image_profil" id="image_profil" accept="image/*">
-            </div>
-            <div class="form-group">
     <label for="instagram">Lien Instagram</label>
     <input type="text" name="instagram" id="instagram" placeholder="https://instagram.com/tonprofil" 
            value="<?= htmlspecialchars($user['instagram'] ?? '') ?>">
@@ -100,6 +96,10 @@ require_once RACINE . 'app/views/templates/header.php';
     <input type="text" name="telegram" id="telegram" placeholder="@tonpseudo" 
            value="<?= htmlspecialchars($user['telegram'] ?? '') ?>">
 </div>
+<div class="form-group">
+                <label for="image_profil">Changer l'image de profil :</label>
+                <input type="file" name="image_profil" id="image_profil" accept="image/*">
+            </div>
 
             <!-- Zone d'aperçu -->
             <div id="preview-container" class="preview-container">

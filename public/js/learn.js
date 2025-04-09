@@ -45,7 +45,6 @@ function loadArticles(page) {
         articles.forEach(function (article) {
           var div = document.createElement("div");
           div.className = "article-item";
-          div.style.border = "1px solid #ccc";
           div.style.padding = "10px";
           div.style.marginBottom = "10px";
 
