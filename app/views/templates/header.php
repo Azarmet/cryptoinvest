@@ -28,9 +28,12 @@ if (session_status() == PHP_SESSION_NONE) {
 <div class="site-wrapper">
     <header class="site-header">
         <nav class="navbar" id="navbar">
-            <div class="logo">
-                <a href="index.php?page=home"><img src="<?= RACINE_URL . 'public/image/logo.png'?>" alt="logo crypto invest" class="logo-header"> CryptoInvest</a>
-            </div>
+        <div class="logo">
+  <a href="index.php?page=home">
+    <img src="<?= RACINE_URL . 'public/image/logo.png'?>" alt="logo crypto invest" class="logo-header">
+    <span class="brand-name">CryptoInvest</span>
+  </a>
+</div>
             <!-- Bouton burger -->
             <div class="burger" id="burger">
                 <div class="bar"></div>
