@@ -138,7 +138,16 @@ document.addEventListener("click", function(e) {
     }
 });
 
-
+// Gérer la sélection du menu code crypto pour widget 
+document.addEventListener("DOMContentLoaded", function () {
+    const select = document.getElementById("crypto_code");
+    if (select) {
+        select.addEventListener("change", function () {
+            const selectedSymbol = select.value;
+            updateTradingViewSymbol(selectedSymbol);
+        });
+    }
+});
 
 
 document.addEventListener("click", function(e) {
