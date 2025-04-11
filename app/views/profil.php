@@ -123,7 +123,15 @@ require_once RACINE . 'app/views/templates/header.php';
             <div class="form-actions">
                 <button type="submit" class="btn-submit">Enregistrer les modifications</button>
                 <button type="button" id="btn-cancel" class="btn-cancel">Annuler</button>
-                <a href="index.php?page=dashboard" id="btn-supprimer" class="btn-supprimer">Supprimer mon compte</a>
+                <p id="btn-supprimer-init" class="btn-supprimer">Supprimer mon compte</p>
+
+                
+                    <a id="confirmation-suppression" style="display: none; margin-top: 10px;" href="index.php?page=profil&action=supprimer" class="btn-supprimer">
+                        ✅ Oui, je veux supprimer mon compte
+                    </a>
+                    <p id="btn-annuler-suppression" class="btn-supprimer-return" style="display: none; margin-top: 8px;">Annuler</p>
+                
+
             </div>
         </form>
     </div>

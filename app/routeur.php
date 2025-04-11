@@ -133,10 +133,16 @@ function routeur()
         case 'profil':
             require_once RACINE . 'app/controllers/ProfilController.php';
             $action = isset($_GET['action']) ? $_GET['action'] : 'show';
-            if ($action == 'update') {
-                \App\Controllers\updateProfile();
-            } else {
-                \App\Controllers\showProfile();
+            switch ($action) {
+                case 'show': 
+                    \App\Controllers\showProfile();
+                    break;
+                case 'update':
+                    \App\Controllers\updateProfile();
+                    break;
+                case 'supprimer':
+                    \App\Controllers\supprimerProfile();
+                    break;
             }
             break;
 

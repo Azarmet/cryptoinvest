@@ -222,7 +222,26 @@
 }
 
 .btn-supprimer:hover {
-    background-color: #b31408;
+    background-color: #9e2b23;
+    color: #eee;
+}
+.btn-supprimer-return {
+    background-color: #f1c40f;
+    color: #111;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-supprimer-return:hover {
+    background-color: #ffe26d;
 }
 
 .btn-cancel {

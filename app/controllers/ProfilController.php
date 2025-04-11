@@ -64,6 +64,19 @@ function refreshPortfolioDataPseudo($pseudo)
     exit();
 }
 
+function supprimerProfile(){
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $userID = $_SESSION['user']['id_utilisateur'];
+    $userModel = new User();
+    $userModel->deleteUser($userID);
+    $_SESSION = [];
+    session_destroy();
+    header('Location: index.php?page=home');
+    exit();
+}
+
 function logout()
 {
     if (session_status() === PHP_SESSION_NONE) {
