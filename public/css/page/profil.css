@@ -206,6 +206,24 @@
 .btn-submit:hover {
     background-color: #ffe26d;
 }
+.btn-supprimer {
+    background-color: #ce291d;
+    color: #111;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 100px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-supprimer:hover {
+    background-color: #b31408;
+}
 
 .btn-cancel {
     background-color: #333;

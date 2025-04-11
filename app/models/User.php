@@ -55,18 +55,20 @@ class User
     }
 
     // Méthode pour mettre à jour la bio, réseaux et l'image de profil de l'utilisateur
-    public function updateProfile($userId, $bio, $imagePath, $instagram = null, $x = null, $telegram = null)
+    public function updateProfile($userId, $pseudo, $bio, $imagePath, $instagram = null, $x = null, $telegram = null)
     {
         $sql = 'UPDATE utilisateur 
-            SET bio = :bio, 
-                image_profil = :image_profil, 
-                instagram = :instagram, 
-                x = :x, 
-                telegram = :telegram 
-            WHERE id_utilisateur = :id';
+                SET pseudo = :pseudo,
+                    bio = :bio, 
+                    image_profil = :image_profil, 
+                    instagram = :instagram, 
+                    x = :x, 
+                    telegram = :telegram 
+                WHERE id_utilisateur = :id';
 
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
+            ':pseudo' => $pseudo,
             ':bio' => $bio,
             ':image_profil' => $imagePath,
             ':instagram' => $instagram,
@@ -134,6 +136,14 @@ class User
             ':id' => $id,
             ':role' => $newRole
         ]);
+    }
+
+    public function isPseudoTaken($pseudo, $currentUserId)
+    {
+        $sql = 'SELECT id_utilisateur FROM utilisateur WHERE pseudo = ? AND id_utilisateur != ?';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$pseudo, $currentUserId]);
+        return $stmt->fetch() ? true : false;
     }
 
     public function searchUsers($term)

@@ -51,30 +51,40 @@ require_once RACINE . 'app/views/templates/header.php';
 </div>
 
 
-    <?php if (isset($_GET['error'])): ?>
-        <div class="alert alert-danger">
-            <?php
-            switch ($_GET['error']) {
-                case 'type':
-                    echo '❌ Format de fichier non autorisé. Seules les images JPEG, PNG, GIF ou WEBP sont acceptées.';
-                    break;
-                case 'size':
-                    echo "❌ L'image dépasse la taille maximale autorisée (10 Mo).";
-                    break;
-                case 'upload':
-                    echo '❌ Une erreur est survenue lors du transfert du fichier.';
-                    break;
-                default:
-                    echo '❌ Une erreur inconnue est survenue.';
-            }
-            ?>
-        </div>
-    <?php endif; ?>
+<?php if (isset($_GET['error'])): ?>
+    <div class="alert alert-danger">
+        <?php
+        switch ($_GET['error']) {
+            case 'type':
+                echo '❌ Format de fichier non autorisé. Seules les images JPEG, PNG, GIF ou WEBP sont acceptées.';
+                break;
+            case 'size':
+                echo "❌ L'image dépasse la taille maximale autorisée (10 Mo).";
+                break;
+            case 'upload':
+                echo '❌ Une erreur est survenue lors du transfert du fichier.';
+                break;
+            case 'pseudo':
+                echo '❌ Ce pseudo est déjà utilisé. Veuillez en choisir un autre.';
+                break;
+            default:
+                echo '❌ Une erreur inconnue est survenue.';
+        }
+        ?>
+    </div>
+<?php endif; ?>
+
 
     <!-- Formulaire de modification, initialement caché -->
     <div id="profile-edit" class="profile-edit" style="display: none;">
         <h3>Modifier votre profil</h3>
         <form action="index.php?page=profil&action=update" method="post" enctype="multipart/form-data" class="profile-form">
+
+        <div class="form-group">
+            <label for="pseudo">Pseudo</label>
+            <input type="text" name="pseudo" id="pseudo" value="<?= htmlspecialchars($user['pseudo']) ?>" required>
+        </div>
+
             <div class="form-group">
                 <label for="bio">Biographie :</label>
                 <textarea name="bio" id="bio" rows="5"><?php echo isset($_SESSION['user']['bio']) ? htmlspecialchars($_SESSION['user']['bio']) : ''; ?></textarea>
@@ -106,13 +116,14 @@ require_once RACINE . 'app/views/templates/header.php';
                 <img id="preview-image" src="#" alt="Aperçu de l'image" style="display: none;">
             </div>
             <?php if (isset($_SESSION['user']['image_profil']) && !empty($_SESSION['user']['image_profil'])): ?>
-                <div class="current-image">
+                <div class="current-image" id="current-image">
                     <img src="<?php echo htmlspecialchars($_SESSION['user']['image_profil']); ?>" alt="Image de Profil Actuelle">
                 </div>
             <?php endif; ?>
             <div class="form-actions">
                 <button type="submit" class="btn-submit">Enregistrer les modifications</button>
                 <button type="button" id="btn-cancel" class="btn-cancel">Annuler</button>
+                <a href="index.php?page=dashboard" id="btn-supprimer" class="btn-supprimer">Supprimer mon compte</a>
             </div>
         </form>
     </div>

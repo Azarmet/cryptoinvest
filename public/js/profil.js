@@ -13,13 +13,16 @@ document.getElementById('btn-cancel').addEventListener('click', function(){
 document.getElementById("image_profil").addEventListener("change", function (event) {
     const file = event.target.files[0];
     const preview = document.getElementById("preview-image");
+    const currentImage = document.getElementById("current-image");
 
     if (file && file.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.onload = function (e) {
             preview.src = e.target.result;
             preview.style.display = "block";
+            
         };
+        currentImage.style.display = "none";
         reader.readAsDataURL(file);
     } else {
         preview.src = "#";
