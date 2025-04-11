@@ -83,6 +83,10 @@
     transition: color 0.3s ease;
 }
 
+.nav-links li.profile a {
+    padding: 15px 0px;
+}
+
 .nav-links li a:hover {
     color: #F1C40F; /* Accent pour les interactions */
 }
@@ -92,7 +96,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
   }
   
   .nav-links li.profile img {
@@ -142,6 +146,9 @@
     }
     .nav-links li a {
         padding: 0;
+    }
+    .nav-links li.profile a {
+        padding: 0px 0px;
     }
 }
 
