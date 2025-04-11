@@ -152,7 +152,7 @@ function updateProfile()
         $_SESSION['user']['x'] = $x;
         $_SESSION['user']['telegram'] = $telegram;
 
-        header('Location: index.php?page=profil&success=1');
+        header('Location: index.php?page=profil');
         exit();
     } else {
         header('Location: index.php?page=profil&error=1');
