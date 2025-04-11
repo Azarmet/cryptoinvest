@@ -34,6 +34,13 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.leaderboard-table td {
+    padding: 14px 1px;
+    text-align: center;
+    text-wrap: nowrap;
+    font-family: 'Poppins', sans-serif;
+}
+
 .leaderboard-table thead {
     background-color: #26333f;
 }
@@ -170,3 +177,15 @@
     color: #cd7f32; /* Bronze */
     font-weight: bold;
 }
+
+@media screen and (max-width: 600px) {
+    body.page-leaderboard .td-pseudo .pseudo-text {
+        display: none; /* masque le pseudo dans les lignes */
+    }
+
+    body.page-leaderboard .leaderboard-table th.th-pseudo {
+        font-size: 0;     /* masque le texte sans casser la mise en page */
+    }
+
+}
+

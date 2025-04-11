@@ -29,8 +29,9 @@ if (searchInput) {
                         tr.innerHTML = `
                             <td class="rank-${user.rank}">${user.rank}${medal}</td>
                             <td class="td-pseudo">
-                                <img src="${user.image}" alt="Profil" width="25"> ${user.pseudo}
+                                <img src="${user.image}" alt="Profil" width="25"> <span class="pseudo-text">${user.pseudo}</span>
                             </td>
+
                             <td>${user.solde}</td>
                             <td class="${user.pnl_24h.startsWith('-') ? 'negative' : 'positive'}">${user.pnl_24h}</td>
                             <td class="${user.pnl_7j.startsWith('-') ? 'negative' : 'positive'}">${user.pnl_7j}</td>

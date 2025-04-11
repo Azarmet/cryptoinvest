@@ -38,7 +38,7 @@ foreach ($usersWithSolde as $user):
     $tableRows .= "
     <tr onclick=\"window.location.href='{$lienProfil}';\" style=\"cursor:pointer;\">
         <td class=\"rank-$rank\">$trophee$rank</td>
-        <td class=\"td-pseudo\">$photoProfil $pseudo</td>
+        <td class=\"td-pseudo\">$photoProfil <span class=\"pseudo-text\">$pseudo</span></td>
         <td>$solde</td>";
     if (isset($_GET['page']) && $page !== 'home') {
         $pnl24hVal = $user['pnl_24h'];
@@ -64,7 +64,7 @@ endforeach;
     <thead>
     <tr>
         <th>RANK</th>
-        <th>Pseudo</th>
+        <th class="th-pseudo">Pseudo</th>
         <?php if (isset($_GET['page']) && $page === 'home'): ?>
         <th>Solde ($)</th>
         <?php endif; ?>
