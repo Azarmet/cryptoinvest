@@ -202,10 +202,16 @@
         display: none;
     }
     body.page-leaderboard .mobile-img {
-        display: inline-block;
-        border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #f1c40f66;
+            display: block; /* ✅ plus fiable que inline-block pour image seule */
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #f1c40f66;
+            aspect-ratio: 1 / 1;
+            flex-shrink: 0; /* ⚠️ évite l'étirement en flex container */
+        
+        
     }
 
     /* Optionnel : masquer aussi l’entête “Pseudo” */
