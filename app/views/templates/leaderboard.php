@@ -19,11 +19,13 @@ if (isset($_GET['page'])):
 endif;
 $rank = 0;
 foreach ($usersWithSolde as $user):
-    $photoProfil = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"25\">";
+    $photoProfilDesktop = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"36\" class=\"desktop-img\">";
+    $photoProfilMobile  = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"36\" class=\"mobile-img\">";
+    
     $pseudo = htmlspecialchars($user['pseudo']);
     
 
-    $solde = number_format($user['solde'], 2, ',', ' ');
+    $solde = number_format($user['solde'], 0, ',', ' ');
     $lienProfil = "index.php?page=profilboard&pseudo=$pseudo";
     $rank += 1;
     $trophee = '';
@@ -38,21 +40,27 @@ foreach ($usersWithSolde as $user):
     $tableRows .= "
     <tr onclick=\"window.location.href='{$lienProfil}';\" style=\"cursor:pointer;\">
         <td class=\"rank-$rank\">$trophee$rank</td>
-        <td class=\"td-pseudo\">$photoProfil <span class=\"pseudo-text\">$pseudo</span></td>
-        <td>$solde</td>";
+        <td class=\"td-pseudo\">
+            $photoProfilDesktop 
+            <span class=\"pseudo-text\">$pseudo</span>
+        </td>
+        <td class=\"td-solde\">
+            $photoProfilMobile 
+            $solde $
+        </td>";
     if (isset($_GET['page']) && $page !== 'home') {
         $pnl24hVal = $user['pnl_24h'];
         $pnl7jVal = $user['pnl_7j'];
 
-        $pnl24h = number_format($pnl24hVal, 2, ',', ' ');
-        $pnl7j = number_format($pnl7jVal, 2, ',', ' ');
+        $pnl24h = number_format($pnl24hVal, 0, ',', ' ');
+        $pnl7j = number_format($pnl7jVal, 0, ',', ' ');
 
         $pnl24hClass = $pnl24hVal >= 0 ? 'positive' : 'negative';
         $pnl7jClass = $pnl7jVal >= 0 ? 'positive' : 'negative';
 
         $tableRows .= "
-        <td class=\"$pnl24hClass\">$pnl24h</td>
-        <td class=\"$pnl7jClass\">$pnl7j</td>";
+        <td class=\"$pnl24hClass\">$pnl24h $</td>
+        <td class=\"$pnl7jClass\">$pnl7j $</td>";
     }
 
     $tableRows .= "</tr>";
@@ -66,14 +74,14 @@ endforeach;
         <th>RANK</th>
         <th class="th-pseudo">Pseudo</th>
         <?php if (isset($_GET['page']) && $page === 'home'): ?>
-        <th>Solde ($)</th>
+        <th>Solde </th>
         <?php endif; ?>
         <!-- Ajout de la classe "sortable" avec un attribut data-sort pour identifier la colonne -->
         
         <?php if (isset($_GET['page']) && $page !== 'home'): ?>
-            <th class="sortable active" data-sort="solde" data-order="desc">Solde ($)</th>
-            <th class="sortable" data-sort="pnl_24h">PnL 24h ($)</th>
-            <th class="sortable" data-sort="pnl_7j">PnL 7j ($)</th>
+            <th class="sortable active" data-sort="solde" data-order="desc">Solde </th>
+            <th class="sortable" data-sort="pnl_24h">PnL 24h </th>
+            <th class="sortable" data-sort="pnl_7j">PnL 7j </th>
         <?php endif; ?>
     </tr>
 </thead>

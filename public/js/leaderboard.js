@@ -26,16 +26,28 @@ if (searchInput) {
                             window.location.href = `index.php?page=profilboard&pseudo=${user.pseudo}`;
                         };
 
+                        const soldeNettoye = parseFloat(user.solde.replace(/\s/g, '').replace(',', '.'));
+                        const pnl7jNettoye = parseFloat(user.pnl_7j.replace(/\s/g, '').replace(',', '.'));
+                        const pnl24hNettoye = parseFloat(user.pnl_24h.replace(/\s/g, '').replace(',', '.'));
+                        
                         tr.innerHTML = `
                             <td class="rank-${user.rank}">${user.rank}${medal}</td>
+
                             <td class="td-pseudo">
-                                <img src="${user.image}" alt="Profil" width="25"> <span class="pseudo-text">${user.pseudo}</span>
+                                <img src="${user.image}" alt="Profil" width="36" class="desktop-img"> 
+                                <span class="pseudo-text">${user.pseudo}</span>
                             </td>
 
-                            <td>${user.solde}</td>
-                            <td class="${user.pnl_24h.startsWith('-') ? 'negative' : 'positive'}">${user.pnl_24h}</td>
-                            <td class="${user.pnl_7j.startsWith('-') ? 'negative' : 'positive'}">${user.pnl_7j}</td>
+                            <td class="td-solde">
+                                <img src="${user.image}" alt="Profil" width="36" class="mobile-img">
+                                ${Math.round(soldeNettoye)}$
+                            </td>
+
+                            <td class="${user.pnl_24h.startsWith('-') ? 'negative' : 'positive'}">${Math.round(pnl24hNettoye)}$</td>
+                            <td class="${user.pnl_7j.startsWith('-') ? 'negative' : 'positive'}">${Math.round(pnl7jNettoye)}$</td>
                         `;
+
+
                         tbody.appendChild(tr);
                     });
                 } else {

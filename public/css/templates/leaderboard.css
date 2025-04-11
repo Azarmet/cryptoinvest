@@ -132,6 +132,10 @@
     font-weight: 500;
 }
 
+.td-solde{
+    font-weight: 500;
+}
+
 .td-pseudo img {
     width: 36px;
     height: 36px;
@@ -178,14 +182,41 @@
     font-weight: bold;
 }
 
+/* Images desktop/ mobile */
+.desktop-img {
+    display: inline-block; /* visible en desktop */
+}
+.mobile-img {
+    display: none;         /* cachée en desktop */
+}
+
+/* Masquer la colonne Pseudo et montrer l'image mobile en <600px> */
 @media screen and (max-width: 600px) {
-    body.page-leaderboard .td-pseudo .pseudo-text {
-        display: none; /* masque le pseudo dans les lignes */
+    /* UNIQUEMENT sur la page leaderboard */
+    body.page-leaderboard .td-pseudo {
+        display: none; /* la colonne pseudo disparaît entièrement */
     }
 
-    body.page-leaderboard .leaderboard-table th.th-pseudo {
-        font-size: 0;     /* masque le texte sans casser la mise en page */
+    /* on cache l'image desktop, on montre l'image mobile */
+    body.page-leaderboard .desktop-img {
+        display: none;
+    }
+    body.page-leaderboard .mobile-img {
+        display: inline-block;
+        border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f1c40f66;
     }
 
+    /* Optionnel : masquer aussi l’entête “Pseudo” */
+    body.page-leaderboard th.th-pseudo {
+        display: none;
+    }
+    body.page-leaderboard .td-solde{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+    }
 }
 
