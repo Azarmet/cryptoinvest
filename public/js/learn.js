@@ -1,15 +1,15 @@
-// Variables globales de filtre
-var currentCategory = "Tous";
+// Global filter variables
+var currentCategory = "tous";
 var currentSearch = "";
-// Page courante, on commencera à 1 par défaut
+// Current page, default starts at 1
 var currentPage = 1;
 
-// Dès le chargement de la page, on appelle loadArticles(1) pour récupérer la page 1
+// As soon as the page loads, call loadArticles(1) to get page 1
 window.addEventListener("DOMContentLoaded", function () {
   loadArticles(1);
 });
 
-// Fonction AJAX pour charger les articles filtrés
+// AJAX function to load filtered articles
 function loadArticles(page) {
   if (typeof page === "undefined") {
     page = 1;
@@ -17,7 +17,7 @@ function loadArticles(page) {
   currentPage = page;
 
   var xhr = new XMLHttpRequest();
-  // On appelle l'action "searchLearn" pour récupérer la liste d'articles en JSON
+  // Call the "searchLearn" action to retrieve the list of articles in JSON
   xhr.open(
     "GET",
     "index.php?page=learn&action=search" +
@@ -34,13 +34,13 @@ function loadArticles(page) {
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
-      // On reçoit un objet JSON contenant : articles, currentPage, totalPages
+      // We receive a JSON object containing: articles, currentPage, totalPages
       var data = JSON.parse(xhr.responseText);
       var articles = data.articles || [];
       var container = document.getElementById("articles-container");
       container.innerHTML = "";
 
-      // Mise à jour de la liste d'articles
+      // Update the list of articles
       if (articles.length > 0) {
         articles.forEach(function (article) {
           var div = document.createElement("div");
@@ -51,7 +51,7 @@ function loadArticles(page) {
           const imageSrc =
             article.image && article.image !== ""
               ? `public/uploads/article/${article.image}`
-              : "public/image/default-article.jpg"; // chemin image par défaut
+              : "public/image/default-article.jpg"; // default image path
 
           var html = `
     <div class="article-image-container">
@@ -60,19 +60,17 @@ function loadArticles(page) {
     <h3>${article.titre}</h3>
     <p><em>${article.categorie} - ${article.date_publication}</em></p>
     <p>${article.contenu.substring(0, 200).replace(/(<([^>]+)>)/gi, "")}...</p>
-    <a href='index.php?page=article&action=show&id=${
-      article.id_article
-    }'>Lire la suite</a>
+    <a href='index.php?page=article&action=show&id=${article.id_article}'>Read more</a>
 `;
 
           div.innerHTML = html;
           container.appendChild(div);
         });
       } else {
-        container.innerHTML = "<p>Aucun article trouvé.</p>";
+        container.innerHTML = "<p>No articles found.</p>";
       }
 
-      // Mise à jour de la pagination
+      // Update pagination
       buildPagination(data.currentPage, data.totalPages);
     }
   };
@@ -80,7 +78,7 @@ function loadArticles(page) {
 }
 
 /**
- * Construit la pagination en JavaScript, dans le div#pagination.
+ * Builds the pagination in JavaScript, inside the div#pagination.
  */
 function buildPagination(current, total) {
     const paginationDiv = document.getElementById("pagination");
@@ -93,12 +91,12 @@ function buildPagination(current, total) {
   
     let ul = '<ul style="list-style: none; display: flex; gap: 5px; flex-wrap: wrap; justify-content: center;">';
   
-    // Lien "Précédent"
+    // "Previous" link
     if (current > 1) {
-      ul += `<li onclick="loadArticles(${current - 1});" class="page-link">Précédent</li>`;
+      ul += `<li onclick="loadArticles(${current - 1});" class="page-link">Previous</li>`;
     }
   
-    // Liens pour chaque page
+    // Links for each page
     for (let i = 1; i <= total; i++) {
       if (i === current) {
         ul += `<li class="page-link active">${i}</li>`;
@@ -107,22 +105,22 @@ function buildPagination(current, total) {
       }
     }
   
-    // Lien "Suivant"
+    // "Next" link
     if (current < total) {
-      ul += `<li onclick="loadArticles(${current + 1});" class="page-link">Suivant</li>`;
+      ul += `<li onclick="loadArticles(${current + 1});" class="page-link">Next</li>`;
     }
   
     ul += "</ul>";
     paginationDiv.innerHTML = ul;
-  }
+}
   
 
-// Gestion des onglets de catégorie avec scroll
+// Category tab management with scroll
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("category-tabs");
   const tabButtons = container.querySelectorAll(".tab-button");
 
-  // Scroll automatique vers l'onglet actif au chargement
+  // Automatic scroll to the active tab on load
   const activeTab = container.querySelector(".tab-button.active");
   if (activeTab) {
     setTimeout(() => {
@@ -134,38 +132,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   }
 
-  // Gestion du clic
+  // Handle click
   tabButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-      // Met à jour la catégorie
+      // Update category
       currentCategory = this.getAttribute("data-category");
 
-      // Supprime la classe active
+      // Remove the active class
       tabButtons.forEach(function (btn) {
         btn.classList.remove("active");
       });
 
-      // Ajoute la classe active au bouton cliqué
+      // Add the active class to the clicked button
       this.classList.add("active");
 
-      // Scroll jusqu'au bouton
+      // Scroll to the button
       this.scrollIntoView({
         behavior: "smooth",
         inline: "center",
         block: "nearest"
       });
 
-      // Réinitialise la recherche
+      // Reset search
       currentSearch = "";
       document.getElementById("learn-search").value = "";
 
-      // Recharge les articles
+      // Reload articles
       loadArticles(1);
     });
   });
 });
 
-// Gestion de la recherche (bouton Rechercher)
+// Search management (for the search input)
 document.getElementById("learn-search").addEventListener("input", function () {
   currentSearch = this.value;
   loadArticles(1);

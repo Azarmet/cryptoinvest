@@ -1,7 +1,7 @@
 <?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
 <section class="article-form-section">
-    <h1 class="section-title"><?= isset($article) ? 'Modifier' : 'Créer' ?> un article</h1>
+    <h1 class="section-title"><?= isset($article) ? 'Edit' : 'Create' ?> an article</h1>
 
     <?php if (!empty($error)): ?>
         <div class="alert alert-error">
@@ -11,12 +11,12 @@
 
     <form method="POST" action="" enctype="multipart/form-data" class="article-form">
         <div class="form-group">
-            <label for="titre">Titre :</label>
+            <label for="titre">Title:</label>
             <input type="text" name="titre" id="titre" required value="<?= isset($article['titre']) ? htmlspecialchars($article['titre']) : '' ?>">
         </div>
 
         <div class="form-group">
-            <label for="contenu">Contenu :</label>
+            <label for="contenu">Content:</label>
             <textarea name="contenu" id="contenu" rows="10" required><?= isset($article['contenu']) ? htmlspecialchars($article['contenu']) : '' ?></textarea>
         </div>
 
@@ -24,26 +24,26 @@
 
         <?php if (isset($article['image']) && !empty($article['image'])): ?>
             <div class="form-group">
-                <label>Image actuelle :</label>
-                <img src="public/uploads/article/<?= htmlspecialchars($article['image']) ?>" alt="Image article" class="image-preview">
+                <label>Current image:</label>
+                <img src="public/uploads/article/<?= htmlspecialchars($article['image']) ?>" alt="Article image" class="image-preview">
             </div>
         <?php endif; ?>
 
         <div class="form-group">
-            <label for="image">Image :</label>
+            <label for="image">Image:</label>
             <input type="file" name="image" id="image" accept="image/*">
         </div>
 
         <div class="form-group" id="preview-container" style="display: none;">
-            <label>Aperçu :</label>
-            <img id="preview" src="#" alt="Aperçu de l'image" class="image-preview">
+            <label>Preview:</label>
+            <img id="preview" src="#" alt="Image preview" class="image-preview">
         </div>
 
         <div class="form-group">
-            <label for="categorie">Catégorie :</label>
+            <label for="categorie">Category:</label>
             <select name="categorie" id="categorie" required>
                 <?php
-                $categories = ['Analyses', 'Guide', 'Tutoriels', 'Crypto News'];
+                $categories = ['Analysis', 'Guide', 'Tutorials', 'Crypto News'];
                 $selected = isset($article['categorie']) ? $article['categorie'] : '';
                 foreach ($categories as $cat):
                 ?>
@@ -53,18 +53,18 @@
         </div>
 
         <div class="form-group">
-            <label for="statut">Statut :</label>
+            <label for="statut">Status:</label>
             <select name="statut" id="statut">
-                <option value="brouillon" <?= isset($article['statut']) && $article['statut'] == 'brouillon' ? 'selected' : '' ?>>Brouillon</option>
-                <option value="publié" <?= isset($article['statut']) && $article['statut'] == 'publié' ? 'selected' : '' ?>>Publié</option>
+                <option value="brouillon" <?= isset($article['statut']) && $article['statut'] == 'brouillon' ? 'selected' : '' ?>>Draft</option>
+                <option value="publié" <?= isset($article['statut']) && $article['statut'] == 'publié' ? 'selected' : '' ?>>Published</option>
             </select>
         </div>
 
-        <input type="submit" class="btn-submit" value="<?= isset($article) ? 'Mettre à jour' : 'Créer' ?> l'article">
+        <input type="submit" class="btn-submit" value="<?= isset($article) ? 'Update' : 'Create' ?> the article">
     </form>
 
     <div class="form-back-link">
-        <a href="index.php?pageback=learn">← Retour à la liste</a>
+        <a href="index.php?pageback=learn">← Back to list</a>
     </div>
 </section>
 

@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -19,7 +19,7 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
         <nav class="header-nav">
             <ul>
-                <li><a href="index.php?pageback=home">Accueil</a></li>
+                <li><a href="index.php?pageback=home">Home</a></li>
                 <li><a href="index.php?pageback=faq">FAQ</a></li>
                 <li><a href="index.php?pageback=learn">Learn</a></li>
                 <li><a href="index.php?pageback=market">Market</a></li>

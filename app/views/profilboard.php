@@ -6,9 +6,9 @@ require_once RACINE . 'app/views/templates/header.php';
 ?>
 <div class="profilboard-container">
 <div class="user-profile">
-    <img id="profil-photo" src="<?= $profiluser['image_profil'] ?>" alt="Photo de profil" class="profile-image">
+    <img id="profil-photo" src="<?= $profiluser['image_profil'] ?>" alt="Profile Picture" class="profile-image">
     <div class="profile-details">
-        <h2 id="profil-pseudo">Profil de <?= $profiluser['pseudo'] ?></h2>
+        <h2 id="profil-pseudo">Profile of <?= $profiluser['pseudo'] ?></h2>
         <p id="profil-bio"><?= $profiluser['bio'] ?></p>
         <div class="social-links">
     <?php if (!empty($profiluser['instagram'])): ?>
@@ -45,7 +45,7 @@ require_once RACINE . 'app/views/templates/header.php';
 
     </div>
 </div>
-<!-- <h3 id="current-portfolio-value">Valeur actuelle : Loading...</h3> -->
+<!-- <h3 id="current-portfolio-value">Current Value: Loading...</h3> -->
     <?php require_once RACINE . 'app/views/templates/portfolio.php'; ?>
 
 </div>

@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>CryptoInvest</title>
@@ -21,7 +21,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <?php else: ?>
     <link rel="stylesheet" href="<?= RACINE_URL . "public/css/page/home.css"?>">
 <?php endif; ?>
-    <!-- Import des polices -->
+    <!-- Importing fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@700&display=swap" rel="stylesheet">
 </head>
 <body class="<?= isset($_GET['page']) ? 'page-' . $_GET['page'] : '' ?>">
@@ -29,22 +29,22 @@ if (session_status() == PHP_SESSION_NONE) {
 <div class="site-wrapper">
     <header class="site-header">
         <nav class="navbar" id="navbar">
-        <div class="logo">
-  <a href="index.php?page=home">
-    <img src="<?= RACINE_URL . 'public/image/logo.png'?>" alt="logo crypto invest" class="logo-header">
-    <span class="brand-name">Crypto<span class="orange">Invest</span></span>
-  </a>
-</div>
-            <!-- Bouton burger -->
+            <div class="logo">
+                <a href="index.php?page=home">
+                    <img src="<?= RACINE_URL . 'public/image/logo.png'?>" alt="CryptoInvest logo" class="logo-header">
+                    <span class="brand-name">Crypto<span class="orange">Invest</span></span>
+                </a>
+            </div>
+            <!-- Burger button -->
             <div class="burger" id="burger">
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
-            <!-- Menu de navigation -->
+            <!-- Navigation menu -->
             <?php
-$currentPage = $_GET['page'] ?? 'home';
-?>
+            $currentPage = $_GET['page'] ?? 'home';
+            ?>
             <ul class="nav-links">
                 <li><a href="index.php?page=home" class="<?= $currentPage === 'home' ? 'active' : '' ?>">Home</a></li>
                 <li><a href="index.php?page=faq" class="<?= $currentPage === 'faq' ? 'active' : '' ?>">FAQ</a></li>
@@ -59,22 +59,22 @@ $currentPage = $_GET['page'] ?? 'home';
 
                 <?php if (isset($_SESSION['user'])): ?>
                     <li class="profile">
-                        <img src="<?= htmlspecialchars($_SESSION['user']['image_profil']) ?>" alt="Profil">
+                        <img src="<?= htmlspecialchars($_SESSION['user']['image_profil']) ?>" alt="Profile">
                         <a href="index.php?page=profil" class="<?= $currentPage === 'profil' ? 'active' : '' ?>">
                             <?= htmlspecialchars($_SESSION['user']['pseudo']) ?>
                         </a>
                     </li>
                 <?php else: ?>
-                    <li><a href="index.php?page=login" class="<?= $currentPage === 'login' ? 'active' : '' ?>">Connexion</a></li>
+                    <li><a href="index.php?page=login" class="<?= $currentPage === 'login' ? 'active' : '' ?>">Login</a></li>
                 <?php endif; ?>
             </ul>
 
         </nav>
     </header>
     <main>
-    <!-- Votre contenu principal -->
+    <!-- Your main content -->
     <script>
-        // Assure l'exécution une fois le DOM chargé
+        // Ensure the code runs once the DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const burger = document.getElementById('burger');
             const navLinks = document.querySelector('.nav-links');

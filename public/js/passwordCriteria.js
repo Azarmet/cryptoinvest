@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmPasswordInput = document.getElementById('confirm_password');
     const registerForm = document.querySelector('.register-form');
     
-    // Création de la zone de critères si elle n'existe pas déjà
+    // Create the criteria container if it doesn't already exist
     let criteriaContainer = document.getElementById('password-criteria');
     if (!criteriaContainer) {
         criteriaContainer = document.createElement('div');
@@ -12,38 +12,38 @@ document.addEventListener('DOMContentLoaded', function() {
         passwordInput.parentNode.insertBefore(criteriaContainer, passwordInput.nextSibling);
     }
 
-    // Définition des critères
+    // Define the criteria
     const criteria = {
         uppercase: {
             regex: /[A-Z]/,
-            message: 'Au moins une majuscule'
+            message: 'At least one uppercase letter'
         },
         lowercase: {
             regex: /[a-z]/,
-            message: 'Au moins une minuscule'
+            message: 'At least one lowercase letter'
         },
         number: {
             regex: /[0-9]/,
-            message: 'Au moins un chiffre'
+            message: 'At least one number'
         },
         special: {
             regex: /[\W_]/,
-            message: 'Au moins un caractère spécial'
+            message: 'At least one special character'
         },
         length: {
             regex: /.{8,}/,
-            message: 'Au moins 8 caractères'
+            message: 'At least 8 characters'
         }
     };
 
-    // Fonction qui met à jour l'affichage des critères
+    // Function to update the criteria display
     function updateCriteria() {
         const value = passwordInput.value;
         const confirmValue = confirmPasswordInput.value;
         let allValid = true;
         let criteriaHTML = '<ul>';
         
-        // Vérification des critères principaux
+        // Check the main criteria
         for (let key in criteria) {
             const item = criteria[key];
             if (item.regex.test(value)) {
@@ -54,11 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Vérification de la correspondance des mots de passe
+        // Check password matching
         if (value === confirmValue && value !== '') {
-            criteriaHTML += `<li class="valid">Les deux mots de passe correspondent</li>`;
+            criteriaHTML += `<li class="valid">Passwords match</li>`;
         } else {
-            criteriaHTML += `<li class="invalid">Les deux mots de passe doivent être identiques</li>`;
+            criteriaHTML += `<li class="invalid">Passwords must match</li>`;
             allValid = false;
         }
         
@@ -67,15 +67,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return allValid;
     }
 
-    // Mise à jour dynamique lors de la saisie
+    // Update dynamically on input
     passwordInput.addEventListener('input', updateCriteria);
     confirmPasswordInput.addEventListener('input', updateCriteria);
 
-    // Empêche l'envoi du formulaire si les critères ne sont pas remplis
+    // Prevent form submission if criteria are not met
     registerForm.addEventListener('submit', function(e) {
         if (!updateCriteria()) {
             e.preventDefault();
-            alert("Veuillez remplir tous les critères de sécurité du mot de passe.");
+            alert("Please fulfill all password security criteria.");
         }
     });
 });

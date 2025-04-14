@@ -8,7 +8,7 @@
                 </div>
                     <div class="legend">
                         <span id="index-value">--</span> / 100
-                        <div id="index-label" class="label">Chargement...</div>
+                        <div id="index-label" class="label">Loading...</div>
                     </div>
                 </div>
             </div >

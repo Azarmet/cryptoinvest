@@ -12,15 +12,15 @@ if (isset($_GET['page'])):
     <?php else: ?>
         <h1>Leader<span class="orange">board</span></h1>   
         <div class="search-container">
-            <input type="text" class="search-input" id="search-input" placeholder="Rechercher un utilisateur...">
+            <input type="text" class="search-input" id="search-input" placeholder="Search for a user...">
         </div>  
     <?php
     endif;
 endif;
 $rank = 0;
 foreach ($usersWithSolde as $user):
-    $photoProfilDesktop = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"36\" class=\"desktop-img\">";
-    $photoProfilMobile  = "<img src=\"{$user['image']}\" alt=\"Profil\" width=\"36\" class=\"mobile-img\">";
+    $photoProfilDesktop = "<img src=\"{$user['image']}\" alt=\"Profile\" width=\"36\" class=\"desktop-img\">";
+    $photoProfilMobile  = "<img src=\"{$user['image']}\" alt=\"Profile\" width=\"36\" class=\"mobile-img\">";
     
     $pseudo = htmlspecialchars($user['pseudo']);
     
@@ -72,16 +72,16 @@ endforeach;
     <thead>
     <tr>
         <th>RANK</th>
-        <th class="th-pseudo">Pseudo</th>
+        <th class="th-pseudo">Username</th>
         <?php if (isset($_GET['page']) && $page === 'home'): ?>
-        <th>Solde </th>
+        <th>Balance </th>
         <?php endif; ?>
-        <!-- Ajout de la classe "sortable" avec un attribut data-sort pour identifier la colonne -->
+        <!-- Added the "sortable" class with a data-sort attribute to identify the column -->
         
         <?php if (isset($_GET['page']) && $page !== 'home'): ?>
-            <th class="sortable active" data-sort="solde" data-order="desc">Solde </th>
+            <th class="sortable active" data-sort="solde" data-order="desc">Balance </th>
             <th class="sortable" data-sort="pnl_24h">PnL 24h </th>
-            <th class="sortable" data-sort="pnl_7j">PnL 7j </th>
+            <th class="sortable" data-sort="pnl_7j">PnL 7d </th>
         <?php endif; ?>
     </tr>
 </thead>

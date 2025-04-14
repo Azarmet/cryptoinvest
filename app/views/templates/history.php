@@ -1,23 +1,21 @@
 <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/transactions.css'?>">
 
-<!-- Historique des transactions -->
+<!-- Transaction History -->
 <div class="transactions-section">
-  <h2>Historique des Transactions</h2>
+  <h2>Transaction History</h2>
   <div class="table-responsive-market">
     <table id="transactionsTable" class="market-table transaction-table">
-    <thead>
-    <tr>
-        <th class="sortable" data-type="date">Date</th>
-        <th class="sortable" data-type="text">Code</th>
-        <th class="sortable" data-type="text">Type</th>
-        <th class="sortable" data-type="number">Quantité</th>
-        <th class="sortable" data-type="number">Prix ouverture</th>
-        <th class="sortable" data-type="number">Prix clôture</th>
-        <th class="sortable" data-type="number">PNL</th>
-    </tr>
-    </thead>
-
-
+      <thead>
+        <tr>
+          <th class="sortable" data-type="date">Date</th>
+          <th class="sortable" data-type="text">Code</th>
+          <th class="sortable" data-type="text">Type</th>
+          <th class="sortable" data-type="number">Quantity</th>
+          <th class="sortable" data-type="number">Opening Price</th>
+          <th class="sortable" data-type="number">Closing Price</th>
+          <th class="sortable" data-type="number">PNL</th>
+        </tr>
+      </thead>
       <tbody>
         <?php foreach ($transactions as $transaction): ?>
           <tr>
@@ -49,14 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const type = header.getAttribute('data-type');
       const rows = Array.from(table.querySelectorAll('tbody tr'));
 
-      // Gérer la direction du tri (asc / desc)
+      // Toggle sort direction (asc / desc)
       const isAscending = !header.classList.contains('asc');
 
-      // Réinitialiser toutes les classes de tri
+      // Reset all sort classes
       headers.forEach(h => h.classList.remove('asc', 'desc'));
       header.classList.add(isAscending ? 'asc' : 'desc');
 
-      // Fonction pour nettoyer les nombres avec , € $ etc.
+      // Function to clean numbers (remove commas, €, $, etc.)
       const cleanNumber = text =>
         parseFloat(text.replace(/[^\d.-]/g, '').replace(',', ''));
 
@@ -87,5 +85,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-
-

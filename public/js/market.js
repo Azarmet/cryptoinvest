@@ -1,7 +1,7 @@
-// Variable globale pour stocker la catégorie courante
-let currentCategory = 'top';
+// Global variable to store the current category
+var currentCategory = 'top';
 
-// Fonction de rafraîchissement du tableau via AJAX
+// AJAX function to refresh the table
 function refreshMarketData(category = currentCategory) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "index.php?page=market&action=refresh&categorie=" + category, true);
@@ -14,7 +14,7 @@ function refreshMarketData(category = currentCategory) {
                 var variation = parseFloat(crypto.variation_24h).toFixed(2);
                 let colorClass = variation >= 0 ? 'positive' : 'negative';
             
-                htmlContent += `<tr class="crypto-link" data-symbol="${crypto.code}">`; // <--- ici
+                htmlContent += `<tr class="crypto-link" data-symbol="${crypto.code}">`;
                 htmlContent += `<td>${crypto.code}</td>`;
                 htmlContent += `<td class="${colorClass}">${crypto.prix_actuel}</td>`;
                 htmlContent += `<td class="${colorClass}">${variation}%</td>`;
@@ -32,7 +32,7 @@ function refreshMarketData(category = currentCategory) {
             
             tbody.innerHTML = htmlContent;
 
-            // Réappliquer le filtre de recherche sur le nouveau contenu
+            // Reapply the search filter on the new content
             applySearchFilter();
         }
     };
@@ -42,7 +42,7 @@ function refreshMarketData(category = currentCategory) {
 
 function updateTradingViewSymbol(symbol) {
     const container = document.querySelector("#tradingview-widget-container");
-    container.innerHTML = ""; // Nettoyer l'ancien widget
+    container.innerHTML = ""; // Clear the old widget
 
     const widgetDiv = document.createElement("div");
     widgetDiv.id = "tradingview_abcdef";
@@ -58,7 +58,7 @@ function updateTradingViewSymbol(symbol) {
             "interval": "D",
             "theme": "dark",
             "style": "1",
-            "locale": "fr",
+            "locale": "en", // Changed from "fr" to "en"
             "toolbar_bg": "#f1f3f6",
             "enable_publishing": false,
             "hide_top_toolbar": false,
@@ -72,12 +72,12 @@ function updateTradingViewSymbol(symbol) {
     container.appendChild(script);
 }
 
-// Gestion des onglets
+// Category tab management
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.querySelector(".market-tabs");
     const tabButtons = container.querySelectorAll(".tab-button");
 
-    // Scroll automatique vers l'onglet actif au chargement
+    // Automatic scroll to the active tab on load
     const activeTab = container.querySelector(".tab-button.active");
     if (activeTab) {
         activeTab.scrollIntoView({
@@ -87,20 +87,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Gestion du clic sur chaque onglet
+    // Handle click on each tab
     tabButtons.forEach(button => {
         button.addEventListener("click", function () {
-            // Désactiver tous les onglets
+            // Deactivate all tabs
             tabButtons.forEach(btn => btn.classList.remove("active"));
 
-            // Activer l'onglet cliqué
+            // Activate the clicked tab
             this.classList.add("active");
 
-            // Met à jour la catégorie globale
+            // Update the global category
             currentCategory = this.getAttribute("data-category");
             refreshMarketData(currentCategory);
 
-            // Scroll vers le bouton actif
+            // Scroll to the active button
             this.scrollIntoView({
                 behavior: "smooth",
                 inline: "center",
@@ -109,20 +109,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
   
-
-// Gérer le clic sur un code de crypto
+// Handle click on a crypto code row
 document.addEventListener("click", function(e) {
     const row = e.target.closest(".crypto-link");
     if (row && !e.target.classList.contains("watchlist-toggle")) {
         e.preventDefault(); 
         const newSymbol = row.getAttribute("data-symbol");
 
-        // Mettre à jour le widget TradingView
+        // Update the TradingView widget
         updateTradingViewSymbol(newSymbol);
 
-        // Mettre à jour le <select> du tradingOrder si présent
+        // Update the <select> element in tradingOrder if present
         const select = document.getElementById("crypto_code");
         if (select) {
             for (let i = 0; i < select.options.length; i++) {
@@ -138,7 +136,7 @@ document.addEventListener("click", function(e) {
     }
 });
 
-// Gérer la sélection du menu code crypto pour widget 
+// Handle selection from the crypto code menu for the widget 
 document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("crypto_code");
     if (select) {
@@ -148,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
 
 document.addEventListener("click", function(e) {
     if (e.target.classList.contains("watchlist-toggle")) {
@@ -160,19 +157,18 @@ document.addEventListener("click", function(e) {
         })
         .then(response => response.text())
         .then(() => {
-            refreshMarketData(); // Rafraîchir juste le tableau, pas la page
+            refreshMarketData(); // Refresh just the table, not the whole page
         })
-        .catch(error => console.error("Erreur AJAX :", error));
+        .catch(error => console.error("AJAX Error:", error));
     }
 });
 
-
-// Rafraîchir toutes les 5 secondes avec la catégorie courante
+// Refresh every 10 seconds with the current category
 setInterval(function() {
     refreshMarketData(currentCategory);
 }, 10000);
 
-// Rafraîchissement des positions
+// Refresh positions
 function refreshPositions() {
     fetch("index.php?page=market&action=refreshPositions")
         .then(res => res.json())
@@ -183,14 +179,14 @@ function refreshPositions() {
             positions.forEach(pos => {
                 let tr = document.createElement('tr');
             
-                // Couleur selon le sens
+                // Color based on side
                 let sensClass = pos.sens.toLowerCase() === 'long' ? 'positive' : 'negative';
             
-                // Couleur PnL
+                // PnL color
                 let pnl = parseFloat(pos.pnl);
                 let pnlClass = pnl >= 0 ? 'positive' : 'negative';
             
-                // Couleur ROI
+                // ROI color
                 let roi = parseFloat(pos.roi);
                 let roiClass = roi >= 0 ? 'positive' : 'negative';
             
@@ -212,12 +208,13 @@ function refreshPositions() {
         .catch(err => console.error(err));
 }
 
+// Search filter on market table
 document.getElementById("searchInput").addEventListener("keyup", function() {
     const searchTerm = this.value.toLowerCase();
     const rows = document.querySelectorAll("#market-table tbody tr");
     
     rows.forEach(function(row) {
-        // On cherche si le texte de la ligne contient le terme recherché
+        // Check if the row text contains the search term
         if (row.textContent.toLowerCase().includes(searchTerm)) {
             row.style.display = "";
         } else {
@@ -240,16 +237,17 @@ function applySearchFilter() {
 }
 
 
-// Rafraîchissement du portefeuille (graphique, stats, valeur actuelle et solde disponible)
+// Refresh available balance in the portfolio section
 function refreshPortfolioData() {
     fetch(`index.php?page=market&action=available-balance`)
         .then(res => res.json())
         .then(data => {
-            document.getElementById('available-balance').textContent = "Solde disponible : " + data.availableBalance.toFixed(2) + " USDT";
+            document.getElementById('available-balance').textContent = "Available Balance: " + data.availableBalance.toFixed(2) + " USDT";
         })
         .catch(err => console.error(err));
 }
-if(isLoggedIn){
+
+if (isLoggedIn) {
     refreshPositions();
 }
 
@@ -257,7 +255,9 @@ refreshMarketData();
 
 updateTradingViewSymbol("BTCUSDT");
 
-if(isLoggedIn){
-refreshPortfolioData();
+if (isLoggedIn) {
+    refreshPortfolioData();
 }
-if(isLoggedIn){setInterval(refreshPositions, 10000);}
+if (isLoggedIn) {
+    setInterval(refreshPositions, 10000);
+}

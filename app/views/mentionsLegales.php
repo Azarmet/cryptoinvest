@@ -2,51 +2,51 @@
 
 <section class="legal-section">
     <div class="container">
-        <h1>Mentions Légales</h1>
+        <h1>Legal Notice</h1>
 
-        <h2>Éditeur du site</h2>
+        <h2>Site Publisher</h2>
         <p>
             <strong>CryptoInvest</strong><br>
-            Plateforme éducative et interactive dédiée à l’univers des cryptomonnaies.<br>
-            Contact : <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a>
+            An educational and interactive platform dedicated to the world of cryptocurrencies.<br>
+            Contact: <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a>
         </p>
 
-        <h2>Responsable de la publication</h2>
+        <h2>Publication Manager</h2>
         <p>
             John Doe – contact@cryptoinvest.com
         </p>
 
-        <h2>Hébergement</h2>
+        <h2>Hosting</h2>
         <p>
-            Le site est hébergé par :<br>
+            The site is hosted by:<br>
             <strong>Hostinger International Ltd</strong><br>
-            61 Lordou Vironos Street, 6023 Larnaca, Chypre<br>
+            61 Lordou Vironos Street, 6023 Larnaca, Cyprus<br>
             <a href="https://www.hostinger.fr">www.hostinger.fr</a>
         </p>
 
-        <h2>Propriété intellectuelle</h2>
+        <h2>Intellectual Property</h2>
         <p>
-            Tous les contenus présents sur le site CryptoInvest (textes, images, vidéos, logos, etc.) sont protégés par le droit d’auteur et restent la propriété exclusive de leur auteur, sauf mention contraire. Toute reproduction ou diffusion sans autorisation est interdite.
+            All content available on CryptoInvest (texts, images, videos, logos, etc.) is protected by copyright law and remains the exclusive property of its author, unless otherwise stated. Any reproduction or distribution without authorization is prohibited.
         </p>
 
-        <h2>Responsabilité</h2>
+        <h2>Liability</h2>
         <p>
-            Les informations disponibles sur CryptoInvest sont fournies à titre informatif. Elles ne constituent en aucun cas un conseil en investissement. L’utilisateur est seul responsable de l’usage des informations proposées.
+            The information provided on CryptoInvest is for informational purposes only. It does not constitute investment advice. The user is solely responsible for the use of the provided information.
         </p>
 
         <h2>Cookies</h2>
         <p>
-            Le site utilise des cookies pour améliorer l’expérience utilisateur et mesurer l’audience. Vous pouvez les refuser ou les paramétrer depuis votre navigateur.
+            The site uses cookies to enhance user experience and measure traffic. You can refuse or adjust them via your browser settings.
         </p>
 
-        <h2>Données personnelles</h2>
+        <h2>Personal Data</h2>
         <p>
-            CryptoInvest collecte certaines données dans le cadre de l’inscription et de l’utilisation du site. Ces données ne sont jamais revendues à des tiers. Vous pouvez demander la suppression de vos données à tout moment en nous contactant.
+            CryptoInvest collects certain data during registration and use of the site. This data is never sold to third parties. You may request the deletion of your data at any time by contacting us.
         </p>
 
         <h2>Contact</h2>
         <p>
-            Pour toute question, vous pouvez nous contacter à : <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a>
+            For any questions, you can contact us at: <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a>
         </p>
     </div>
 </section>

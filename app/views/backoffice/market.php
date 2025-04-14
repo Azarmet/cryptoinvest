@@ -1,35 +1,35 @@
 <?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
 <section class="market-section">
-    <h1 class="section-title">Gestion du Marché Crypto</h1>
+    <h1 class="section-title">Crypto Market Management</h1>
 
     <?php if (isset($_GET['success'])): ?>
         <div class="alert alert-success">
             <?php
             switch ($_GET['success']) {
-                case '1': echo '✅ Crypto ajoutée au marché global.'; break;
-                case '2': echo '✅ Crypto supprimée du marché global.'; break;
-                case '3': echo '✅ Crypto ajoutée aux transactions.'; break;
-                case '4': echo '✅ Crypto supprimée des transactions.'; break;
+                case '1': echo '✅ Crypto added to the global market.'; break;
+                case '2': echo '✅ Crypto removed from the global market.'; break;
+                case '3': echo '✅ Crypto added to transactions.'; break;
+                case '4': echo '✅ Crypto removed from transactions.'; break;
             }
             ?>
         </div>
     <?php endif; ?>
 
-    <!-- Onglets -->
+    <!-- Tabs -->
     <div class="market-tabs">
-        <button class="market-tab-button active" data-tab="global">🔹 Marché Global</button>
+        <button class="market-tab-button active" data-tab="global">🔹 Global Market</button>
         <button class="market-tab-button" data-tab="transaction">🔸 Transactions</button>
     </div>
 
-    <!-- Contenu Onglet Global -->
+    <!-- Global Tab Content -->
     <div class="market-tab-content active" id="tab-global">
-        <h2>🔹 Cryptos du Marché Global</h2>
+        <h2>🔹 Global Market Cryptos</h2>
 
         <form method="POST" action="index.php?pageback=createCryptoMarket" class="crypto-form">
             <input type="text" name="code" placeholder="Code (ex: BTC)" required>
 
-            <label>Catégories :</label>
+            <label>Categories:</label>
             <div class="checkbox-group">
                 <?php
                 $categories = ["top10", "layer1", "new", "layer2", "web3", "meme", "ai", "defi", "nft"];
@@ -37,7 +37,7 @@
                     <label><input type="checkbox" name="categories[]" value="<?= $cat ?>"> <?= $cat ?></label>
                 <?php endforeach; ?>
             </div>
-            <button type="submit" class="btn-submit">➕ Ajouter</button>
+            <button type="submit" class="btn-submit">➕ Add</button>
         </form>
 
         <?php if (!empty($marketCryptos)): ?>
@@ -47,7 +47,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Code</th>
-                            <th>Catégorie</th>
+                            <th>Category</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -58,7 +58,7 @@
                                 <td><?= htmlspecialchars($crypto['code']) ?></td>
                                 <td><?= htmlspecialchars($crypto['categorie']) ?></td>
                                 <td>
-                                    <a href="index.php?pageback=deleteCryptoMarket&id=<?= $crypto['id_crypto_market'] ?>" onclick="return confirm('Supprimer cette crypto ?')" class="action-btn delete">🗑️</a>
+                                    <a href="index.php?pageback=deleteCryptoMarket&id=<?= $crypto['id_crypto_market'] ?>" onclick="return confirm('Delete this crypto?')" class="action-btn delete">🗑️</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -66,17 +66,17 @@
                 </table>
             </div>
         <?php else: ?>
-            <p class="no-user">Aucune cryptomonnaie ajoutée au marché.</p>
+            <p class="no-user">No cryptocurrency added to the market.</p>
         <?php endif; ?>
     </div>
 
-    <!-- Contenu Onglet Transaction -->
+    <!-- Transaction Tab Content -->
     <div class="market-tab-content" id="tab-transaction">
-        <h2>🔸 Cryptos disponibles pour les Transactions</h2>
+        <h2>🔸 Cryptos Available for Transactions</h2>
 
         <form method="POST" action="index.php?pageback=createCryptoTrans" class="crypto-form">
             <input type="text" name="code" placeholder="Code (ex: BTC)" required>
-            <button type="submit" class="btn-submit">➕ Ajouter</button>
+            <button type="submit" class="btn-submit">➕ Add</button>
         </form>
 
         <?php if (!empty($transCryptos)): ?>
@@ -95,7 +95,7 @@
                                 <td><?= $crypto['id_crypto_trans'] ?></td>
                                 <td><?= htmlspecialchars($crypto['code']) ?></td>
                                 <td>
-                                    <a href="index.php?pageback=deleteCryptoTrans&id=<?= $crypto['id_crypto_trans'] ?>" onclick="return confirm('Supprimer ?')" class="action-btn delete">🗑️</a>
+                                    <a href="index.php?pageback=deleteCryptoTrans&id=<?= $crypto['id_crypto_trans'] ?>" onclick="return confirm('Delete?')" class="action-btn delete">🗑️</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -103,7 +103,7 @@
                 </table>
             </div>
         <?php else: ?>
-            <p class="no-user">Aucune cryptomonnaie transactionnelle ajoutée.</p>
+            <p class="no-user">No transactional cryptocurrency added.</p>
         <?php endif; ?>
     </div>
 </section>

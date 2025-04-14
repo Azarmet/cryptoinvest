@@ -1,15 +1,15 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
 
 <div class="watchlist-container">
-  <h2>Ma Watchlist</h2>
+  <h2>My Watchlist</h2>
 
   <div class="table-responsive">
     <table id="watchlist-table" class="watchlist-table">
         <thead>
             <tr>
                 <th>Crypto</th>
-                <th>Actual Price</th>
-                <th>Variation 24H</th>
+                <th>Current Price</th>
+                <th>24H Change</th>
                 <th>Last Update</th>
                 <th>Watchlist</th>
             </tr>
@@ -32,7 +32,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="5">Votre watchlist est vide.</td>
+                    <td colspan="5">Your watchlist is empty.</td>
                 </tr>
             <?php endif; ?>
         </tbody>

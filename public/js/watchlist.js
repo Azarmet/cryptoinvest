@@ -1,7 +1,7 @@
-// Fonction de rafraîchissement du tableau via AJAX
+// Function to refresh the watchlist table via AJAX
 function refreshWatchlistData() {
     var xhr = new XMLHttpRequest();
-    // Ajout d'un paramètre "timestamp" pour éviter la mise en cache
+    // Add a "timestamp" parameter to avoid caching
     xhr.open("GET", "index.php?page=watchlist&action=refresh&timestamp=" + new Date().getTime(), true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -13,7 +13,7 @@ function refreshWatchlistData() {
                     var variation = parseFloat(crypto.variation_24h).toFixed(2);
                     let colorClass = variation >= 0 ? 'positive' : 'negative';
                     var row = "<tr class='crypto-link'  data-symbol='" + crypto.code + "'>" +
-                              "<td>" + crypto.code + "</td>"+
+                              "<td>" + crypto.code + "</td>" +
                               "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>" +
                               "<td class='" + colorClass + "'>" + variation + "%" + "</td>" +
                               "<td>" + crypto.date_maj + "</td>" +
@@ -22,7 +22,7 @@ function refreshWatchlistData() {
                     tbody.innerHTML += row;
                 });
             } else {
-                tbody.innerHTML = "<tr><td colspan='5'>Votre watchlist est vide.</td></tr>";
+                tbody.innerHTML = "<tr><td colspan='5'>Your watchlist is empty.</td></tr>";
             }
         }
     };
@@ -31,7 +31,7 @@ function refreshWatchlistData() {
 
 function updateTradingViewSymbol(symbol) {
     const container = document.querySelector("#tradingview-widget-container");
-    container.innerHTML = ""; // Nettoyer l'ancien widget
+    container.innerHTML = ""; // Clear the previous widget
 
     const widgetDiv = document.createElement("div");
     widgetDiv.id = "tradingview_abcdef";
@@ -47,7 +47,7 @@ function updateTradingViewSymbol(symbol) {
             "interval": "D",
             "theme": "dark",
             "style": "1",
-            "locale": "fr",
+            "locale": "en",
             "toolbar_bg": "#f1f3f6",
             "enable_publishing": false,
             "hide_top_toolbar": false,
@@ -61,19 +61,17 @@ function updateTradingViewSymbol(symbol) {
     container.appendChild(script);
 }
 
-
-
-// Gérer le clic sur un code de crypto
+// Handle click on a crypto code row
 document.addEventListener("click", function(e) {
     const row = e.target.closest(".crypto-link");
     if (row && !e.target.classList.contains("watchlist-toggle")) {
         e.preventDefault(); 
         const newSymbol = row.getAttribute("data-symbol");
 
-        // Mettre à jour le widget TradingView
+        // Update the TradingView widget
         updateTradingViewSymbol(newSymbol);
 
-        // Mettre à jour le <select> du tradingOrder si présent
+        // Update the <select> element in tradingOrder, if present
         const select = document.getElementById("crypto_code");
         if (select) {
             for (let i = 0; i < select.options.length; i++) {
@@ -89,12 +87,10 @@ document.addEventListener("click", function(e) {
     }
 });
 
-
 window.onload = function() {
     updateTradingViewSymbol("BTCUSDT");
     refreshWatchlistData();
 };
 
-
-// Rafraîchir la watchlist toutes les 5 secondes (5000 millisecondes)
+// Refresh the watchlist every 5 seconds (5000 milliseconds)
 setInterval(refreshWatchlistData, 5000);

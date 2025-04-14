@@ -1,27 +1,26 @@
-
 // ------------------ PORTFOLIO SECTION ------------------
 let currentInterval = 'jour';
 
-// Rafraîchissement du portefeuille (graphique, stats, valeur actuelle et solde disponible)
+// Refresh portfolio (chart, stats, current value, and available balance)
 function refreshPortfolioData() {
     fetch(`index.php?page=profilboard&action=refreshPortfolioData&pseudo=${pseudoleaderboard}&interval=${currentInterval}`)
     .then(res => res.json())
     .then(data => {
         updatePortfolioChart(data.chartData);
 
-        // Sélection des éléments
+        // Select elements
         const roiElement = document.getElementById('roi-total');
         const pnlElement = document.getElementById('pnl-total');
 
-        // Mise à jour du contenu
+        // Update content
         roiElement.textContent = data.stats.roiTotal + ' %';
         pnlElement.textContent = data.stats.pnlTotal + ' USDT';
 
-        // Réinitialisation des classes
+        // Reset classes
         roiElement.classList.remove('positive', 'negative');
         pnlElement.classList.remove('positive', 'negative');
 
-        // Ajout des classes en fonction des valeurs
+        // Add classes based on the values
         if (parseFloat(data.stats.roiTotal) >= 0) {
             roiElement.classList.add('positive');
         } else {
@@ -35,20 +34,20 @@ function refreshPortfolioData() {
         }
 
         document.getElementById('tx-count').textContent = data.stats.txCount;
-        document.getElementById('current-portfolio-value').textContent = "Valeur actuelle : " + data.currentValue + " USDT";
+        document.getElementById('current-portfolio-value').textContent = "Current Value: " + data.currentValue + " USDT";
     })
     .catch(err => console.error(err));
 }
 
 
-// Gestion du graphique via Chart.js
+// Chart management via Chart.js
 let chart;
 function updatePortfolioChart(chartData) {
     const labels = chartData.map(d => d.date);
     const dataSolde = chartData.map(d => d.solde);
     const ctx = document.getElementById('portfolioChart').getContext('2d');
 
-    // Création d'un dégradé vertical pour le remplissage
+    // Create a vertical gradient for the fill
     let gradientStroke = ctx.createLinearGradient(0, 0, 0, 300);
     gradientStroke.addColorStop(0, "rgba(241, 196, 15, 0.8)");
     gradientStroke.addColorStop(1, "rgba(241, 196, 15, 0.2)");
@@ -59,12 +58,12 @@ function updatePortfolioChart(chartData) {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Solde du Portefeuille',
+                    label: 'Portfolio Balance',
                     data: dataSolde,
                     borderColor: "rgba(241, 196, 15, 1)",
                     backgroundColor: gradientStroke,
                     fill: true,
-                    tension: 0.4,               // Courbes lisses
+                    tension: 0.4,               // Smooth curves
                     pointRadius: 4,
                     pointHoverRadius: 6,
                     pointBackgroundColor: "rgba(241, 196, 15, 1)",
@@ -122,25 +121,32 @@ function updatePortfolioChart(chartData) {
     }
 }
 
-// ------------------ GESTION DES INTERVALLES ------------------
+// ------------------ INTERVAL MANAGEMENT ------------------
 document.querySelectorAll('.interval-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        // 1. Supprime la classe "active" de tous les boutons
+        // 1. Remove the "active" class from all buttons
         document.querySelectorAll('.interval-btn').forEach(b => b.classList.remove('active'));
 
-        // 2. Ajoute la classe "active" au bouton cliqué
+        // 2. Add the "active" class to the clicked button
         btn.classList.add('active');
 
-        // 3. Met à jour l’intervalle actuel
+        // 3. Update the current interval
         currentInterval = btn.getAttribute('data-interval');
 
-        // 4. Rafraîchit les données
+        // 4. Refresh the data
         refreshPortfolioData();
     });
 });
 
-// ------------------ INITIALISATION ------------------
-
+// ------------------ INITIALIZATION ------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const defaultBtn = document.querySelector('.interval-btn[data-interval="jour"]');
+    if (defaultBtn) {
+        defaultBtn.classList.add('active');
+    }
+    refreshPortfolioData();
+});
+refreshProfilboardStats();
 
 function refreshProfilboardStats() {
     fetch(`index.php?page=profilboard&action=getStats&pseudo=${pseudoleaderboard}`)
@@ -158,12 +164,3 @@ function refreshProfilboardStats() {
         })
         .catch(err => console.error(err));
 }
-// ------------------ INITIALISATION ------------------
-document.addEventListener('DOMContentLoaded', () => {
-    const defaultBtn = document.querySelector('.interval-btn[data-interval="jour"]');
-    if (defaultBtn) {
-        defaultBtn.classList.add('active');
-    }
-    refreshPortfolioData();
-});
-refreshProfilboardStats();

@@ -34,12 +34,12 @@ if (searchInput) {
                             <td class="rank-${user.rank}">${user.rank}${medal}</td>
 
                             <td class="td-pseudo">
-                                <img src="${user.image}" alt="Profil" width="36" class="desktop-img"> 
+                                <img src="${user.image}" alt="Profile" width="36" class="desktop-img"> 
                                 <span class="pseudo-text">${user.pseudo}</span>
                             </td>
 
                             <td class="td-solde">
-                                <img src="${user.image}" alt="Profil" width="36" class="mobile-img">
+                                <img src="${user.image}" alt="Profile" width="36" class="mobile-img">
                                 ${Math.round(soldeNettoye)}$
                             </td>
 
@@ -47,11 +47,10 @@ if (searchInput) {
                             <td class="${user.pnl_7j.startsWith('-') ? 'negative' : 'positive'}">${Math.round(pnl7jNettoye)}$</td>
                         `;
 
-
                         tbody.appendChild(tr);
                     });
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Aucun utilisateur trouvé</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No user found</td></tr>`;
                 }
             }
         };
@@ -65,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     tableHeaders.forEach(header => {
         header.addEventListener('click', function () {
-            // Retirer la classe active et l'attribut data-order des autres colonnes
+            // Remove the active class and data-order attribute from the other columns
             tableHeaders.forEach(th => {
                 if (th !== this) {
                     th.removeAttribute('data-order');
@@ -73,35 +72,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Récupère l'ordre actuel s'il existe, sinon part de "desc"
+            // Get the current order if it exists, otherwise start with "desc"
             let currentOrder = this.getAttribute('data-order') || 'desc';
-            // Inverse l'ordre
+            // Toggle the order
             let order = currentOrder === 'asc' ? 'desc' : 'asc';
             this.setAttribute('data-order', order);
-            // Ajoute la classe "active" sur l'en-tête courant
+            // Add the "active" class to the current header
             this.classList.add('active');
 
             const table = this.closest('table');
             const tbody = table.querySelector('tbody');
             const rows = Array.from(tbody.querySelectorAll('tr'));
 
-            // Récupère l'index de la colonne cliquée
+            // Get the index of the clicked column
             const headerIndex = Array.from(this.parentElement.children).indexOf(this);
 
-            // Trie les lignes du tableau en fonction du contenu numérique de la cellule
+            // Sort the table rows based on the numeric content of the cell
             rows.sort((rowA, rowB) => {
                 const cellA = rowA.children[headerIndex].innerText.trim();
                 const cellB = rowB.children[headerIndex].innerText.trim();
 
-                // Extraction et conversion des valeurs numériques,
-                // en retirant les caractères non numériques et en remplaçant la virgule par un point
+                // Extract and convert numeric values,
+                // removing non-numeric characters and replacing comma with a dot
                 const numA = parseFloat(cellA.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')) || 0;
                 const numB = parseFloat(cellB.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')) || 0;
 
                 return order === 'asc' ? numA - numB : numB - numA;
             });
 
-            // Réinjecte les lignes triées dans le tbody
+            // Reinserts the sorted rows into the tbody
             rows.forEach(row => tbody.appendChild(row));
         });
     });

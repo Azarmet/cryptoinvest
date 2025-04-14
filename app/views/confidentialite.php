@@ -2,58 +2,58 @@
 
 <section class="legal-section">
     <div class="container">
-        <h1>Politique de Confidentialité</h1>
+        <h1>Privacy Policy</h1>
 
-        <p>Cette politique de confidentialité décrit comment CryptoInvest collecte, utilise et protège vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD).</p>
+        <p>This privacy policy describes how CryptoInvest collects, uses, and protects your personal data in accordance with the General Data Protection Regulation (GDPR).</p>
 
-        <h2>1. Données collectées</h2>
-        <p>Nous collectons uniquement les données nécessaires à votre inscription et à l'utilisation de la plateforme :</p>
+        <h2>1. Data Collected</h2>
+        <p>We only collect the data necessary for your registration and use of the platform:</p>
         <ul>
-            <li>Nom d'utilisateur</li>
-            <li>Adresse e-mail</li>
-            <li>Adresse IP</li>
-            <li>Historique d'utilisation (portefeuille, interactions, préférences)</li>
+            <li>Username</li>
+            <li>Email address</li>
+            <li>IP address</li>
+            <li>Usage history (portfolio, interactions, preferences)</li>
         </ul>
 
-        <h2>2. Utilisation des données</h2>
-        <p>Les données sont utilisées uniquement pour les finalités suivantes :</p>
+        <h2>2. Data Usage</h2>
+        <p>The data is used solely for the following purposes:</p>
         <ul>
-            <li>Création et gestion de votre compte utilisateur</li>
-            <li>Personnalisation de votre tableau de bord</li>
-            <li>Amélioration de nos services et statistiques d'usage</li>
-            <li>Envoi d'e-mails informatifs ou de notifications importantes (jamais de spam)</li>
+            <li>Creation and management of your user account</li>
+            <li>Personalizing your dashboard</li>
+            <li>Improving our services and usage statistics</li>
+            <li>Sending informational emails or important notifications (never spam)</li>
         </ul>
 
         <h2>3. Cookies</h2>
-        <p>Nous utilisons des cookies pour :</p>
+        <p>We use cookies to:</p>
         <ul>
-            <li>Assurer le bon fonctionnement du site</li>
-            <li>Analyser le trafic et l'expérience utilisateur</li>
-            <li>Se souvenir de vos préférences</li>
+            <li>Ensure the proper functioning of the website</li>
+            <li>Analyze traffic and user experience</li>
+            <li>Remember your preferences</li>
         </ul>
-        <p>Vous pouvez à tout moment désactiver les cookies dans les paramètres de votre navigateur.</p>
+        <p>You can disable cookies at any time in your browser settings.</p>
 
-        <h2>4. Partage des données</h2>
-        <p>Vos données ne sont **jamais vendues**, partagées ou cédées à des tiers sans votre consentement explicite.</p>
+        <h2>4. Data Sharing</h2>
+        <p>Your data is <strong>never sold</strong>, shared, or transferred to third parties without your explicit consent.</p>
 
-        <h2>5. Durée de conservation</h2>
-        <p>Vos données sont conservées aussi longtemps que votre compte est actif. Vous pouvez demander leur suppression à tout moment.</p>
+        <h2>5. Retention Period</h2>
+        <p>Your data is kept as long as your account is active. You may request its deletion at any time.</p>
 
-        <h2>6. Vos droits</h2>
-        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+        <h2>6. Your Rights</h2>
+        <p>In accordance with the GDPR, you have the following rights:</p>
         <ul>
-            <li>Droit d’accès à vos données</li>
-            <li>Droit de rectification ou de suppression</li>
-            <li>Droit à la portabilité</li>
-            <li>Droit d’opposition ou de limitation du traitement</li>
+            <li>Right to access your data</li>
+            <li>Right to rectification or deletion</li>
+            <li>Right to data portability</li>
+            <li>Right to object or restrict processing</li>
         </ul>
-        <p>Pour exercer vos droits, contactez-nous à <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a></p>
+        <p>To exercise your rights, please contact us at <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a></p>
 
-        <h2>7. Sécurité</h2>
-        <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre toute perte, accès non autorisé ou divulgation.</p>
+        <h2>7. Security</h2>
+        <p>We implement appropriate technical and organizational measures to protect your data from any loss, unauthorized access, or disclosure.</p>
 
         <h2>8. Contact</h2>
-        <p>Pour toute question relative à cette politique, vous pouvez nous contacter à l'adresse suivante : <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a></p>
+        <p>If you have any questions regarding this policy, you can contact us at the following address: <a href="mailto:contact@cryptoinvest.com">contact@cryptoinvest.com</a></p>
     </div>
 </section>
 

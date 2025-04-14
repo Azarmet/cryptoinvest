@@ -1,27 +1,27 @@
 <?php require_once RACINE . 'app/views/backoffice/headerback.php'; ?>
 
 <section class="backoffice-home">
-    <h1 class="dashboard-title">Accueil Back Office</h1>
+    <h1 class="dashboard-title">Back Office Home</h1>
 
     <div class="dashboard-cards">
         <a href="index.php?pageback=faq" class="dashboard-card">
-            <h2>Gérer la FAQ</h2>
-            <p>Ajoutez, modifiez ou supprimez les questions fréquentes.</p>
+            <h2>Manage FAQ</h2>
+            <p>Add, modify or delete frequently asked questions.</p>
         </a>
 
         <a href="index.php?pageback=learn" class="dashboard-card">
-            <h2>Gestion Learn</h2>
-            <p>Organisez vos articles éducatifs pour les utilisateurs.</p>
+            <h2>Learn Management</h2>
+            <p>Organize your educational articles for users.</p>
         </a>
 
         <a href="index.php?pageback=market" class="dashboard-card">
-            <h2>Gestion du Market</h2>
-            <p>Supervisez les données des cryptos en temps réel.</p>
+            <h2>Market Management</h2>
+            <p>Supervise real-time crypto data.</p>
         </a>
 
         <a href="index.php?pageback=users" class="dashboard-card">
-            <h2>Utilisateurs</h2>
-            <p>Consultez et gérez les profils des membres.</p>
+            <h2>Users</h2>
+            <p>View and manage member profiles.</p>
         </a>
     </div>
 </section>

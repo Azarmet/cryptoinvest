@@ -32,7 +32,7 @@ document.getElementById('faq-search').addEventListener('input', function () {
                     container.appendChild(item);
                 });
             } else {
-                container.innerHTML = "<p class='no-results'>Aucun résultat trouvé.</p>";
+                container.innerHTML = "<p class='no-results'>No result found.</p>";
             }
         }
     };

@@ -1,10 +1,10 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
 
 <section class="faq-wrapper">
-    <h2 class="faq-title">Foire aux Questions</h2>
+    <h2 class="faq-title">Frequently Asked Questions</h2>
 
     <div class="faq-search-container">
-        <input type="text" id="faq-search" class="faq-search-input" placeholder="🔍 Rechercher une question...">
+        <input type="text" id="faq-search" class="faq-search-input" placeholder="🔍 Search for a question...">
     </div>
 
     <div id="faq-results" class="faq-results">
@@ -21,7 +21,7 @@
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p class="no-results">Aucun résultat trouvé.</p>
+            <p class="no-results">No results found.</p>
         <?php endif; ?>
     </div>
 </section>

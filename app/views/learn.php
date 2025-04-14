@@ -5,17 +5,17 @@
 
   <!-- Onglets de catégories -->
   <div id="category-tabs" class="tabs-container">
-      <button class="tab-button active" data-category="Tous">Tous</button>
-      <button class="tab-button" data-category="Tutoriels">Tutoriels</button>
+      <button class="tab-button active" data-category="Tous">All</button>
+      <button class="tab-button" data-category="Tutoriels">Tutorials</button>
       <button class="tab-button" data-category="Crypto News">Crypto News</button>
-      <button class="tab-button" data-category="Analyses">Analyses</button>
+      <button class="tab-button" data-category="Analyses">Analysis</button>
       <button class="tab-button" data-category="Guide">Guide</button>
   </div>
 
   <!-- Barre de recherche -->
   <div class="search-container">
-      <input type="text" id="learn-search" class="search-input" placeholder="Rechercher un sujet...">
-      <button id="search-button" class="search-button">Rechercher</button>
+      <input type="text" id="learn-search" class="search-input" placeholder="Search for a topic...">
+      <button id="search-button" class="search-button">Search</button>
   </div>
 
   <!-- Zone d'affichage des articles -->

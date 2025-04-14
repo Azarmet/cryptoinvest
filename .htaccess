@@ -1,3 +1,4 @@
+Options -Indexes
 RewriteEngine On
 
 # Rediriger tout vers index.php
