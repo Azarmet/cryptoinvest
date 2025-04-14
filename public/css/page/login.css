@@ -1,9 +1,9 @@
 
 /* =================== Login Page Styles =================== */
 .login-container {
-    max-width: 400px;
     margin: 50px auto;
     padding: 20px;
+    max-width: 90%;
     background-color: #2C3E50; /* Fond sombre */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -72,4 +72,10 @@
 .submit-btn:hover {
     background-color: #f1c40f75;
     color: #fff;
+}
+
+@media (min-width: 768px) {
+    .login-container {
+        max-width: 400px;
+    }
 }

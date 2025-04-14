@@ -42,24 +42,33 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="bar"></div>
             </div>
             <!-- Menu de navigation -->
+            <?php
+$currentPage = $_GET['page'] ?? 'home';
+?>
             <ul class="nav-links">
-                <li><a href="index.php?page=home">Home</a></li>
-                <li><a href="index.php?page=faq">FAQ</a></li>
-                <li><a href="index.php?page=learn">Learn</a></li>
+                <li><a href="index.php?page=home" class="<?= $currentPage === 'home' ? 'active' : '' ?>">Home</a></li>
+                <li><a href="index.php?page=faq" class="<?= $currentPage === 'faq' ? 'active' : '' ?>">FAQ</a></li>
+                <li><a href="index.php?page=learn" class="<?= $currentPage === 'learn' ? 'active' : '' ?>">Learn</a></li>
+
                 <?php if (isset($_SESSION['user'])): ?>
-                    <li><a href="index.php?page=dashboard">Dashboard</a></li>
+                    <li><a href="index.php?page=dashboard" class="<?= $currentPage === 'dashboard' ? 'active' : '' ?>">Dashboard</a></li>
                 <?php endif; ?>
-                <li><a href="index.php?page=market">Market</a></li>
-                <li><a href="index.php?page=leaderboard">Leaderboard</a></li>
+
+                <li><a href="index.php?page=market" class="<?= $currentPage === 'market' ? 'active' : '' ?>">Market</a></li>
+                <li><a href="index.php?page=leaderboard" class="<?= $currentPage === 'leaderboard' ? 'active' : '' ?>">Leaderboard</a></li>
+
                 <?php if (isset($_SESSION['user'])): ?>
                     <li class="profile">
-                        <img src="<?php echo htmlspecialchars($_SESSION['user']['image_profil']); ?>" alt="Profil">
-                        <a href="index.php?page=profil"><?php echo htmlspecialchars($_SESSION['user']['pseudo']); ?></a>
+                        <img src="<?= htmlspecialchars($_SESSION['user']['image_profil']) ?>" alt="Profil">
+                        <a href="index.php?page=profil" class="<?= $currentPage === 'profil' ? 'active' : '' ?>">
+                            <?= htmlspecialchars($_SESSION['user']['pseudo']) ?>
+                        </a>
                     </li>
                 <?php else: ?>
-                    <li><a href="index.php?page=login">Connexion</a></li>
+                    <li><a href="index.php?page=login" class="<?= $currentPage === 'login' ? 'active' : '' ?>">Connexion</a></li>
                 <?php endif; ?>
             </ul>
+
         </nav>
     </header>
     <main>

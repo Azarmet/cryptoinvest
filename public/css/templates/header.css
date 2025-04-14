@@ -3,7 +3,7 @@
     background: linear-gradient(to right, #2e4155, #090a0f);
     padding: 14px 30px;
     box-shadow: 0 0 12px rgba(0,0,0,0.7);
-    border-bottom: 2px solid #f1c40f;
+    border-bottom: 1px solid #6525dbc2;
     width: 100%;
     position: sticky;
     top: 0;
@@ -152,3 +152,7 @@
     }
 }
 
+.nav-links a.active {
+    color: #f1c40fa2;
+    
+}

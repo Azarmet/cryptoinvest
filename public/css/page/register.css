@@ -1,13 +1,14 @@
 
 /* =================== Register Page Styles =================== */
 .register-container {
-    max-width: 400px;
+    
     margin: 50px auto;
     padding: 20px;
     background-color: #2C3E50; /* Fond sombre */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     color: #F8F9FA;
+    max-width: 90%;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -106,4 +107,10 @@
 
 .login-link a:hover {
     color: #f1c40f75;
+}
+
+@media (min-width: 768px) {
+    .register-container {
+        max-width: 400px;
+    }
 }
