@@ -47,6 +47,17 @@ function routeur()
             }
             break;
 
+            case 'mentions':
+                require_once RACINE . 'app/controllers/LegalController.php';
+                \App\Controllers\showMentions();
+                break;
+            
+            case 'confidentialite':
+                require_once RACINE . 'app/controllers/LegalController.php';
+                \App\Controllers\showConfidential();
+                break;
+            
+
             case 'leaderboard':
                 require_once RACINE . 'app/controllers/LeaderboardController.php';
                 $action = $_GET['action'] ?? 'show';
