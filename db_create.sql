@@ -1,11 +1,11 @@
 -- -----------------------------------------------------
 -- 1. Création de la base de données
 -- -----------------------------------------------------
-CREATE DATABASE IF NOT EXISTS crypto_invest
+CREATE DATABASE IF NOT EXISTS crypto_invest2
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE crypto_invest;
+USE crypto_invest2;
 
 -- -----------------------------------------------------
 -- 2. Table Utilisateur
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS utilisateur (
     image_profil  VARCHAR(255) NULL DEFAULT 'public/uploads/profiles/default.png',
     instagram     VARCHAR(255) DEFAULT NULL,
     x             VARCHAR(255) DEFAULT NULL,
-    telegram      VARCHAR(255) DEFAULT NULL;
+    telegram      VARCHAR(255) DEFAULT NULL
     -- Exemples de rôles : 'utilisateur', 'administrateur'
 ) ENGINE=InnoDB;
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS cryptomarket (
     prix_actuel      DECIMAL(15,6) NOT NULL, -- Ajustez la précision selon vos besoins
     variation_24h    DECIMAL(7,4)  NOT NULL, -- Variation en pourcentage (+X.XXXX / -X.XXXX)
     date_maj         DATETIME      NOT NULL,
-    categorie        VARCHAR(20)   NULL
+    categorie        VARCHAR(20)   NULL,
     CONSTRAINT uk_code_market UNIQUE (code)
 ) ENGINE=InnoDB;
 
@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS cryptomarket (
 CREATE TABLE IF NOT EXISTS portefeuille (
     id_portefeuille INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     capital_initial DECIMAL(15,2) NOT NULL DEFAULT 10000.00,
+    capital_actuel DECIMAL(15,2) NOT NULL DEFAULT 10000.00,
     -- Ex. : 10 000 USDT de départ
     id_utilisateur  INT UNSIGNED NOT NULL,
     CONSTRAINT fk_portefeuille_utilisateur
