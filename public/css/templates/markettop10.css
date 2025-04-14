@@ -100,7 +100,7 @@
 @media screen and (max-width: 600px) {
     .market-top10 th,
     .market-top10 td {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         padding: 10px;
     }
 }
