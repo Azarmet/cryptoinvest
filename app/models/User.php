@@ -16,29 +16,65 @@ class User
     // Inscription : ajoute un nouvel utilisateur
     public function register($email, $pseudo, $password)
     {
+        // === VALIDATION ===
+
+        // Email valide
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return ['success' => false, 'error' => 'Adresse e-mail invalide.'];
+        }
+
+        // Pseudo : 3-10 caractères, lettres/chiffres/underscores
+        if (!preg_match('/^[a-zA-Z0-9_]{3,10}$/', $pseudo)) {
+            return ['success' => false, 'error' => 'Le pseudo doit contenir entre 3 et 10 caractères alphanumériques ou underscores.'];
+        }
+
+        // Mot de passe : minimum 8 caractères
+        if (strlen($password) < 8) {
+            return ['success' => false, 'error' => 'Le mot de passe doit contenir au moins 8 caractères.'];
+        }
+
+        // === UNICITÉ EMAIL ===
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM utilisateur WHERE email = :email');
+        $stmt->execute([':email' => $email]);
+        if ($stmt->fetchColumn() > 0) {
+            return ['success' => false, 'error' => 'Cet email est déjà utilisé.'];
+        }
+
+        // === UNICITÉ PSEUDO ===
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM utilisateur WHERE pseudo = :pseudo');
+        $stmt->execute([':pseudo' => $pseudo]);
+        if ($stmt->fetchColumn() > 0) {
+            return ['success' => false, 'error' => 'Ce pseudo est déjà pris.'];
+        }
+
+        // === ENREGISTREMENT ===
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $imgdefaut = 'public/uploads/profiles/default.png';
-        $sql = 'INSERT INTO utilisateur (email, pseudo, mot_de_passe, image_profil) VALUES (:email, :pseudo, :mot_de_passe, :image_profil)';
-        $stmt = $this->pdo->prepare($sql);
-        if (!$stmt->execute([
+
+        $insertSql = 'INSERT INTO utilisateur (email, pseudo, mot_de_passe, image_profil) 
+                  VALUES (:email, :pseudo, :mot_de_passe, :image_profil)';
+        $stmt = $this->pdo->prepare($insertSql);
+        $executed = $stmt->execute([
             ':email' => $email,
             ':pseudo' => $pseudo,
             ':mot_de_passe' => $hash,
             ':image_profil' => $imgdefaut
-        ])) {
-            return false;
+        ]);
+
+        if (!$executed) {
+            return ['success' => false, 'error' => "Erreur lors de l'enregistrement de l'utilisateur."];
         }
 
+        // Création du portefeuille
         $newUserId = $this->pdo->lastInsertId();
+        $walletSql = 'INSERT INTO portefeuille (capital_initial, id_utilisateur) VALUES (10000, :userId)';
+        $stmtPf = $this->pdo->prepare($walletSql);
 
-        // Créer automatiquement le portefeuille pour ce user
-        $sqlPortefeuille = 'INSERT INTO portefeuille (capital_initial, id_utilisateur) VALUES (10000, :userId)';
-        $stmtPf = $this->pdo->prepare($sqlPortefeuille);
         if (!$stmtPf->execute([':userId' => $newUserId])) {
-            return false;
+            return ['success' => false, 'error' => 'Erreur lors de la création du portefeuille.'];
         }
 
-        return true;
+        return ['success' => true];
     }
 
     // Login : vérifie l'identifiant et retourne l'utilisateur si correct
@@ -90,7 +126,7 @@ class User
     // Méthode pour récupérer tous les utilisateurs
     public function getAllIdUsers()
     {
-        $sql = 'SELECT id_utilisateur FROM utilisateur WHERE id_utilisateur ';
+        $sql = 'SELECT id_utilisateur FROM utilisateur';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -113,18 +149,13 @@ class User
     public function getAllUsers()
     {
         $sql = 'SELECT id_utilisateur, email, pseudo, role, bio, image_profil FROM utilisateur ORDER BY id_utilisateur DESC';
-        $stmt = $this->pdo->query($sql);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Supprime un utilisateur (et son portefeuille par exemple)
     public function deleteUser($id)
     {
-        // Supprimer d'abord les dépendances éventuelles (ex: portefeuille, watchlist)
-        $this->pdo->prepare('DELETE FROM portefeuille WHERE id_utilisateur = :id')->execute([':id' => $id]);
-        $this->pdo->prepare('DELETE FROM watchlist WHERE id_utilisateur = :id')->execute([':id' => $id]);
-
-        // Supprimer l'utilisateur lui-même
         $stmt = $this->pdo->prepare('DELETE FROM utilisateur WHERE id_utilisateur = :id');
         return $stmt->execute([':id' => $id]);
     }

@@ -196,49 +196,29 @@ class Portefeuille
         ];
     }
 
-    public function getPnL24h($userId)
+    public function getPnL($userId, $nb_jour = 1)
     {
         $sql = 'SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':userId' => $userId]);
         $row = $stmt->fetch();
+
         if (!$row)
             return 0;
 
         $pfId = $row['id_portefeuille'];
 
-        $sql = "SELECT SUM(pnl) as pnl24h FROM transaction 
+        $sql = "SELECT SUM(pnl) as total_pnl FROM transaction 
             WHERE statut = 'close'
               AND id_portefeuille = :pfId
-              AND date_cloture >= NOW() - INTERVAL 1 DAY";
+              AND date_cloture >= NOW() - INTERVAL :nb_jour DAY";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':pfId' => $pfId]);
+        $stmt->bindValue(':pfId', $pfId, PDO::PARAM_INT);
+        $stmt->bindValue(':nb_jour', (int) $nb_jour, PDO::PARAM_INT);
+        $stmt->execute();
         $result = $stmt->fetch();
 
-        return floatval($result['pnl24h']);
-    }
-
-    public function getPnL7j($userId)
-    {
-        $sql = 'SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':userId' => $userId]);
-        $row = $stmt->fetch();
-        if (!$row)
-            return 0;
-
-        $pfId = $row['id_portefeuille'];
-
-        $sql = "SELECT SUM(pnl) as pnl7j FROM transaction 
-            WHERE statut = 'close'
-              AND id_portefeuille = :pfId
-              AND date_cloture >= NOW() - INTERVAL 7 DAY";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':pfId' => $pfId]);
-        $result = $stmt->fetch();
-
-        return floatval($result['pnl7j']);
+        return floatval($result['total_pnl']);
     }
 }

@@ -44,7 +44,7 @@ function processRegister()
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Assainir et valider les entrées
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-        $pseudo = filter_input(INPUT_POST, 'pseudo', FILTER_SANITIZE_STRING);
+        $pseudo = trim(strip_tags($_POST['pseudo'] ?? ''));
         $password = trim($_POST['password']);
         $confirmPassword = trim($_POST['confirm_password']);
 
@@ -75,8 +75,14 @@ function processRegister()
 
         $userModel = new User();
         $result = $userModel->register($email, $pseudo, $password);
+        if (!$result['success']) {
+            $error = $result['error'];
+            // afficher le message dans la vue
+            require_once RACINE . 'app/views/register.php';
+        }
 
-        if ($result) {
+
+        if ($result['success']) {
             header('Location: index.php?page=login');
             exit();
         } else {

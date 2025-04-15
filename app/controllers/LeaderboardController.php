@@ -18,8 +18,8 @@ function showLeaderboard()
         $userID = $user['id_utilisateur'];
         $profil = $userModel->getById($userID);
         $solde = $pfUser->getSoldeActuel($userID);
-        $pnl24h = $pfUser->getPnL24h($userID);
-        $pnl7j = $pfUser->getPnL7j($userID);
+        $pnl24h = $pfUser->getPnL($userID, 1);
+        $pnl7j = $pfUser->getPnL($userID, 7);
 
         $usersWithSolde[] = [
             'id' => $userID,
@@ -55,8 +55,8 @@ function search_user() {
 
             if (stripos($profil['pseudo'], $query) !== false) {
                 $solde = $pfModel->getSoldeActuel($userID);
-                $pnl24h = $pfModel->getPnL24h($userID);
-                $pnl7j = $pfModel->getPnL7j($userID);
+                $pnl24h = $pfModel->getPnL($userID, 1);
+                $pnl7j = $pfModel->getPnL($user, 7);
 
                 $result[] = [
                     'id' => $userID,
