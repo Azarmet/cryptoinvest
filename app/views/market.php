@@ -1,7 +1,5 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
-<div class="market-container">
-  <h2>Cryptocurrency Market</h2>
-  
+<div class="market-container">  
   <!-- Onglets de catégories -->
   <div class="market-tabs">
     <button class="tab-button" data-category="all">All</button>

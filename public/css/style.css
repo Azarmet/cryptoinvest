@@ -379,7 +379,8 @@
   color: #F8F9FA;
 }
 .learn-container h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  font-style: normal;
   text-align: center;
   margin-bottom: 1.5rem;
   color: #F1C40F;
@@ -513,7 +514,6 @@
   display: inline-block;
   margin-top: 0.5rem;
   color: #F1C40F;
-  font-weight: bold;
   text-decoration: none;
   transition: color 0.3s;
 }
