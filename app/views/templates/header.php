@@ -9,10 +9,10 @@ if (session_status() == PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <title>CryptoInvest</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/style.css'?>">
-    <!-- Importing fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <!-- Importing fonts
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Roboto:wght@700&display=swap" rel="stylesheet"> -->
 </head>
 <body class="<?= isset($_GET['page']) ? 'page-' . $_GET['page'] : '' ?>">
 
