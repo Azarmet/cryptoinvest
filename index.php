@@ -2,8 +2,8 @@
 
     // Définir la racine du projet
     define('RACINE', __DIR__ . '/');
-    //define('RACINE_URL', '/lucas-roirand/CryptoInvestMVC/'); // ou simplement '/' si c'est à la racine du domaine
-    define('RACINE_URL', '/php_project/CryptoInvestMVC/'); // ou simplement '/' si c'est à la racine du domaine
+    define('RACINE_URL', '/lucas-roirand/CryptoInvestMVC/'); 
+    //define('RACINE_URL', '/php_project/CryptoInvestMVC/'); // 
     // Charger l'autoloader de Composer
     require_once RACINE . 'vendor/autoload.php';
 
