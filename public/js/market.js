@@ -130,11 +130,19 @@ document.addEventListener("click", function(e) {
                 }
             }
 
+            // MAJ visuelle du menu personnalisé
+            const customDisplay = document.querySelector("#crypto_code_custom .selected-option");
+            if (customDisplay) {
+                customDisplay.textContent = newSymbol;
+            }
+
+            // Déclencher le changement
             const event = new Event("change");
             select.dispatchEvent(event);
         }
     }
 });
+
 
 // Handle selection from the crypto code menu for the widget 
 document.addEventListener("DOMContentLoaded", function () {

@@ -59,6 +59,11 @@
 .table-responsive-market::-webkit-scrollbar-track {
     background: #2C3E50;
 }
+
+input:focus{
+    outline: none;
+    box-shadow: 0 0 10px #f1c40f88;
+}
 /* =================== Base =================== */
 body {
     font-family: 'Poppins', sans-serif;
@@ -82,3 +87,4 @@ body {
   main {
     flex: 1;
   }
+

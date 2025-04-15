@@ -9,14 +9,23 @@
         <form action="index.php?page=market&action=openPosition" method="POST" class="order-form">
             <div class="form-group">
                 <label for="crypto_code">Crypto:</label>
-                <select name="crypto_code" id="crypto_code">
-                  <?php
-                  // $cryptosTrans has been defined in showDashboard()
-                  // Create an option for each available code
-                  foreach ($cryptosTrans as $code) {
-                      echo '<option value="' . htmlspecialchars($code) . '">' . htmlspecialchars($code) . '</option>';
-                  }
-                  ?>
+                <!-- Menu personnalisé stylé -->
+                <div class="custom-select-wrapper">
+                    <div class="custom-select" id="crypto_code_custom">
+                        <div class="selected-option">Select a crypto</div>
+                        <div class="options-list">
+                            <?php foreach ($cryptosTrans as $code): ?>
+                            <div class="option" data-value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($code) ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Select masqué pour compatibilité JS -->
+                <select id="crypto_code" name="crypto_code" style="display: none;">
+                <?php foreach ($cryptosTrans as $code): ?>
+                    <option value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($code) ?></option>
+                <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
@@ -34,3 +43,4 @@
             <button type="submit" class="submit-btn">Open Position</button>
         </form>
 </section>
+<script src="<?php echo RACINE_URL; ?>public/js/tradingorder.js"></script>

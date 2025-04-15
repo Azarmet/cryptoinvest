@@ -4,7 +4,7 @@
     
     margin: 50px auto;
     padding: 20px;
-    background-color: #2C3E50; /* Fond sombre */
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     color: #F8F9FA;

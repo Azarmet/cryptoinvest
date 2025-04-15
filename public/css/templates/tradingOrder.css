@@ -89,3 +89,82 @@
         align-items: center;
     }
 }
+
+.custom-select-wrapper {
+    width: 100%;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .custom-select {
+    background-color: #2C3E50;
+    border: 1px solid #F1C40F;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    color: #F8F9FA;
+    padding: 10px 14px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .custom-select:hover {
+    box-shadow: 0 0 10px #f1c40f88;
+  }
+  
+  .selected-option {
+    font-size: 0.95rem;
+    user-select: none;
+  }
+  
+  .options-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 180px;
+    overflow-y: auto;
+    background-color: #2C3E50;
+    border: 1px solid #F1C40F;
+    border-top: none;
+    z-index: 10;
+    border-radius: 0 0 6px 6px;
+  }
+  
+  .option {
+    padding: 10px 14px;
+    color: #F8F9FA;
+    transition: background-color 0.2s ease;
+  }
+  
+  .option:hover {
+    background-color: #f1c40f88;
+    color: #2C3E50;
+  }
+  
+  /* Scrollbar personnalisée pour la liste d'options */
+.options-list {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #F1C40F #1e1e2f; /* Firefox */
+  }
+  
+  /* Scrollbar Chrome, Edge, Safari */
+  .options-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .options-list::-webkit-scrollbar-track {
+    background: #1e1e2f;
+    border-radius: 4px;
+  }
+  
+  .options-list::-webkit-scrollbar-thumb {
+    background-color: #F1C40F;
+    border-radius: 4px;
+    border: 2px solid #1e1e2f; /* Espace autour pour un effet net */
+  }
+  
+  .options-list::-webkit-scrollbar-thumb:hover {
+    background-color: #ffe26d;
+  }
+  
