@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/tradingOrder.css'?>">
 <!-- SECTION 2 : Trading -->
 <section id="trading-section" class="trading-section">
         <h3>Place an Order</h3>

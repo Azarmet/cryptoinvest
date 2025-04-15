@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/positions.css'?>">
 
 <!-- SECTION 3 : Open Positions -->
 <section id="positions-section" class="positions-section">

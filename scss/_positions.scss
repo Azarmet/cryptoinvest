@@ -1,0 +1,112 @@
+/* -------------------- Positions Section - Modern & Responsive -------------------- */
+.positions-section {
+    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  
+    h3 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.75rem;
+      color: #f1c40f;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;
+    }
+  }
+  
+  /* Container pour table responsive */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Style global du tableau */
+  #positions-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Poppins', sans-serif;
+    min-width: 600px;
+  
+    th,
+    td {
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid rgba(44, 62, 80, 0.5);
+    }
+  
+    thead {
+      background-color: #2c3e50;
+    }
+  
+    th {
+      color: #f1c40f;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+  
+    tbody {
+      tr:nth-child(even) {
+        background-color: rgba(44, 62, 80, 0.7);
+      }
+  
+      tr:nth-child(odd) {
+        background-color: rgba(44, 62, 80, 0.5);
+      }
+  
+      tr:hover {
+        background-color: #4d6457;
+        color: #fff;
+        transition: background 0.3s ease;
+      }
+    }
+  }
+  
+  /* Bouton "Clôturer" */
+  .close-btn {
+    display: inline-block;
+    padding: 0.5rem 0.5rem;
+    background-color: #e74c3c;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 550;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
+  
+    &:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+    }
+  }
+  
+  /* -------------------- Responsive Mobile -------------------- */
+  @media (max-width: 767px) {
+    .positions-section {
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+  
+    #positions-table {
+      th,
+      td {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+      }
+  
+      th:nth-child(3),
+      td:nth-child(3),
+      th:nth-child(4),
+      td:nth-child(4),
+      th:nth-child(6),
+      td:nth-child(6) {
+        display: none;
+      }
+    }
+  }
+  

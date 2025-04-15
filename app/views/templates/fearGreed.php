@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/fearGreed.css'?>">
 
 <div class="fear">
                 <h2>Crypto Fear & Greed Index</h2>

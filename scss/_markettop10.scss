@@ -1,0 +1,101 @@
+/* =================== Top 10 Cryptos (Amélioration) =================== */
+.market-top10 {
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
+    padding: 20px 20px 34px;
+    border-radius: 10px;
+    box-shadow:
+      0 0 16px 8px rgba(14, 14, 14, 0.6),
+      0 0 16px 8px rgba(24, 24, 24, 0.9);
+    max-width: 100%;
+    overflow-x: auto;
+  
+    h2 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.8rem;
+      color: #f8f9fa;
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+  
+      thead {
+        background-color: #2c3e50;
+      }
+  
+      th,
+      td {
+        padding: 14px 10px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+      }
+  
+      th {
+        font-size: 1.1rem;
+        color: #b9b9b9;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+  
+      tbody {
+        tr {
+          transition: background-color 0.3s, color 0.3s;
+  
+          &:nth-child(even) {
+            background-color: #3b4a59;
+          }
+  
+          &:nth-child(odd) {
+            background-color: #2c3e50;
+          }
+  
+          &:hover {
+            background-color: #f1c40f75;
+            color: #fff;
+            cursor: pointer;
+          }
+        }
+      }
+  
+      th:not(:last-child),
+      td:not(:last-child) {
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+  
+    .btn-go-market {
+      display: block;
+      background-color: #f1c40f;
+      color: #2c3e50;
+      padding: 10px 20px;
+      margin: 32px auto 0;
+      text-align: center;
+      border-radius: 50px;
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+  
+      &:hover {
+        background-color: #f1c40f75;
+        color: #fff;
+      }
+    }
+  }
+  
+  /* Mobile Optimisation */
+  @media screen and (max-width: 600px) {
+    .market-top10 {
+      th,
+      td {
+        font-size: 0.8rem;
+        padding: 10px;
+      }
+    }
+  }
+  

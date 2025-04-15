@@ -1,0 +1,187 @@
+/* =================== Home Page =================== */
+
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* === Section Hero (accroche) === */
+  .hero {
+    position: relative;
+    padding: 100px 20px;
+    text-align: center;
+    color: #F8F9FA;
+    overflow: hidden;
+    margin-bottom: 40px;
+    border-radius: 12px;
+  
+    .hero-content {
+      position: relative;
+      z-index: 1;
+  
+      h1 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 3rem;
+        color: #F8F9FA;
+        margin-bottom: 20px;
+      }
+  
+      .orange {
+        color: #F1C40F;
+      }
+  
+      p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
+  
+      .btn-get-started {
+        display: inline-block;
+        background-color: #F1C40F;
+        color: #2C3E50;
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-family: 'Poppins', sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
+  
+        &:hover {
+          background-color: #f1c40f75;
+          color: #fff;
+        }
+      }
+    }
+  }
+  
+  /* === Section Market & Fear Index === */
+  .market-fear {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 40px;
+  
+    .market-data {
+      width: 100%;
+    }
+  
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+  
+      .market-data,
+      .fear-leader {
+        width: 48%;
+      }
+    }
+  }
+  
+  .btn-go-market {
+    display: block;
+    background-color: #f1c40f;
+    color: #2c3e50;
+    padding: 10px 20px;
+    margin: 32px auto 0;
+    text-align: center;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: #f1c40f75;
+      color: #fff;
+    }
+  }
+  /* === Section Features === */
+  .home-features {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin: 40px 0;
+  
+    .feature {
+      position: relative;
+      min-height: 250px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 16px 8px rgba(14, 14, 14, 0.6),
+                  0 0 16px 8px rgba(24, 24, 24, 0.9);
+  
+      .feature-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+      }
+  
+      .feature-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.212);
+        z-index: 2;
+      }
+  
+      .feature-content {
+        position: relative;
+        z-index: 3;
+        padding: 20px;
+        text-align: center;
+  
+        h2 {
+          font-family: 'Roboto', sans-serif;
+          font-size: 2rem;
+          margin-bottom: 10px;
+          color: #F8F9FA;
+        }
+  
+        p {
+          font-family: 'Poppins', sans-serif;
+          margin-bottom: 20px;
+          padding: 10px;
+          color: #F8F9FA;
+        }
+  
+        a.btn-get-started {
+          display: inline-block;
+          padding: 12px 16px;
+          margin-top: 50px;
+          text-decoration: none;
+          border-radius: 50px;
+          transition: background-color 0.3s ease, color 0.3s ease;
+  
+          &:hover {
+            background-color: #f1c40f75;
+            color: #fff;
+          }
+        }
+      }
+    }
+  
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+  
+      .feature {
+        width: 48%;
+      }
+    }
+  }
+  
+  .leader {
+    margin-top: 50px;
+    box-shadow:
+      0 0 16px 8px rgba(14, 14, 14, 0.6),
+      0 0 16px 8px rgba(24, 24, 24, 0.9);
+  }
+  

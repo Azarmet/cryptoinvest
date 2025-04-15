@@ -1,5 +1,4 @@
 </main>
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/footer.css'?>">
 <footer class="site-footer">
     <div class="footer-container">
         

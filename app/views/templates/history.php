@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/transactions.css'?>">
 
 <!-- Transaction History -->
 <div class="transactions-section">

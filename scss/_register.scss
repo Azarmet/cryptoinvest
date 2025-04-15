@@ -1,0 +1,114 @@
+.register-container {
+    margin: 50px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #1e1e2fde, #2c3e50e0);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #F8F9FA;
+    max-width: 90%;
+    font-family: 'Poppins', sans-serif;
+  
+    @media (min-width: 768px) {
+      max-width: 400px;
+    }
+  
+    h2 {
+      font-family: 'Roboto', sans-serif;
+      color: #F1C40F;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .register-form {
+    .form-group {
+      margin-bottom: 15px;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-family: 'Poppins', sans-serif;
+    }
+  
+    input[type="email"],
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #F1C40F;
+      border-radius: 4px;
+      background-color: #2C3E50;
+      color: #F8F9FA;
+      font-family: 'Poppins', sans-serif;
+    }
+  }
+  
+  .btn-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #F1C40F;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #2C3E50;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 10px;
+  
+    &:hover {
+      background-color: #f1c40f75;
+      color: #fff;
+    }
+  }
+  
+  /* Critères de mot de passe */
+  .password-criteria {
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 10px 0 0;
+    }
+  
+    li {
+      font-size: 0.9rem;
+      margin: 5px 0;
+      padding-left: 25px;
+      position: relative;
+  
+      &.valid::before {
+        content: '✔';
+        color: #27AE60;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+  
+      &.invalid::before {
+        content: '✖';
+        color: #E74C3C;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+  }
+  
+  /* Lien vers la connexion */
+  .login-link {
+    text-align: center;
+    margin-top: 15px;
+    font-family: 'Poppins', sans-serif;
+  
+    a {
+      color: #F1C40F;
+      text-decoration: none;
+      transition: color 0.3s ease;
+  
+      &:hover {
+        color: #f1c40f75;
+      }
+    }
+  }
+  

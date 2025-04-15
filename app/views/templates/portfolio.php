@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="<?= RACINE_URL . 'public/css/templates/portfolio.css' ?>">
 <!-- SECTION 1 : Portfolio -->
 <section id="portfolio-section" class="portfolio-section">
     <?php if ($_GET['page'] !== 'profilboard'): ?>
