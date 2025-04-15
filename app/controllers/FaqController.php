@@ -17,30 +17,38 @@ function showBackFaq()
     require_once RACINE . 'app/views/backoffice/faq.php';
 }
 
-// ✅ Créer une nouvelle FAQ
 function createFaq()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $question = trim($_POST['question']);
         $reponse = trim($_POST['reponse']);
 
-        if (!empty($question) && !empty($reponse)) {
-            $faqModel = new Faq();
-            $faqModel->createFaq($question, $reponse);
-            header('Location: index.php?pageback=faq&success=1');  // ✅ Ajouté
-            exit;
+        $faqModel = new Faq();
+        $validation = $faqModel->validateFaqData($question, $reponse);
+
+        if (!$validation['success']) {
+            $error = $validation['error'];
         } else {
-            $error = 'Veuillez remplir tous les champs.';
+            $faqModel->createFaq($question, $reponse);
+            header('Location: index.php?pageback=faq&success=1');
+            exit;
         }
     }
+
     require_once RACINE . 'app/views/backoffice/formFaq.php';
 }
 
-// ✅ Éditer une FAQ existante
+
+// Éditer une FAQ existante
 function editFaq($id)
 {
+    if (!is_numeric($id)) {
+        echo 'ID invalide.';
+        exit;
+    }
+
     $faqModel = new Faq();
-    $faq = $faqModel->getById($id);
+    $faq = $faqModel->getById((int)$id);
 
     if (!$faq) {
         echo 'FAQ introuvable.';
@@ -51,26 +59,35 @@ function editFaq($id)
         $question = trim($_POST['question']);
         $reponse = trim($_POST['reponse']);
 
-        if (!empty($question) && !empty($reponse)) {
-            $faqModel->updateFaq($id, $question, $reponse);
-            header('Location: index.php?pageback=faq&success=2');  // ✅ Mise à jour
-            exit;
+        $validation = $faqModel->validateFaqData($question, $reponse);
+
+        if (!$validation['success']) {
+            $error = $validation['error'];
         } else {
-            $error = 'Veuillez remplir tous les champs.';
+            $faqModel->updateFaq($id, $question, $reponse);
+            header('Location: index.php?pageback=faq&success=2');
+            exit;
         }
     }
 
     require_once RACINE . 'app/views/backoffice/formFaq.php';
 }
 
-// ✅ Supprimer une FAQ
+
+//  Supprimer une FAQ
 function deleteFaq($id)
 {
+    if (!is_numeric($id)) {
+        echo 'ID invalide.';
+        exit;
+    }
+
     $faqModel = new Faq();
-    $faqModel->deleteFaq($id);
-    header('Location: index.php?pageback=faq&success=3');  // ✅ Suppression
+    $faqModel->deleteFaq((int)$id);
+    header('Location: index.php?pageback=faq&success=3');
     exit;
 }
+
 
 // API JSON
 function searchFaq()

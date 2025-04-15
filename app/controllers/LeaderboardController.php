@@ -56,7 +56,7 @@ function search_user() {
             if (stripos($profil['pseudo'], $query) !== false) {
                 $solde = $pfModel->getSoldeActuel($userID);
                 $pnl24h = $pfModel->getPnL($userID, 1);
-                $pnl7j = $pfModel->getPnL($user, 7);
+                $pnl7j = $pfModel->getPnL($userID, 7);
 
                 $result[] = [
                     'id' => $userID,

@@ -116,17 +116,75 @@ class CryptoMarket
 
     public function createCrypto($code, $categorie)
     {
-        $stmt = $this->pdo->prepare('INSERT INTO cryptomarket (code, categorie) VALUES (:code, :categorie); INSERT INTO cryptotrans (code) VALUES (:code)');
-        return $stmt->execute([
-            ':code' => $code,
-            ':categorie' => $categorie
-        ]);
+        // Nettoyage de l’entrée
+        $code = strtoupper(trim($code));
+        $categorie = trim($categorie);
+
+        // Vérifier unicité du code dans cryptomarket
+        $stmtCheck = $this->pdo->prepare('SELECT id_crypto_market FROM cryptomarket WHERE code = :code');
+        $stmtCheck->execute([':code' => $code]);
+        if ($stmtCheck->fetch()) {
+            return ['success' => false, 'error' => 'Cette cryptomonnaie existe déjà.'];
+        }
+
+        // Démarre la transaction
+        $this->pdo->beginTransaction();
+
+        try {
+            // Insertion dans cryptomarket
+            $stmt1 = $this->pdo->prepare(
+                'INSERT INTO cryptomarket (code, categorie, date_maj, prix_actuel, variation_24h)
+             VALUES (:code, :categorie, NOW(), 0, 0)'
+            );
+            $stmt1->execute([
+                ':code' => $code,
+                ':categorie' => $categorie
+            ]);
+
+            // Insertion dans cryptotrans
+            $stmt2 = $this->pdo->prepare('INSERT INTO cryptotrans (code) VALUES (:code)');
+            $stmt2->execute([':code' => $code]);
+
+            $this->pdo->commit();
+            return ['success' => true];
+        } catch (\PDOException $e) {
+            $this->pdo->rollBack();
+            error_log('Erreur lors de la création de la crypto : ' . $e->getMessage());
+            return ['success' => false, 'error' => "Erreur interne lors de l'ajout."];
+        }
     }
 
     public function deleteCrypto($id)
     {
-        $stmt = $this->pdo->prepare('DELETE FROM cryptomarket WHERE id_crypto_market = :id');
-        return $stmt->execute([':id' => $id]);
+        // Récupérer le code avant suppression (pour supprimer aussi dans cryptotrans)
+        $stmtSelect = $this->pdo->prepare('SELECT code FROM cryptomarket WHERE id_crypto_market = :id');
+        $stmtSelect->execute([':id' => $id]);
+        $row = $stmtSelect->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            return ['success' => false, 'error' => 'Crypto introuvable.'];
+        }
+
+        $code = $row['code'];
+
+        try {
+            $this->pdo->beginTransaction();
+
+            // Supprimer d'abord de cryptomarket
+            $stmtDeleteMarket = $this->pdo->prepare('DELETE FROM cryptomarket WHERE id_crypto_market = :id');
+            $stmtDeleteMarket->execute([':id' => $id]);
+
+            // Puis supprimer de cryptotrans (basé sur le code)
+            $stmtDeleteTrans = $this->pdo->prepare('DELETE FROM cryptotrans WHERE code = :code');
+            $stmtDeleteTrans->execute([':code' => $code]);
+
+            $this->pdo->commit();
+            return ['success' => true];
+        } catch (\PDOException $e) {
+            $this->pdo->rollBack();
+            error_log('Erreur suppression crypto : ' . $e->getMessage());
+            return ['success' => false, 'error' => 'Erreur lors de la suppression.'];
+        }
     }
 }
 ?>

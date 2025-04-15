@@ -18,132 +18,119 @@ class Portefeuille
      */
     public function getSoldeDisponible($userId)
     {
-        // 1) Récupérer le portefeuille de l'utilisateur
         $sql = 'SELECT id_portefeuille, capital_initial
-                FROM portefeuille
-                WHERE id_utilisateur = :userId
-                LIMIT 1';
+            FROM portefeuille
+            WHERE id_utilisateur = :userId
+            LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':userId' => $userId]);
         $pf = $stmt->fetch();
-        if (!$pf) {
-            return 0;
-        }
-        $capitalInitial = floatval($pf['capital_initial']);
-        $pfId = $pf['id_portefeuille'];
 
-        // 2) Calculer la somme investie dans les positions open
+        if (!$pf) {
+            return 0.0;
+        }
+
+        $capitalInitial = floatval($pf['capital_initial']);
+        $pfId = (int) $pf['id_portefeuille'];
+
+        // Somme des positions ouvertes
         $sqlOpen = "SELECT SUM(prix_ouverture * quantite) as sommeEngagee
-                    FROM transaction
-                    WHERE statut = 'open'
-                      AND id_portefeuille = :pfId";
+                FROM transaction
+                WHERE statut = 'open'
+                  AND id_portefeuille = :pfId";
         $stmt2 = $this->pdo->prepare($sqlOpen);
         $stmt2->execute([':pfId' => $pfId]);
-        $row2 = $stmt2->fetch();
-        $sommeEngagee = floatval($row2['sommeEngagee']);
+        $sommeEngagee = floatval($stmt2->fetchColumn() ?? 0);
 
-        // 3) Calculer les gains/pertes réalisés (transactions close)
+        // Somme des PnL réalisés
         $sqlClose = "SELECT SUM(pnl) as sommePnl
-                     FROM transaction
-                     WHERE statut = 'close'
-                       AND id_portefeuille = :pfId";
+                 FROM transaction
+                 WHERE statut = 'close'
+                   AND id_portefeuille = :pfId";
         $stmt3 = $this->pdo->prepare($sqlClose);
         $stmt3->execute([':pfId' => $pfId]);
-        $row3 = $stmt3->fetch();
-        $sommePnl = floatval($row3['sommePnl']);
+        $sommePnl = floatval($stmt3->fetchColumn() ?? 0);
 
-        // 4) Calcul du solde disponible
         $solde = $capitalInitial + $sommePnl - $sommeEngagee;
-        return $solde;
+        return round($solde, 2);
     }
 
-    public function getSoldeActuel($userId)
+    public function getSoldeActuel($userId): float
     {
         $sql = 'SELECT capital_actuel FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':userId' => $userId]);
-        $row = $stmt->fetch();
-        return $row ? floatval($row['capital_actuel']) : 0;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return isset($row['capital_actuel']) ? floatval($row['capital_actuel']) : 0.0;
     }
 
     /**
      * Retourne l'historique du solde pour le graphique.
      */
-    public function getSoldeHistory($userId, $interval)
+    public function getSoldeHistory($userId, $interval): array
     {
-        // Récupérer le portefeuille de l'utilisateur
+        // Étape 1 : Récupération du portefeuille
         $sql = 'SELECT id_portefeuille, capital_initial FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':userId' => $userId]);
-        $pf = $stmt->fetch();
-        if (!$pf) {
-            return [];
-        }
-        $capitalInitial = floatval($pf['capital_initial']);
-        $pfId = $pf['id_portefeuille'];
+        $pf = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Définir la date de début en fonction de l'intervalle choisi
+        if (!$pf)
+            return [];
+
+        $capitalInitial = floatval($pf['capital_initial']);
+        $pfId = (int) $pf['id_portefeuille'];
+
+        // Étape 2 : Gestion sécurisée des intervalles
         $now = new \DateTime();
-        switch ($interval) {
-            case 'jour':
-                $startDate = clone $now;
-                $startDate->modify('-24 hours');
-                break;
-            case 'semaine':
-                $startDate = clone $now;
-                $startDate->modify('-7 days');
-                break;
-            case 'mois':
-                $startDate = clone $now;
-                $startDate->modify('-30 days');
-                break;
-            case 'annee':
-                $startDate = clone $now;
-                $startDate->modify('-365 days');
-                break;
-            default:
-                // Si l'intervalle est invalide, on renvoie l'historique complet
-                $startDate = new \DateTime('1970-01-01');
-                break;
-        }
+        $intervals = [
+            'jour' => '-24 hours',
+            'semaine' => '-7 days',
+            'mois' => '-30 days',
+            'annee' => '-365 days'
+        ];
+
+        $startDate = isset($intervals[$interval])
+            ? $now->modify($intervals[$interval])
+            : new \DateTime('1970-01-01');
+
         $startDateStr = $startDate->format('Y-m-d H:i:s');
 
-        // Calculer le solde au début de la période : capital_initial + PnL des transactions avant startDate
-        $sqlBefore = "SELECT SUM(pnl) as totalPnl
-                      FROM transaction
-                      WHERE statut = 'close'
-                        AND id_portefeuille = :pfId
-                        AND date_cloture < :startDate";
+        // Étape 3 : Calcul du solde initial à cette date
+        $sqlBefore = "SELECT SUM(pnl) as totalPnl FROM transaction
+                  WHERE statut = 'close' AND id_portefeuille = :pfId AND date_cloture < :startDate";
         $stmtBefore = $this->pdo->prepare($sqlBefore);
         $stmtBefore->execute([':pfId' => $pfId, ':startDate' => $startDateStr]);
-        $rowBefore = $stmtBefore->fetch();
-        $pnlBefore = floatval($rowBefore['totalPnl']);
+        $rowBefore = $stmtBefore->fetch(PDO::FETCH_ASSOC);
+        $pnlBefore = isset($rowBefore['totalPnl']) ? floatval($rowBefore['totalPnl']) : 0.0;
+
         $balance = $capitalInitial + $pnlBefore;
 
-        // Point initial de l'historique : début de période avec le solde calculé
-        $history = [];
-        $history[] = ['date' => $startDateStr, 'solde' => $balance];
+        // Initialiser l'historique
+        $history = [['date' => $startDateStr, 'solde' => $balance]];
 
-        // Récupérer toutes les transactions clôturées depuis le début de la période, triées par date_cloture
-        $sqlTx = "SELECT date_cloture, pnl 
-                  FROM transaction 
-                  WHERE statut = 'close'
-                    AND id_portefeuille = :pfId
-                    AND date_cloture >= :startDate
-                  ORDER BY date_cloture ASC";
+        // Étape 4 : Transactions clôturées depuis cette date
+        $sqlTx = "SELECT date_cloture, pnl FROM transaction
+              WHERE statut = 'close' AND id_portefeuille = :pfId AND date_cloture >= :startDate
+              ORDER BY date_cloture ASC";
         $stmtTx = $this->pdo->prepare($sqlTx);
         $stmtTx->execute([':pfId' => $pfId, ':startDate' => $startDateStr]);
         $transactions = $stmtTx->fetchAll(PDO::FETCH_ASSOC);
 
-        // Pour chaque transaction, mettre à jour le solde et ajouter un point
         foreach ($transactions as $tx) {
             $balance += floatval($tx['pnl']);
-            $history[] = ['date' => $tx['date_cloture'], 'solde' => $balance];
+            $history[] = [
+                'date' => $tx['date_cloture'],
+                'solde' => round($balance, 2)
+            ];
         }
 
-        // Ajouter enfin le point actuel (même si aucune transaction n'est intervenue après le début de la période)
-        $nowStr = $now->format('Y-m-d H:i:s');
-        $history[] = ['date' => $nowStr, 'solde' => $balance];
+        // Ajouter le point final (maintenant)
+        $history[] = [
+            'date' => (new \DateTime())->format('Y-m-d H:i:s'),
+            'solde' => round($balance, 2)
+        ];
 
         return $history;
     }
@@ -151,43 +138,41 @@ class Portefeuille
     /**
      * Renvoie les statistiques globales du portefeuille : ROI total, PnL total, nombre de transactions.
      */
-    public function getPortfolioStats($userId)
+    public function getPortfolioStats($userId): array
     {
-        $sql = 'SELECT id_portefeuille, capital_initial
-                FROM portefeuille
-                WHERE id_utilisateur = :userId
-                LIMIT 1';
+        // 1. Récupération du portefeuille
+        $sql = 'SELECT id_portefeuille, capital_initial FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':userId' => $userId]);
-        $pf = $stmt->fetch();
+        $pf = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if (!$pf) {
             return [
-                'roiTotal' => 0,
-                'pnlTotal' => 0,
+                'roiTotal' => 0.0,
+                'pnlTotal' => 0.0,
                 'txCount' => 0
             ];
         }
-        $capitalInitial = floatval($pf['capital_initial']);
-        $pfId = $pf['id_portefeuille'];
 
-        $sqlPnl = "SELECT SUM(pnl) as totalPnl
-                   FROM transaction
-                   WHERE statut = 'close'
-                     AND id_portefeuille = :pfId";
+        $capitalInitial = floatval($pf['capital_initial']);
+        $pfId = (int) $pf['id_portefeuille'];
+
+        // 2. Total PnL
+        $sqlPnl = 'SELECT SUM(pnl) AS totalPnl FROM transaction WHERE statut = "close" AND id_portefeuille = :pfId';
         $stmtPnl = $this->pdo->prepare($sqlPnl);
         $stmtPnl->execute([':pfId' => $pfId]);
-        $rowPnl = $stmtPnl->fetch();
-        $pnlTotal = floatval($rowPnl['totalPnl']);
+        $pnlRow = $stmtPnl->fetch(PDO::FETCH_ASSOC);
+        $pnlTotal = isset($pnlRow['totalPnl']) ? floatval($pnlRow['totalPnl']) : 0.0;
 
-        $sqlCount = 'SELECT COUNT(*) as nbTx
-                     FROM transaction
-                     WHERE id_portefeuille = :pfId';
+        // 3. Total transactions
+        $sqlCount = 'SELECT COUNT(*) AS nbTx FROM transaction WHERE id_portefeuille = :pfId';
         $stmtCount = $this->pdo->prepare($sqlCount);
         $stmtCount->execute([':pfId' => $pfId]);
-        $rowCount = $stmtCount->fetch();
-        $txCount = intval($rowCount['nbTx']);
+        $countRow = $stmtCount->fetch(PDO::FETCH_ASSOC);
+        $txCount = isset($countRow['nbTx']) ? (int) $countRow['nbTx'] : 0;
 
-        $roiTotal = ($capitalInitial > 0) ? (($pnlTotal / $capitalInitial) * 100) : 0;
+        // 4. Calcul ROI
+        $roiTotal = ($capitalInitial > 0) ? ($pnlTotal / $capitalInitial) * 100 : 0;
 
         return [
             'roiTotal' => round($roiTotal, 2),
@@ -196,29 +181,40 @@ class Portefeuille
         ];
     }
 
-    public function getPnL($userId, $nb_jour = 1)
+    public function getPnL(int $userId, int $nb_jour = 1): float
     {
-        $sql = 'SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1';
-        $stmt = $this->pdo->prepare($sql);
+        // Validation simple
+        if ($nb_jour <= 0 || $nb_jour > 365) {
+            $nb_jour = 1;
+        }
+
+        // 1. Récupérer le portefeuille de l'utilisateur
+        $stmt = $this->pdo->prepare('SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1');
         $stmt->execute([':userId' => $userId]);
-        $row = $stmt->fetch();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$row)
-            return 0;
+        if (!$row) {
+            return 0.0;
+        }
 
-        $pfId = $row['id_portefeuille'];
+        $pfId = (int) $row['id_portefeuille'];
 
-        $sql = "SELECT SUM(pnl) as total_pnl FROM transaction 
-            WHERE statut = 'close'
-              AND id_portefeuille = :pfId
-              AND date_cloture >= NOW() - INTERVAL :nb_jour DAY";
+        // 2. Calcul du PnL sur les X derniers jours — avec date calculée en PHP (évite le paramètre non autorisé)
+        $dateDebut = (new \DateTime())->modify("-{$nb_jour} days")->format('Y-m-d H:i:s');
 
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':pfId', $pfId, PDO::PARAM_INT);
-        $stmt->bindValue(':nb_jour', (int) $nb_jour, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch();
+        $stmt = $this->pdo->prepare("
+        SELECT SUM(pnl) as total_pnl
+        FROM transaction
+        WHERE statut = 'close'
+          AND id_portefeuille = :pfId
+          AND date_cloture >= :startDate
+    ");
+        $stmt->execute([
+            ':pfId' => $pfId,
+            ':startDate' => $dateDebut
+        ]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return floatval($result['total_pnl']);
+        return isset($result['total_pnl']) ? floatval($result['total_pnl']) : 0.0;
     }
 }

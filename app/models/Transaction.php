@@ -26,33 +26,66 @@ class Transaction
      */
     public function openPosition($userId, $montant, $type, $cryptoCode = 'BTCUSDT')
     {
-        // Récupérer le prix d'ouverture en temps réel via l'API Binance pour la crypto choisie
-        $prixOuverture = $this->getCurrentPriceFromBinance($cryptoCode);
-        if (!$prixOuverture) {
-            return;  // ou gérer l'erreur
+        // 1. Valider les données d'entrée
+        if (!is_numeric($montant) || $montant <= 0) {
+            return ['success' => false, 'error' => 'Le montant est invalide.'];
         }
 
-        // Calculer la quantité investie
-        $quantite = ($prixOuverture > 0) ? ($montant / $prixOuverture) : 0;
+        if (!in_array($type, ['long', 'short'])) {
+            return ['success' => false, 'error' => 'Le type de position est invalide.'];
+        }
 
-        // Insérer la transaction avec statut 'open'
+        // 2. Vérifier que la crypto existe dans cryptotrans
+        $checkCrypto = $this->pdo->prepare('SELECT id_crypto_trans FROM cryptotrans WHERE code = :code LIMIT 1');
+        $checkCrypto->execute([':code' => $cryptoCode]);
+        $cryptoRow = $checkCrypto->fetch();
+        if (!$cryptoRow) {
+            return ['success' => false, 'error' => 'Crypto inconnue.'];
+        }
+
+        // 3. Récupérer le prix d’ouverture via l’API Binance
+        $prixOuverture = $this->getCurrentPriceFromBinance($cryptoCode);
+        if (!$prixOuverture || !is_numeric($prixOuverture) || $prixOuverture <= 0) {
+            return ['success' => false, 'error' => 'Erreur lors de la récupération du prix de la crypto.'];
+        }
+
+        // 4. Calcul de la quantité
+        $quantite = $montant / $prixOuverture;
+
+        // 5. Vérifier l’existence du portefeuille utilisateur
+        $pfStmt = $this->pdo->prepare('SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :uid LIMIT 1');
+        $pfStmt->execute([':uid' => $userId]);
+        $pfRow = $pfStmt->fetch();
+        if (!$pfRow) {
+            return ['success' => false, 'error' => 'Portefeuille non trouvé pour cet utilisateur.'];
+        }
+
+        // 6. Insertion dans la table transaction
         $sqlInsert = "
-        INSERT INTO transaction
-            (statut, date_ouverture, prix_ouverture, quantite, sens, id_portefeuille, id_crypto_trans)
-        VALUES
-            ('open', NOW(), :prixOuverture, :quantite, :sens,
-             (SELECT id_portefeuille FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1),
-             (SELECT id_crypto_trans FROM cryptotrans WHERE code = :cryptoCode LIMIT 1)
-            )
+        INSERT INTO transaction (
+            statut, date_ouverture, prix_ouverture, quantite, sens,
+            id_portefeuille, id_crypto_trans
+        )
+        VALUES (
+            'open', NOW(), :prixOuverture, :quantite, :sens,
+            :id_portefeuille, :id_crypto_trans
+        )
     ";
+
         $stmtInsert = $this->pdo->prepare($sqlInsert);
-        $stmtInsert->execute([
+        $success = $stmtInsert->execute([
             ':prixOuverture' => $prixOuverture,
             ':quantite' => $quantite,
-            ':sens' => $type,  // "long" ou "short"
-            ':userId' => $userId,
-            ':cryptoCode' => $cryptoCode
+            ':sens' => $type,
+            ':id_portefeuille' => $pfRow['id_portefeuille'],
+            ':id_crypto_trans' => $cryptoRow['id_crypto_trans']
         ]);
+
+        if (!$success) {
+            return ['success' => false, 'error' => 'Erreur lors de l\'ouverture de la position.'];
+        }
+
+        return ['success' => true];
     }
 
     /**
@@ -279,8 +312,8 @@ class Transaction
     }
 
     public function getTransactionsByUserId($user_id)
-{
-    $stmt = $this->pdo->prepare('
+    {
+        $stmt = $this->pdo->prepare('
         SELECT t.*, c.code AS crypto_code
         FROM transaction t
         JOIN portefeuille p ON t.id_portefeuille = p.id_portefeuille
@@ -288,9 +321,8 @@ class Transaction
         WHERE p.id_utilisateur = :user_id
         ORDER BY t.date_ouverture DESC
     ');
-    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

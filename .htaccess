@@ -1,12 +1,16 @@
 Options -Indexes
 RewriteEngine On
+<FilesMatch "\.log$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
 
 # Rediriger tout vers index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
 
-# Optionnel : Forcer UTF-8
+
 AddDefaultCharset UTF-8
 
 # Optionnel : Augmenter certaines limites
