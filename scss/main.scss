@@ -121,7 +121,11 @@
   
 
   /* =================== Base =================== */
-  
+  html{
+    scrollbar-width: thin;
+    scrollbar-color: #f1c40f #1e1e2f;
+  }
+
   body {
     font-family: 'Poppins', sans-serif;
     background-color: #2C2C2C;

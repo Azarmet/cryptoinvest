@@ -5,6 +5,9 @@ RewriteEngine On
   Deny from all
 </FilesMatch>
 
+# Rediriger tout le trafic vers HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # Rediriger tout vers index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -2637,4 +2637,9 @@ main {
   flex: 1;
 }
 
+html{
+  scrollbar-width: thin;
+  scrollbar-color: #f1c40f #1e1e2f;
+}
+
 /*# sourceMappingURL=style.css.map */
