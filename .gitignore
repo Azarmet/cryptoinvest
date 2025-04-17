@@ -1,0 +1,37 @@
+# Fichiers d’environnement (ne pas versionner vos clés/credentials)
+.env
+.env*
+
+# Dépendances Node.js
+/node_modules/
+
+# Dépendances PHP / Composer
+/vendor/
+/composer.lock      # (optionnel : vous pouvez versionner composer.lock pour verrouiller les versions)
+
+# Dossiers de build / artefacts
+/public/css/*.map
+/public/js/*.map
+scss/**/*.css.map   # si vos builds génèrent des sourcemaps
+
+# Uploads utilisateurs (images, etc.), ne pas versionner les fichiers uploadés
+/public/uploads/
+/app/uploads/       # si vous avez d’autres dossiers d’uploads ailleurs
+
+# Logs d’application
+/logs/
+/logs/app.log
+
+# Cache / sessions / fichiers temporaires
+/storage/           # si vous utilisez un dossier de cache
+/tmp/
+/*.tmp
+
+# IDEs et OS
+.vscode/
+/.idea/
+/.DS_Store
+Thumbs.db
+
+# Fichiers de test ou utilitaires locaux
+test.php
