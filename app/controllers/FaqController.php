@@ -3,6 +3,12 @@ namespace App\Controllers;
 
 use App\Models\Faq;
 
+/**
+ * Affiche la FAQ publique.
+ *
+ * - Récupère toutes les entrées via le modèle Faq.
+ * - Charge la vue frontoffice/app/views/faq.php.
+ */
 function showFaq()
 {
     $faqModel = new Faq();
@@ -10,6 +16,12 @@ function showFaq()
     require_once RACINE . 'app/views/faq.php';
 }
 
+/**
+ * Affiche la FAQ dans le back-office.
+ *
+ * - Récupère toutes les entrées via le modèle Faq.
+ * - Charge la vue backoffice/app/views/backoffice/faq.php.
+ */
 function showBackFaq()
 {
     $faqModel = new Faq();
@@ -17,6 +29,14 @@ function showBackFaq()
     require_once RACINE . 'app/views/backoffice/faq.php';
 }
 
+/**
+ * Crée une nouvelle entrée FAQ.
+ *
+ * - Valide la requête POST.
+ * - Valide les données (question, réponse) via validateFaqData().
+ * - Insère en base via createFaq().
+ * - Redirige en back-office avec indicateur de succès.
+ */
 function createFaq()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,7 +59,16 @@ function createFaq()
 }
 
 
-// Éditer une FAQ existante
+/**
+ * Édite une entrée FAQ existante.
+ *
+ * @param $id Identifiant de la FAQ à modifier.
+ *
+ * - Vérifie que l'ID est numérique.
+ * - Récupère la FAQ via getById().
+ * - En POST, valide et met à jour via updateFaq().
+ * - Redirige en back-office avec indicateur de succès.
+ */
 function editFaq($id)
 {
     if (!is_numeric($id)) {
@@ -74,7 +103,15 @@ function editFaq($id)
 }
 
 
-//  Supprimer une FAQ
+/**
+ * Supprime une FAQ existante.
+ *
+ * @param $id Identifiant de la FAQ à supprimer.
+ *
+ * - Vérifie que l'ID est numérique.
+ * - Supprime via deleteFaq().
+ * - Redirige en back-office avec indicateur de succès.
+ */
 function deleteFaq($id)
 {
     if (!is_numeric($id)) {
@@ -89,7 +126,14 @@ function deleteFaq($id)
 }
 
 
-// API JSON
+/**
+ * Point d'entrée API pour la recherche de FAQ au format JSON.
+ *
+ * - Définit l'en-tête Content-Type.
+ * - Lit le paramètre 'term' en GET.
+ * - Si vide, renvoie toutes les FAQ, sinon celles correspondant au terme via search().
+ * - Retourne le JSON et termine le script.
+ */
 function searchFaq()
 {
     header('Content-Type: application/json');

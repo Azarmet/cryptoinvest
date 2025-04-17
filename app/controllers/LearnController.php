@@ -3,15 +3,31 @@ namespace App\Controllers;
 
 use App\Models\Article;
 
+
+/**
+ * Contrôleur gérant la section « Learn » (articles) du site.
+ */
+  
+/**
+ * Affiche la page « Learn » publique.
+ *
+ * - Récupère les filtres GET (catégorie, recherche) pour l'interface JS.
+ * - Charge la vue app/views/learn.php.
+ */
+
 function showLearn()
 {
-    // Affichage initial de la page "learn".
-    // Notez qu'ici, nous ne récupérons pas encore les articles : ce sera fait en AJAX.
     $categorie = isset($_GET['categorie']) ? $_GET['categorie'] : 'Tous';
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     require_once RACINE . 'app/views/learn.php';
 }
 
+/**
+ * Affiche la liste des articles dans le back-office.
+ *
+ * - Récupère tous les articles (sans filtre).
+ * - Charge la vue backoffice/app/views/backoffice/learn.php.
+ */
 function showBackLearn()
 {
     $articleModel = new Article();
@@ -19,6 +35,11 @@ function showBackLearn()
     require_once RACINE . 'app/views/backoffice/learn.php';
 }
 
+/**
+ * Affiche le détail d’un article.
+ *
+ * @param int $id Identifiant de l’article.
+ */
 function showArticleDetail($id)
 {
     $articleModel = new \App\Models\Article();
@@ -31,6 +52,13 @@ function showArticleDetail($id)
     }
 }
 
+/**
+ * Crée un nouvel article via le back-office.
+ *
+ * - Gère l’upload d’image.
+ * - Valide et préremplit le formulaire en cas d’erreur.
+ * - Appelle Article::createArticle().
+ */
 function createArticle()
 {
     $error = null;
@@ -59,6 +87,12 @@ function createArticle()
     require RACINE . 'app/views/backoffice/formArticle.php';
 }
 
+
+/**
+ * Édite un article existant via le back-office.
+ *
+ * @param int $id Identifiant de l’article à modifier.
+ */
 function editArticle($id)
 {
     $error = null;
@@ -90,6 +124,17 @@ function editArticle($id)
     require RACINE . 'app/views/backoffice/formArticle.php';
 }
 
+
+/**
+ * Gère l’upload d’une image pour un article.
+ *
+ * - Vérifie la taille et le type MIME.
+ * - Crée le dossier si nécessaire.
+ * - Génère un nom unique et déplace le fichier.
+ *
+ * @param string|null &$error Retourne le message d’erreur en cas d’échec.
+ * @return string|null Nom du fichier enregistré ou null.
+ */
 function changeImage(&$error = null)
 {
     if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === 0) {
@@ -127,6 +172,12 @@ function changeImage(&$error = null)
     return null;
 }
 
+
+/**
+ * Supprime un article.
+ *
+ * @param int $id Identifiant de l’article à supprimer.
+ */
 function deleteArticle($id)
 {
     $articleModel = new \App\Models\Article();
@@ -136,8 +187,11 @@ function deleteArticle($id)
 }
 
 /**
- * Appelé en AJAX pour renvoyer la liste d'articles filtrés,
- * ainsi que la pagination (nombre total de pages, page courante).
+ * Point d’entrée AJAX pour rechercher et paginer les articles.
+ *
+ * - Lit GET : catégorie, search, p (page).
+ * - Calcule offset et total pages.
+ * - Renvoie JSON : articles, currentPage, totalPages.
  */
 function searchLearn()
 {

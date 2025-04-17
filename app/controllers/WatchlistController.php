@@ -4,6 +4,13 @@ namespace App\Controllers;
 use App\Models\CryptoMarket;
 use App\Models\Watchlist;
 
+/**
+ * Affiche la page de la watchlist d’un utilisateur connecté.
+ *
+ * - Vérifie la session et l’authentification.
+ * - Récupère la liste des cryptos en watchlist via Watchlist::getWatchlist().
+ * - Charge la vue app/views/watchlist.php.
+ */
 function showWatchlist()
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -22,6 +29,14 @@ function showWatchlist()
     require_once RACINE . 'app/views/watchlist.php';
 }
 
+/**
+ * Ajoute une cryptomonnaie à la watchlist de l’utilisateur connecté.
+ *
+ * - Vérifie la session et l’authentification.
+ * - Lit l’ID de la crypto en GET.
+ * - Appelle Watchlist::add().
+ * - Redirige vers la page Market.
+ */
 function addToWatchlist()
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -42,6 +57,14 @@ function addToWatchlist()
     exit();
 }
 
+/**
+ * Supprime une cryptomonnaie de la watchlist de l’utilisateur connecté.
+ *
+ * - Vérifie la session et l’authentification.
+ * - Lit l’ID de la crypto en GET.
+ * - Appelle Watchlist::remove().
+ * - Redirige vers la page Watchlist.
+ */
 function removeFromWatchlist()
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -62,6 +85,14 @@ function removeFromWatchlist()
     exit();
 }
 
+/**
+ * Rafraîchit la watchlist de l’utilisateur en AJAX (JSON).
+ *
+ * - Vérifie la session et l’authentification.
+ * - Met à jour les prix via CryptoMarket::updateFromBinance().
+ * - Récupère la watchlist via Watchlist::getWatchlist().
+ * - Retourne un JSON de la liste mise à jour.
+ */
 function refreshWatchlist()
 {
     if (session_status() === PHP_SESSION_NONE) {

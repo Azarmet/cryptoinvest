@@ -4,6 +4,13 @@ namespace App\Controllers;
 use App\Models\Portefeuille;
 use App\Models\Transaction;
 
+/**
+ * Affiche le tableau de bord utilisateur.
+ *
+ * - Vérifie l’authentification via la session.
+ * - Récupère l’historique des transactions.
+ * - Charge la vue dashboard.php.
+ */
 function showDashboard()
 {
     // Vérifier la session
@@ -18,6 +25,13 @@ function showDashboard()
     // Afficher la vue du dashboard
     require_once RACINE . 'app/views/dashboard.php';
 }
+
+/**
+ * Renvoie les statistiques du dashboard au format JSON.
+ *
+ * - Vérifie l’authentification.
+ * - Appelle Transaction::getDashboardStats().
+ */
 
 function getStats() {
     if (session_status() === PHP_SESSION_NONE) session_start();
@@ -34,6 +48,14 @@ function getStats() {
     exit;
 }
 
+/**
+ * Récupère l’historique complet des transactions de l’utilisateur.
+ *
+ * - Vérifie l’authentification.
+ * - Utilise Transaction::getTransactionsByUserId().
+ *
+ * @return array Tableau associatif des transactions.
+ */
 function getHistoryTransaction(){
 // Vérifier la session
 if (session_status() === PHP_SESSION_NONE) {

@@ -27,7 +27,7 @@ function refreshPositions()
 }
 
 /**
- * Ouvre une nouvelle position (long/short).
+ * Ouvre une nouvelle position (long/short) pour l’utilisateur connecté.
  */
 function openPosition()
 {
@@ -81,7 +81,7 @@ function openPosition()
 
 
 /**
- * Clôture la position en cours (idTransaction).
+ * Clôture une position ouverte identifiée par GET['id'] pour l’utilisateur connecté.
  */
 function closePosition()
 {

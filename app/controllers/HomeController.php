@@ -4,17 +4,40 @@ namespace App\Controllers;
 use App\Models\User;
 use App\Models\Portefeuille;
 
+/**
+ * Affiche la page d’accueil publique avec le classement des utilisateurs.
+ *
+ * - Récupère le leaderboard via GetExtractLeaderboard().
+ * - Charge la vue frontoffice/app/views/home.php.
+ */
+
 function showHome()
 {   
     $usersWithSolde = GetExtractLeaderboard();
     require_once RACINE . 'app/views/home.php';
 }
 
+/**
+ * Affiche la page d’accueil du back-office.
+ */
 function showBackHome()
 {
     require_once RACINE . 'app/views/backoffice/home.php';
 }
 
+/**
+ * Construit le leaderboard des utilisateurs basé sur leur solde actuel.
+ *
+ * - Récupère tous les IDs utilisateurs.
+ * - Pour chaque utilisateur :  
+ *     • Lit le profil (pseudo, image).  
+ *     • Récupère le solde actuel via Portefeuille::getSoldeActuel().  
+ * - Trie les utilisateurs par solde décroissant.  
+ * - Renvoie les 3 premiers (top 3).
+ *
+ * @return array Tableau des meilleurs utilisateurs avec clés :
+ *               'id', 'pseudo', 'image', 'solde'.
+ */
 function GetExtractLeaderboard()
 {
     $userModel = new User();

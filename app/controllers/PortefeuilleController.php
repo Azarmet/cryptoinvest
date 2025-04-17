@@ -2,7 +2,14 @@
 namespace App\Controllers;
 
 use App\Models\Portefeuille;
-
+/**
+ * Rafraîchit les données du portefeuille et renvoie un JSON contenant :
+ * - chartData : historique du solde pour affichage graphique
+ * - stats : statistiques globales du portefeuille (ROI, PnL, etc.)
+ * - currentValue : valeur actuelle du capital (capital_actuel)
+ * - availableBalance : solde disponible non alloué
+ *
+ */
 function refreshPortfolioData()
 {
     header('Content-Type: application/json');

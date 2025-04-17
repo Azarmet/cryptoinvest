@@ -6,6 +6,16 @@ use App\Models\CryptoTrans;
 use App\Models\Watchlist;
 use App\Models\Transaction;
 
+
+/**
+ * Affiche la page « Market » publique.
+ *
+ * - Met à jour les données depuis Binance (optionnel).
+ * - Récupère les cryptos selon la catégorie.
+ * - Récupère la liste des cryptos dans Transactions.
+ * - Ajoute l’état « in_watchlist » si l’utilisateur est connecté.
+ * - Charge la vue app/views/market.php.
+ */
 function showMarket()
 {
     $cryptoModel = new CryptoMarket();
@@ -31,7 +41,11 @@ function showMarket()
     require_once RACINE . 'app/views/market.php';
 }
 
-
+/**
+ * Récupère tous les codes de cryptos disponibles pour les transactions.
+ *
+ * @return string[] Liste de codes (ex. « BTCUSDT »)
+ */
 function cryptoTrans()
 {
     $transactionnModel = new Transaction();
@@ -39,6 +53,15 @@ function cryptoTrans()
     return $cryptos;
 }
 
+
+/**
+ * Rafraîchit les données de marché en AJAX.
+ *
+ * - Met à jour depuis Binance.
+ * - Récupère les cryptos (toutes ou par catégorie).
+ * - Ajoute l’état watchlist si connecté.
+ * - Retourne le JSON des cryptos.
+ */
 function refreshMarket()
 {
     header('Content-Type: application/json');
@@ -75,6 +98,12 @@ function refreshMarket()
     exit;
 }
 
+/**
+ * Affiche la page « Market » du back-office.
+ *
+ * - Récupère les cryptos du marché et les cryptos enregistrées pour transactions.
+ * - Charge la vue backoffice/app/views/backoffice/market.php.
+ */
 
 function showBackMarket()
 {
@@ -87,6 +116,13 @@ function showBackMarket()
     require_once RACINE . 'app/views/backoffice/market.php';
 }
 
+/**
+ * Crée une nouvelle crypto dans le back-office (cryptomarket).
+ *
+ * - Valide les champs POST (code, catégories).
+ * - Appelle CryptoMarket::createCrypto().
+ * - Redirige avec indicateur de succès ou affiche l’erreur.
+ */
 function createCryptoMarket()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -109,6 +145,11 @@ function createCryptoMarket()
     require_once RACINE . 'app/views/backoffice/formCryptoMarket.php';
 }
 
+/**
+ * Supprime une crypto du back-office (cryptomarket).
+ *
+ * @param int $id Identifiant de la crypto à supprimer.
+ */
 function deleteCryptoMarket($id)
 {
     $model = new CryptoMarket();
@@ -117,6 +158,12 @@ function deleteCryptoMarket($id)
     exit;
 }
 
+/**
+ * Crée une nouvelle crypto pour transactions (cryptotrans) dans le back-office.
+ *
+ * - Valide le code POST.
+ * - Appelle CryptoTrans::createCrypto().
+ */
 function createCryptoTrans()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -135,6 +182,11 @@ function createCryptoTrans()
     require_once RACINE . 'app/views/backoffice/formCryptoTrans.php';
 }
 
+/**
+ * Supprime une crypto pour transactions (cryptotrans) dans le back-office.
+ *
+ * @param int $id Identifiant de la crypto à supprimer.
+ */
 function deleteCryptoTrans($id)
 {
     $model = new CryptoTrans();
@@ -144,6 +196,14 @@ function deleteCryptoTrans($id)
 }
 
 
+/**
+ * Récupère la watchlist d’un utilisateur connecté.
+ *
+ * - Vérifie la session.
+ * - Appelle Watchlist::getWatchlist().
+ *
+ * @return array Tableau associatif des cryptos en watchlist.
+ */
 function getWatchlistCrypto()
 {
     if (session_status() === PHP_SESSION_NONE) {

@@ -5,6 +5,14 @@ use App\Models\Portefeuille;
 use App\Models\User;
 use App\Models\Transaction;
 
+
+/**
+ * Affiche le profil de l'utilisateur connecté.
+ *
+ * - Vérifie la session et l'authentification.
+ * - Récupère les données utilisateur via User::getById().
+ * - Charge la vue app/views/profil.php.
+ */
 function showProfile()
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -22,6 +30,11 @@ function showProfile()
     require_once RACINE . 'app/views/profil.php';
 }
 
+/**
+ * Affiche le profil d'un utilisateur donné par son pseudo.
+ *
+ * @param string $pseudo Pseudo de l'utilisateur.
+ */
 function showProfileByPseudo($pseudo)
 {
     $userModel = new User();
@@ -29,6 +42,11 @@ function showProfileByPseudo($pseudo)
     require_once RACINE . 'app/views/profilboard.php';
 }
 
+/**
+ * Renvoie les statistiques du profilboard pour un pseudo donné (JSON).
+ *
+ * @param string $pseudo Pseudo de l'utilisateur.
+ */
 function getStats($pseudo)
 {
     if (session_status() === PHP_SESSION_NONE) session_start();
@@ -40,6 +58,12 @@ function getStats($pseudo)
     exit;
 }
 
+
+/**
+ * Rafraîchit les données du portefeuille d'un utilisateur (JSON).
+ *
+ * @param string $pseudo Pseudo de l'utilisateur.
+ */
 function refreshPortfolioDataPseudo($pseudo)
 {
     header('Content-Type: application/json');
@@ -64,6 +88,9 @@ function refreshPortfolioDataPseudo($pseudo)
     exit();
 }
 
+/**
+ * Supprime le profil de l'utilisateur connecté et son compte.
+ */
 function supprimerProfile(){
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -77,6 +104,9 @@ function supprimerProfile(){
     exit();
 }
 
+/**
+ * Déconnecte l'utilisateur actuel.
+ */
 function logout()
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -88,6 +118,13 @@ function logout()
     exit();
 }
 
+/**
+ * Met à jour le profil de l'utilisateur connecté.
+ *
+ * - Valide le pseudo pour éviter les doublons.
+ * - Gère l'upload et la validation de l'image.
+ * - Appelle User::updateProfile() et met à jour la session.
+ */
 function updateProfile()
 {
     if (session_status() === PHP_SESSION_NONE) {

@@ -3,11 +3,24 @@ namespace App\Controllers;
 
 use App\Models\User;
 
+/**
+ * Affiche la page de connexion.
+ */
 function showLogin()
 {
     require_once RACINE . 'app/views/login.php';
 }
 
+
+/**
+ * Traite la soumission du formulaire de connexion.
+ *
+ * - Valide et assainit l'email et le mot de passe.
+ * - Authentifie l'utilisateur via User::login().
+ * - Démarre la session et redirige en cas de succès.
+ * - Réaffiche le formulaire avec message d'erreur en cas d'échec.
+ *
+ */
 function processLogin()
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,6 +51,16 @@ function processLogin()
         }
     }
 }
+
+
+/**
+ * Traite la soumission du formulaire d'inscription.
+ *
+ * - Valide et assainit les champs (email, pseudo, mots de passe).
+ * - Vérifie la correspondance des mots de passe.
+ * - Appelle User::register() pour créer l'utilisateur et son portefeuille.
+ * - Redirige ou réaffiche le formulaire avec message d'erreur.
+ */
 
 function processRegister()
 {
