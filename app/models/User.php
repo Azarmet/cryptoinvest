@@ -4,6 +4,10 @@ namespace App\Models;
 use App\Models\Database;
 use PDO;
 
+/**
+ * Classe représentant un utilisateur et gérant l'enregistrement, la connexion,
+ * et les opérations CRUD sur les profils utilisateurs.
+ */
 class User
 {
     private $pdo;
@@ -13,7 +17,18 @@ class User
         $this->pdo = Database::getInstance()->getConnection();
     }
 
-    // Inscription : ajoute un nouvel utilisateur
+    /**
+     * Inscription d'un nouvel utilisateur.
+     *
+     * Valide les données (email, pseudo, mot de passe), vérifie l'unicité
+     * de l'email et du pseudo, hash le mot de passe, crée l'utilisateur
+     * et initialise son portefeuille.
+     *
+     * @param string $email    Adresse e-mail de l'utilisateur.
+     * @param string $pseudo   Pseudo choisi (3-10 caractères alphanumériques ou underscore).
+     * @param string $password Mot de passe (minimum 8 caractères).
+     * @return array ['success' => bool, 'error' => string?]
+     */
     public function register($email, $pseudo, $password)
     {
         // === VALIDATION ===
@@ -77,7 +92,15 @@ class User
         return ['success' => true];
     }
 
-    // Login : vérifie l'identifiant et retourne l'utilisateur si correct
+    /**
+     * Authentification de l'utilisateur.
+     *
+     * Vérifie l'adresse e-mail et le mot de passe.
+     *
+     * @param string $email    Adresse e-mail.
+     * @param string $password Mot de passe.
+     * @return array|false Tableau de l'utilisateur ou false en cas d'échec.
+     */
     public function login($email, $password)
     {
         $sql = 'SELECT * FROM utilisateur WHERE email = :email';
@@ -90,7 +113,19 @@ class User
         return false;
     }
 
-    // Méthode pour mettre à jour la bio, réseaux et l'image de profil de l'utilisateur
+    /**
+     * Met à jour le profil de l'utilisateur :
+     * pseudo, bio, image, et liens vers les réseaux sociaux.
+     *
+     * @param int         $userId    Identifiant de l'utilisateur.
+     * @param string      $pseudo    Nouveau pseudo.
+     * @param string      $bio       Biographie.
+     * @param string      $imagePath Chemin de la nouvelle image de profil.
+     * @param string|null $instagram Lien Instagram (optionnel).
+     * @param string|null $x         Lien X/Twitter (optionnel).
+     * @param string|null $telegram  Lien Telegram (optionnel).
+     * @return bool Vrai si la mise à jour a réussi, sinon false.
+     */    
     public function updateProfile($userId, $pseudo, $bio, $imagePath, $instagram = null, $x = null, $telegram = null)
     {
         $sql = 'UPDATE utilisateur 
@@ -114,7 +149,12 @@ class User
         ]);
     }
 
-    // (Optionnel) Méthode pour récupérer l'utilisateur par son ID
+    /**
+     * Récupère un utilisateur par son identifiant.
+     *
+     * @param int $userId Identifiant de l'utilisateur.
+     * @return array|false Tableau associatif de l'utilisateur ou false si non trouvé.
+     */
     public function getById($userId)
     {
         $sql = 'SELECT * FROM utilisateur WHERE id_utilisateur = :id';
@@ -123,7 +163,11 @@ class User
         return $stmt->fetch();
     }
 
-    // Méthode pour récupérer tous les utilisateurs
+    /**
+     * Récupère la liste de tous les identifiants d'utilisateurs.
+     *
+     * @return array Tableau d'associatifs avec la clé 'id_utilisateur'.
+     */
     public function getAllIdUsers()
     {
         $sql = 'SELECT id_utilisateur FROM utilisateur';
@@ -132,7 +176,12 @@ class User
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Méthode pour récupérer un utilisateur par son pseudo (toutes les infos sauf l'ID)
+    /**
+     * Récupère un utilisateur par son pseudo (sans l'ID).
+     *
+     * @param string $pseudo Pseudo de l'utilisateur.
+     * @return array|false Tableau associatif de l'utilisateur ou false si non trouvé.
+     */
     public function getByPseudo($pseudo)
     {
         $sql = 'SELECT pseudo, id_utilisateur, image_profil, bio, instagram, x, telegram 
@@ -144,8 +193,11 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Récupère tous les utilisateurs
-
+    /**
+     * Récupère tous les utilisateurs (pour l'administration).
+     *
+     * @return array Tableau associatif des utilisateurs.
+     */
     public function getAllUsers()
     {
         $sql = 'SELECT id_utilisateur, email, pseudo, role, bio, image_profil FROM utilisateur ORDER BY id_utilisateur DESC';
@@ -154,12 +206,26 @@ class User
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Supprime un utilisateur par son identifiant.
+     *
+     * @param int $id Identifiant de l'utilisateur.
+     * @return bool Vrai si la suppression a réussi, sinon false.
+     */
     public function deleteUser($id)
     {
         $stmt = $this->pdo->prepare('DELETE FROM utilisateur WHERE id_utilisateur = :id');
         return $stmt->execute([':id' => $id]);
     }
 
+
+    /**
+     * Met à jour le rôle d'un utilisateur.
+     *
+     * @param int    $id      Identifiant de l'utilisateur.
+     * @param string $newRole Nouveau rôle (ex: 'admin', 'user').
+     * @return bool Vrai si la mise à jour a réussi, sinon false.
+     */
     public function updateRole($id, $newRole)
     {
         $stmt = $this->pdo->prepare('UPDATE utilisateur SET role = :role WHERE id_utilisateur = :id');
@@ -169,6 +235,14 @@ class User
         ]);
     }
 
+
+    /**
+     * Vérifie si un pseudo est déjà pris par un autre utilisateur.
+     *
+     * @param string $pseudo         Pseudo à tester.
+     * @param int    $currentUserId  Identifiant de l'utilisateur courant.
+     * @return bool Vrai si le pseudo est pris, sinon false.
+     */
     public function isPseudoTaken($pseudo, $currentUserId)
     {
         $sql = 'SELECT id_utilisateur FROM utilisateur WHERE pseudo = ? AND id_utilisateur != ?';
@@ -177,6 +251,13 @@ class User
         return $stmt->fetch() ? true : false;
     }
 
+
+    /**
+     * Recherche des utilisateurs par pseudo ou email.
+     *
+     * @param string $term Terme de recherche.
+     * @return array Tableau associatif des utilisateurs correspondants.
+     */
     public function searchUsers($term)
     {
         $stmt = $this->pdo->prepare('

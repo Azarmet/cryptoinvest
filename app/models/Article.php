@@ -4,6 +4,9 @@ namespace App\Models;
 use App\Models\Database;
 use PDO;
 
+/**
+ * Classe gérant les opérations CRUD et la pagination des articles.
+ */
 class Article
 {
     private $pdo;
@@ -13,7 +16,15 @@ class Article
         $this->pdo = Database::getInstance()->getConnection();
     }
 
-    // Compte le nombre total d'articles (filtrés si besoin)
+    /**
+     * Compte le nombre total d'articles publiés,
+     * avec filtrage optionnel par catégorie et terme de recherche.
+     *
+     * @param string|null $categorie Filtre sur la catégorie (null ou 'tous' = tous).
+     * @param string|null $search    Terme à rechercher dans le titre ou le contenu.
+     * @return int Nombre total d'articles correspondants.
+     */
+
     public function countArticles($categorie = null, $search = null)
     {
         $sql = "SELECT COUNT(*) as total FROM article WHERE statut = 'publié'";
@@ -32,6 +43,12 @@ class Article
         return $row ? (int) $row['total'] : 0;
     }
 
+    /**
+     * Récupère un article par son identifiant.
+     *
+     * @param int $id Identifiant de l'article.
+     * @return array|false Tableau associatif de l'article ou false si non trouvé.
+     */
     public function getById($id)
     {
         $sql = 'SELECT * FROM article WHERE id_article = :id';
@@ -41,7 +58,16 @@ class Article
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Récupère les articles avec filtrage, pagination, et tri par date
+    /**
+     * Récupère une liste d'articles avec pagination, tri par date,
+     * et filtrage optionnel par catégorie et recherche.
+     *
+     * @param string|null $categorie Filtre sur la catégorie.
+     * @param string|null $search    Terme à rechercher dans titre/contenu.
+     * @param int         $limit     Nombre maximal d'articles à retourner.
+     * @param int         $offset    Décalage pour la pagination.
+     * @return array Tableau associatif des articles.
+     */
     public function getArticles($categorie = null, $search = null, $limit = 100, $offset = 0)
     {
         $sql = 'SELECT * FROM article WHERE 1';  // <- Ajouté pour permettre les AND suivants
@@ -74,7 +100,15 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Récupère les articles avec filtrage, pagination, et tri par date
+    /**
+     * Idem getArticles mais restreint aux articles au statut 'publié'.
+     *
+     * @param string|null $categorie Filtre catégorie.
+     * @param string|null $search    Terme de recherche.
+     * @param int         $limit     Nombre d'articles.
+     * @param int         $offset    Décalage.
+     * @return array Articles publiés.
+     */
     public function getArticlesPublie($categorie = null, $search = null, $limit = 100, $offset = 0)
     {
         $sql = "SELECT * FROM article WHERE statut = 'publié'";
@@ -99,6 +133,13 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    /**
+     * Crée un nouvel article après validation des données.
+     *
+     * @param array $data Données de l'article (titre, contenu, auteur, catégorie, statut, image).
+     * @return array ['success'=>bool, 'error'=>string?]
+     */
     public function createArticle($data)
     {
         $validation = $this->validateArticleData($data);
@@ -121,6 +162,13 @@ class Article
         return ['success' => $success];
     }
 
+    /**
+     * Met à jour un article existant après validation.
+     *
+     * @param int   $id   Identifiant de l'article.
+     * @param array $data Données à mettre à jour.
+     * @return array ['success'=>bool, 'error'=>string?]
+     */
     public function updateArticle($id, $data)
     {
         $validation = $this->validateArticleData($data);
@@ -143,7 +191,13 @@ class Article
 
         return ['success' => $success];
     }
-
+    
+    /**
+     * Supprime un article par son identifiant.
+     *
+     * @param int $id Identifiant de l'article à supprimer.
+     * @return bool Vrai si la suppression a réussi, sinon false.
+     */
     public function deleteArticle($id)
     {
         $sql = 'DELETE FROM article WHERE id_article = :id';
@@ -151,6 +205,13 @@ class Article
         return $stmt->execute([':id' => $id]);
     }
 
+
+    /**
+     * Valide les données d'un article avant insertion ou mise à jour.
+     *
+     * @param array $data Données de l'article.
+     * @return array ['success'=>bool, 'error'=>string?]
+     */
     private function validateArticleData(array $data)
     {
         if (empty($data['titre']) || strlen($data['titre']) > 200) {

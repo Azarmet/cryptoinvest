@@ -4,6 +4,9 @@ namespace App\Models;
 use App\Models\Database;
 use PDO;
 
+/**
+ * Classe de gestion du portefeuille d'un utilisateur et calculs financiers associés.
+ */
 class Portefeuille
 {
     private $pdo;
@@ -14,7 +17,11 @@ class Portefeuille
     }
 
     /**
-     * Calcule le solde disponible = capital_initial + somme des PnL (closed) - somme investie dans positions open.
+     * Calcule le solde disponible pour un utilisateur :
+     * capital_initial + somme des PnL réalisés – somme engagée dans les positions ouvertes.
+     *
+     * @param int $userId Identifiant de l'utilisateur.
+     * @return float Solde disponible, arrondi à deux décimales.
      */
     public function getSoldeDisponible($userId)
     {
@@ -55,6 +62,13 @@ class Portefeuille
         return round($solde, 2);
     }
 
+
+    /**
+     * Récupère le solde actuel enregistré en base pour l'utilisateur.
+     *
+     * @param int $userId Identifiant de l'utilisateur.
+     * @return float Solde actuel ou 0.0 si non trouvé.
+     */
     public function getSoldeActuel($userId): float
     {
         $sql = 'SELECT capital_actuel FROM portefeuille WHERE id_utilisateur = :userId LIMIT 1';
@@ -66,7 +80,11 @@ class Portefeuille
     }
 
     /**
-     * Retourne l'historique du solde pour le graphique.
+     * Fournit l'historique du solde sur un intervalle donné pour graphique.
+     *
+     * @param int    $userId   Identifiant de l'utilisateur.
+     * @param string $interval Intervalle : 'jour', 'semaine', 'mois' ou 'annee'.
+     * @return array Tableau d'entrées ['date' => string, 'solde' => float].
      */
     public function getSoldeHistory($userId, $interval): array
     {
@@ -136,7 +154,11 @@ class Portefeuille
     }
 
     /**
-     * Renvoie les statistiques globales du portefeuille : ROI total, PnL total, nombre de transactions.
+     * Renvoie les statistiques globales du portefeuille :
+     * ROI total (%), PnL total, et nombre de transactions.
+     *
+     * @param int $userId Identifiant de l'utilisateur.
+     * @return array ['roiTotal' => float, 'pnlTotal' => float, 'txCount' => int].
      */
     public function getPortfolioStats($userId): array
     {
@@ -181,6 +203,14 @@ class Portefeuille
         ];
     }
 
+
+    /**
+     * Calcule le PnL réalisé sur les X derniers jours.
+     *
+     * @param int $userId   Identifiant de l'utilisateur.
+     * @param int $nb_jour  Nombre de jours (1 à 365).
+     * @return float Montant total du PnL, ou 0.0 si aucune donnée.
+     */
     public function getPnL(int $userId, int $nb_jour = 1): float
     {
         // Validation simple

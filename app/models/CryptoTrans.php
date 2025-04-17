@@ -2,9 +2,13 @@
 namespace App\Models;
 
 use App\Models\Database;
-use App\Utils\Logger; // Si tu as une classe Logger comme mentionné
+use App\Utils\Logger;
 use PDO;
 
+/**
+ * Classe gérant l'entité CryptoTrans et les opérations associées
+ * sur les tables cryptotrans et cryptomarket.
+ */
 class CryptoTrans
 {
     private $pdo;
@@ -14,12 +18,25 @@ class CryptoTrans
         $this->pdo = Database::getInstance()->getConnection();
     }
 
+    /**
+     * Récupère toutes les cryptos enregistrées dans cryptotrans
+     * et les renvoie ordonnées par identifiant décroissant.
+     *
+     * @return array Tableau associatif de toutes les entrées cryptotrans.
+     */
     public function getAll()
     {
         $stmt = $this->pdo->query('SELECT * FROM cryptotrans ORDER BY id_crypto_trans DESC');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    /**
+     * Crée un nouvel enregistrement de crypto dans cryptotrans et cryptomarket.
+     *
+     * @param string $code Code de la cryptomonnaie (ex: "BTC").
+     * @return array ['success' => bool, 'error' => string?]
+     */
     public function createCrypto($code)
     {
         $code = strtoupper(trim($code));
@@ -50,6 +67,13 @@ class CryptoTrans
         }
     }
 
+
+    /**
+     * Supprime une crypto des tables cryptotrans et cryptomarket.
+     *
+     * @param int $id Identifiant dans cryptotrans.
+     * @return array ['success' => bool, 'error' => string?]
+     */
     public function deleteCrypto($id)
     {
         try {

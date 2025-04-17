@@ -4,6 +4,10 @@ namespace App\Models;
 use App\Models\Database;
 use PDO;
 
+/**
+ * Classe gérant les opérations de lecture et de mise à jour
+ * des données de marché des cryptomonnaies via l'API Binance.
+ */
 class CryptoMarket
 {
     private $pdo;
@@ -13,14 +17,23 @@ class CryptoMarket
         $this->pdo = Database::getInstance()->getConnection();
     }
 
-    // Récupère toutes les cryptomonnaies de la table
+    /**
+     * Récupère toutes les cryptomonnaies de la table cryptomarket.
+     *
+     * @return array Tableau associatif des entrées cryptomarket.
+     */
     public function getAll()
     {
         $stmt = $this->pdo->query('SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj, categorie FROM cryptomarket');
         return $stmt->fetchAll();
     }
 
-    // Récupère toutes les cryptomonnaies de la table
+    /**
+     * Récupère toutes les cryptomonnaies correspondant à une catégorie.
+     *
+     * @param string $cat Catégorie recherchée.
+     * @return array Tableau associatif des entrées filtrées par catégorie.
+     */
     public function getAllFromCat($cat)
     {
         $sql = "SELECT id_crypto_market, code, prix_actuel, variation_24h, date_maj 
@@ -32,7 +45,12 @@ class CryptoMarket
         return $stmt->fetchAll();
     }
 
-    // Met à jour les données de chaque crypto via l'API Binance en parallèle
+    /**
+     * Met à jour les données de marché de toutes les cryptomonnaies
+     * en parallèle via l'API Binance.
+     *
+     * @return void
+     */
     public function updateFromBinance()
     {
         // Récupérer tous les enregistrements
@@ -97,7 +115,13 @@ class CryptoMarket
         curl_multi_close($multiCurl);
     }
 
-    // Fonction privée pour appeler l'API Binance (ancienne méthode, non utilisée ici)
+    /**
+     * Appelle l'API Binance (ancienne méthode non utilisée dans updateFromBinance).
+     *
+     * @param string $url URL complète du point d'accès API.
+     * @return array|false Données JSON décodées ou false en cas d'erreur cURL.
+     */
+
     private function callBinanceApi($url)
     {
         $curl = curl_init();
@@ -114,6 +138,14 @@ class CryptoMarket
         return json_decode($result, true);
     }
 
+
+    /**
+     * Crée une nouvelle cryptomonnaie dans cryptomarket et cryptotrans.
+     *
+     * @param string $code      Code de la cryptomonnaie.
+     * @param string $categorie Catégorie associée.
+     * @return array ['success' => bool, 'error' => string?]
+     */
     public function createCrypto($code, $categorie)
     {
         // Nettoyage de l’entrée
@@ -154,6 +186,13 @@ class CryptoMarket
         }
     }
 
+
+    /**
+     * Supprime une cryptomonnaie dans cryptomarket et cryptotrans.
+     *
+     * @param int $id Identifiant de la crypto en cryptomarket.
+     * @return array ['success' => bool, 'error' => string?]
+     */
     public function deleteCrypto($id)
     {
         // Récupérer le code avant suppression (pour supprimer aussi dans cryptotrans)

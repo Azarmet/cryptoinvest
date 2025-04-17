@@ -4,11 +4,20 @@ use Dotenv\Dotenv;
 use PDO;
 use PDOException;
 use App\Utils\Logger;
+
+
+/**
+ * Classe de gestion de la connexion à la base de données (singleton).
+ */
 class Database
 {
     private static $instance = null;
     private $pdo;
 
+     /**
+     * Constructeur privé pour empêcher l'instanciation directe.
+     * Charge les variables d'environnement et initialise la connexion PDO.
+     */
     private function __construct()
     {
         // Chargement des variables d'environnement
@@ -33,6 +42,11 @@ class Database
         }
     }
 
+    /**
+     * Retourne l'instance unique de Database, la crée si nécessaire.
+     *
+     * @return Database
+     */
     public static function getInstance()
     {
         if (self::$instance === null) {
@@ -41,6 +55,11 @@ class Database
         return self::$instance;
     }
 
+    /**
+     * Fournit l'objet PDO pour effectuer des requêtes SQL.
+     *
+     * @return PDO
+     */
     public function getConnection()
     {
         return $this->pdo;

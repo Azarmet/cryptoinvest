@@ -4,6 +4,10 @@ namespace App\Models;
 use App\Models\Database;
 use PDO;
 
+/**
+ * Classe gérant les opérations sur les transactions de trading :
+ * ouverture, clôture, et récupération des positions.
+ */
 class Transaction
 {
     private $pdo;
@@ -13,6 +17,11 @@ class Transaction
         $this->pdo = Database::getInstance()->getConnection();
     }
 
+    /**
+     * Récupère tous les codes de cryptomonnaies disponibles dans la table cryptotrans.
+     *
+     * @return string[] Tableau de codes (ex. "BTCUSDT").
+     */
     public function getCryptoTrans()
     {
         $stmt = $this->pdo->query('SELECT code FROM cryptotrans');
@@ -20,9 +29,14 @@ class Transaction
     }
 
     /**
-     * Ouvre une nouvelle position (long/short) pour l'utilisateur, sur BTCUSDT.
-     * Le prix d'ouverture est récupéré directement via l'API Binance.
-     * Cette méthode ne modifie pas la colonne capital_actuel.
+     * Ouvre une nouvelle position (long ou short) pour une cryptomonnaie.
+     * Ne met pas à jour le capital_actuel du portefeuille.
+     *
+     * @param int    $userId     Identifiant de l'utilisateur.
+     * @param float  $montant    Montant en devise à investir.
+     * @param string $type       'long' ou 'short'.
+     * @param string $cryptoCode Code de la crypto (par défaut 'BTCUSDT').
+     * @return array ['success' => bool, 'error' => string?]
      */
     public function openPosition($userId, $montant, $type, $cryptoCode = 'BTCUSDT')
     {
@@ -88,9 +102,13 @@ class Transaction
         return ['success' => true];
     }
 
+
     /**
-     * Clôture une position 'open' et met à jour le portefeuille.
-     * Le capital_actuel est mis à jour en ajoutant uniquement le PnL réalisé.
+     * Clôture une position ouverte et met à jour le capital_actuel du portefeuille.
+     *
+     * @param int $idTransaction Identifiant de la transaction à clôturer.
+     * @param int $userId        Identifiant de l'utilisateur.
+     * @return void
      */
     public function closePosition($idTransaction, $userId)
     {
@@ -157,9 +175,10 @@ class Transaction
     }
 
     /**
-     * Récupère le prix actuel en temps réel pour un code donné en appelant l'API Binance.
-     * @param string $code Le code de la cryptomonnaie (ex: 'BTCUSDT')
-     * @return float|false Le prix actuel ou false en cas d'erreur.
+     * Récupère le prix actuel pour une crypto donnée en appelant l'API Binance.
+     *
+     * @param string $code Code de la crypto (ex. 'BTCUSDT').
+     * @return float|false Prix actuel ou false en cas d'erreur.
      */
     private function getCurrentPriceFromBinance($code)
     {
@@ -182,7 +201,11 @@ class Transaction
     }
 
     /**
-     * Récupère les positions 'open' de l'utilisateur et met à jour dynamiquement le prix pour chaque position.
+     * Récupère les positions ouvertes de l'utilisateur et calcule dynamiquement
+     * le PnL, ROI, et autres métriques pour chaque position.
+     *
+     * @param int $userId Identifiant de l'utilisateur.
+     * @return array Tableau de positions avec détails et statistiques.
      */
     public function getOpenPositions($userId)
     {
@@ -229,6 +252,14 @@ class Transaction
         return $positions;
     }
 
+
+    /**
+     * Récupère des statistiques pour le dashboard utilisateur :
+     * nombre total, gagnantes, perdantes, pnl moyen, temps moyen, etc.
+     *
+     * @param int $userId Identifiant de l'utilisateur.
+     * @return array|null Tableau associatif de stats ou null si aucun portefeuille.
+     */
     public function getDashboardStats($userId)
     {
         // 1. Trouver l'id_portefeuille correspondant
@@ -264,6 +295,13 @@ class Transaction
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
+    /**
+     * Récupère les mêmes statistiques que getDashboardStats mais par pseudo utilisateur.
+     *
+     * @param string $pseudo Pseudo de l'utilisateur.
+     * @return array|null Tableau de stats ou null si utilisateur/portefeuille introuvable.
+     */
     public function getProfilboardStatsByPseudo($pseudo)
     {
         // 1. Trouver l'id_utilisateur via le pseudo
@@ -311,6 +349,12 @@ class Transaction
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Récupère toutes les transactions (ouverte ou fermée) d'un utilisateur.
+     *
+     * @param int $user_id Identifiant de l'utilisateur.
+     * @return array Tableau associatif de transactions.
+     */
     public function getTransactionsByUserId($user_id)
     {
         $stmt = $this->pdo->prepare('
