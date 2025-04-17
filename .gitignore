@@ -16,7 +16,7 @@ scss/**/*.css.map   # si vos builds génèrent des sourcemaps
 
 # Uploads utilisateurs (images, etc.), ne pas versionner les fichiers uploadés
 /public/uploads/
-/app/uploads/       # si vous avez d’autres dossiers d’uploads ailleurs
+/app/uploads/       # si vous avez d'autres dossiers d'uploads ailleurs
 
 # Logs d’application
 /logs/
