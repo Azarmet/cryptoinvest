@@ -106,7 +106,7 @@ function processRegister()
 
 
         if ($result['success']) {
-            header('Location: index.php?page=login');
+            processLogin();
             exit();
         } else {
             $error = "Erreur lors de l'inscription. Veuillez réessayer.";
