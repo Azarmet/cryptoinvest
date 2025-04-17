@@ -13,15 +13,15 @@
 
         <h2>Publication Manager</h2>
         <p>
-            John Doe – contact@cryptoinvest.com
+            Lucas R - contact@cryptoinvest.com
         </p>
 
         <h2>Hosting</h2>
         <p>
             The site is hosted by:<br>
-            <strong>Hostinger International Ltd</strong><br>
+            <strong>O2SWITCH International Ltd</strong><br>
             61 Lordou Vironos Street, 6023 Larnaca, Cyprus<br>
-            <a href="https://www.hostinger.fr">www.hostinger.fr</a>
+            <a href="https://www.o2switch.fr">www.o2switch.fr</a>
         </p>
 
         <h2>Intellectual Property</h2>
