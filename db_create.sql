@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS portefeuille (
       ON DELETE CASCADE
       ON UPDATE CASCADE
     -- Relation 1-1 avec l’utilisateur (mais techniquement 1-N autorisé).
-    -- Pour forcer le 1-1 strictement, vous pouvez ajouter une contrainte UNIQUE sur id_utilisateur.
 ) ENGINE=InnoDB;
 
 
