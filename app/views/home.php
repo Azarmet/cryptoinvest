@@ -50,52 +50,6 @@
 
 <?php require_once RACINE . 'app/views/templates/footer.php'; ?>
 <script src="<?php echo RACINE_URL; ?>public/js/home.js"></script>
-<script>
-async function loadFearIndex() {
-    try {
-        const res = await fetch("https://api.alternative.me/fng/");
-        const data = await res.json();
-        const value = parseInt(data.data[0].value);
-        const classification = data.data[0].value_classification;
+<script src="<?php echo RACINE_URL; ?>public/js/fearGreed.js"></script>
 
-        // Display the value
-        document.getElementById("index-value").textContent = value;
 
-        // Update the needle (from -90° to +90°)
-        const angle = (value / 100) * 180 - 90;
-        document.getElementById("needle").style.transform = `rotate(${angle}deg)`;
-
-        // Display the label with custom colors
-        const label = document.getElementById("index-label");
-        label.textContent = classification;
-
-        // Apply a color based on the level
-        let color = "#f8f9fa";
-        switch (classification.toLowerCase()) {
-            case "extreme fear":
-                color = "#e74c3c";
-                break;
-            case "fear":
-                color = "#e67e22";
-                break;
-            case "neutral":
-                color = "#f1c40f";
-                break;
-            case "greed":
-                color = "#2ecc71";
-                break;
-            case "extreme greed":
-                color = "#27ae60";
-                break;
-        }
-        label.style.backgroundColor = color;
-        label.style.color = "#fff";
-
-    } catch (err) {
-        console.error("Error while loading index:", err);
-        document.getElementById("index-label").textContent = "Error";
-    }
-}
-
-window.addEventListener("DOMContentLoaded", loadFearIndex);
-</script>

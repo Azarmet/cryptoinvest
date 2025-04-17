@@ -108,16 +108,7 @@
     </div>
 </section>
 
-<script>
-    document.querySelectorAll('.market-tab-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.market-tab-button').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.market-tab-content').forEach(tab => tab.classList.remove('active'));
+<script src="<?php echo RACINE_URL; ?>public/js/backmarket.js"></script>
 
-            btn.classList.add('active');
-            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-        });
-    });
-</script>
 
 <?php require_once RACINE . 'app/views/backoffice/footerback.php'; ?>

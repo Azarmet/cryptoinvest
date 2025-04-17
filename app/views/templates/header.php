@@ -63,14 +63,5 @@ if (session_status() == PHP_SESSION_NONE) {
     </header>
     <main>
     <!-- Your main content -->
-    <script>
-        // Ensure the code runs once the DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            const burger = document.getElementById('burger');
-            const navLinks = document.querySelector('.nav-links');
-            burger.addEventListener('click', function() {
-                navLinks.classList.toggle('nav-active');
-                burger.classList.toggle('toggle');
-            });
-        });
-    </script>
+    <script src="<?php echo RACINE_URL; ?>public/js/burger.js"></script>
+
