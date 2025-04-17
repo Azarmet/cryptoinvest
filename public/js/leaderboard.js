@@ -1,11 +1,18 @@
+// Sélection de l’élément input de recherche dans le leaderboard
 const searchInput = document.getElementById('search-input');
 
 if (searchInput) {
+    // À chaque saisie, on interroge l’API pour filtrer les utilisateurs
     searchInput.addEventListener('input', function () {
         const search = this.value;
         const xhr = new XMLHttpRequest();
 
-        xhr.open("GET", "index.php?page=leaderboard&action=search&term=" + encodeURIComponent(search), true);
+        // Requête GET vers l’action search du leaderboard avec le terme saisi
+        xhr.open(
+            "GET",
+            "index.php?page=leaderboard&action=search&term=" + encodeURIComponent(search),
+            true
+        );
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -14,6 +21,7 @@ if (searchInput) {
                 tbody.innerHTML = '';
 
                 if (data.length > 0) {
+                    // Pour chaque utilisateur retourné, on construit une ligne cliquable
                     data.forEach(user => {
                         let medal = '';
                         if (user.rank === 1) medal = ' 🥇';
@@ -22,14 +30,23 @@ if (searchInput) {
 
                         const tr = document.createElement('tr');
                         tr.style.cursor = 'pointer';
+                        // Clic redirige vers la page de profilboard de l’utilisateur
                         tr.onclick = () => {
                             window.location.href = `index.php?page=profilboard&pseudo=${user.pseudo}`;
                         };
 
-                        const soldeNettoye = parseFloat(user.solde.replace(/\s/g, '').replace(',', '.'));
-                        const pnl7jNettoye = parseFloat(user.pnl_7j.replace(/\s/g, '').replace(',', '.'));
-                        const pnl24hNettoye = parseFloat(user.pnl_24h.replace(/\s/g, '').replace(',', '.'));
-                        
+                        // Nettoyage des chaînes pour extraire des nombres
+                        const soldeNettoye = parseFloat(
+                            user.solde.replace(/\s/g, '').replace(',', '.')
+                        );
+                        const pnl7jNettoye = parseFloat(
+                            user.pnl_7j.replace(/\s/g, '').replace(',', '.')
+                        );
+                        const pnl24hNettoye = parseFloat(
+                            user.pnl_24h.replace(/\s/g, '').replace(',', '.')
+                        );
+
+                        // Construction du HTML de la ligne
                         tr.innerHTML = `
                             <td class="rank-${user.rank}">${user.rank}${medal}</td>
 
@@ -43,14 +60,22 @@ if (searchInput) {
                                 ${Math.round(soldeNettoye)}$
                             </td>
 
-                            <td class="${user.pnl_24h.startsWith('-') ? 'negative' : 'positive'}">${Math.round(pnl24hNettoye)}$</td>
-                            <td class="${user.pnl_7j.startsWith('-') ? 'negative' : 'positive'}">${Math.round(pnl7jNettoye)}$</td>
+                            <td class="${user.pnl_24h.startsWith('-') ? 'negative' : 'positive'}">
+                                ${Math.round(pnl24hNettoye)}$
+                            </td>
+                            <td class="${user.pnl_7j.startsWith('-') ? 'negative' : 'positive'}">
+                                ${Math.round(pnl7jNettoye)}$
+                            </td>
                         `;
 
                         tbody.appendChild(tr);
                     });
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No user found</td></tr>`;
+                    // Message si aucun utilisateur trouvé
+                    tbody.innerHTML = `
+                        <tr><td colspan="5" style="text-align:center;">
+                            No user found
+                        </td></tr>`;
                 }
             }
         };
@@ -59,12 +84,13 @@ if (searchInput) {
     });
 }
 
+// Ajout du tri dynamique sur les colonnes « sortable » du leaderboard
 document.addEventListener('DOMContentLoaded', function () {
     const tableHeaders = document.querySelectorAll('.leaderboard-table thead th.sortable');
 
     tableHeaders.forEach(header => {
         header.addEventListener('click', function () {
-            // Remove the active class and data-order attribute from the other columns
+            // Réinitialise les autres colonnes (classe active et ordre)
             tableHeaders.forEach(th => {
                 if (th !== this) {
                     th.removeAttribute('data-order');
@@ -72,35 +98,37 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Get the current order if it exists, otherwise start with "desc"
+            // Récupère l’ordre actuel ou initialise à 'desc'
             let currentOrder = this.getAttribute('data-order') || 'desc';
-            // Toggle the order
+            // Inverse l’ordre
             let order = currentOrder === 'asc' ? 'desc' : 'asc';
             this.setAttribute('data-order', order);
-            // Add the "active" class to the current header
             this.classList.add('active');
 
             const table = this.closest('table');
             const tbody = table.querySelector('tbody');
             const rows = Array.from(tbody.querySelectorAll('tr'));
 
-            // Get the index of the clicked column
+            // Indice de la colonne cliquée
             const headerIndex = Array.from(this.parentElement.children).indexOf(this);
 
-            // Sort the table rows based on the numeric content of the cell
+            // Tri des lignes selon la valeur numérique de chaque cellule
             rows.sort((rowA, rowB) => {
                 const cellA = rowA.children[headerIndex].innerText.trim();
                 const cellB = rowB.children[headerIndex].innerText.trim();
 
-                // Extract and convert numeric values,
-                // removing non-numeric characters and replacing comma with a dot
-                const numA = parseFloat(cellA.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')) || 0;
-                const numB = parseFloat(cellB.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')) || 0;
+                // Extrait et convertit en nombre en supprimant les caractères non numériques
+                const numA = parseFloat(
+                    cellA.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')
+                ) || 0;
+                const numB = parseFloat(
+                    cellB.replace(/[^0-9\-,.]/g, '').replace(/\s/g, '').replace(',', '.')
+                ) || 0;
 
                 return order === 'asc' ? numA - numB : numB - numA;
             });
 
-            // Reinserts the sorted rows into the tbody
+            // Réinsertion des lignes triées dans le tbody
             rows.forEach(row => tbody.appendChild(row));
         });
     });

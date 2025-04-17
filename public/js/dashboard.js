@@ -1,26 +1,26 @@
-// ------------------ PORTFOLIO SECTION ------------------
+// ------------------ SECTION PORTEFEUILLE ------------------
 let currentInterval = 'jour';
 
-// Refresh portfolio (chart, stats, current value, and available balance)
+// Rafraîchit les données du portefeuille (graphique, statistiques, valeur actuelle et solde disponible)
 function refreshPortfolioData() {
     fetch(`index.php?page=dashboard&action=refreshPortfolioData&interval=${currentInterval}`)
         .then(res => res.json())
         .then(data => {
             updatePortfolioChart(data.chartData);
 
-            // Select elements
+            // Sélection des éléments DOM
             const roiElement = document.getElementById('roi-total');
             const pnlElement = document.getElementById('pnl-total');
 
-            // Update content
+            // Mise à jour des contenus
             roiElement.textContent = data.stats.roiTotal + ' %';
             pnlElement.textContent = data.stats.pnlTotal + ' USDT';
 
-            // Reset classes
+            // Réinitialisation des classes
             roiElement.classList.remove('positive', 'negative');
             pnlElement.classList.remove('positive', 'negative');
 
-            // Add classes based on values
+            // Ajout de la classe en fonction des valeurs
             if (parseFloat(data.stats.roiTotal) >= 0) {
                 roiElement.classList.add('positive');
             } else {
@@ -35,11 +35,11 @@ function refreshPortfolioData() {
 
             document.getElementById('tx-count').textContent = data.stats.txCount;
             document.getElementById('current-portfolio-value').textContent = "Current Value: " + data.currentValue + " USDT";
-            
         })
         .catch(err => console.error(err));
 }
 
+// Rafraîchit les statistiques détaillées du tableau de bord
 function refreshDashboardStats() {
     fetch("index.php?page=dashboard&action=getStats")
         .then(res => res.json())
@@ -57,8 +57,8 @@ function refreshDashboardStats() {
         .catch(err => console.error(err));
 }
 
-
-// Refresh positions
+// ------------------ RAFRAÎCHIR LES POSITIONS ------------------
+// Recharge la liste des positions ouvertes via AJAX
 function refreshPositions() {
     fetch("index.php?page=dashboard&action=refreshPositions")
         .then(res => res.json())
@@ -68,14 +68,14 @@ function refreshPositions() {
             positions.forEach(pos => {
                 let tr = document.createElement('tr');
             
-                // Color based on side
+                // Classe selon le sens (long ou short)
                 let sensClass = pos.sens.toLowerCase() === 'long' ? 'positive' : 'negative';
             
-                // PnL color
+                // Classe PnL selon la valeur
                 let pnl = parseFloat(pos.pnl);
                 let pnlClass = pnl >= 0 ? 'positive' : 'negative';
             
-                // ROI color
+                // Classe ROI selon la valeur
                 let roi = parseFloat(pos.roi);
                 let roiClass = roi >= 0 ? 'positive' : 'negative';
                 document.getElementById('positions-number').textContent = "(" + positions.length + ")" ;
@@ -93,15 +93,14 @@ function refreshPositions() {
                 `;
                 tbody.appendChild(tr);
             });
-            
         })
         .catch(err => console.error(err));
 }
 
-
-// Chart management with Chart.js
+// ------------------ GESTION DU GRAPHIQUE AVEC CHART.JS ------------------
 let chart;
 
+// Formate les valeurs en k et M pour l’affichage monétaire
 function formatCurrency(value) {
     if (value >= 1_000_000) {
         return `$${(value / 1_000_000).toFixed(1)}M`;
@@ -112,12 +111,13 @@ function formatCurrency(value) {
     }
 }
 
+// Met à jour le graphique du portefeuille
 function updatePortfolioChart(chartData) {
     const labels = chartData.map(d => d.date);
-    const dataSolde = chartData.map(d => Math.round(d.solde)); // ✅ Arrondi des données ici
+    const dataSolde = chartData.map(d => Math.round(d.solde)); // Arrondi des soldes
     const ctx = document.getElementById('portfolioChart').getContext('2d');
 
-    // Création du dégradé vertical
+    // Création d’un dégradé vertical pour le remplissage
     let gradientStroke = ctx.createLinearGradient(0, 0, 0, 300);
     gradientStroke.addColorStop(0, "rgba(241, 196, 15, 0.8)");
     gradientStroke.addColorStop(1, "rgba(241, 196, 15, 0.2)");
@@ -148,9 +148,7 @@ function updatePortfolioChart(chartData) {
                 scales: {
                     x: {
                         display: false,
-                        grid: {
-                            color: "rgba(255,255,255,0.1)"
-                        },
+                        grid: { color: "rgba(255,255,255,0.1)" },
                         ticks: {
                             color: "#F8F9FA",
                             font: { family: "'Poppins', sans-serif", size: 12 }
@@ -158,14 +156,12 @@ function updatePortfolioChart(chartData) {
                     },
                     y: {
                         display: true,
-                        grid: {
-                            color: "rgba(255,255,255,0.1)"
-                        },
+                        grid: { color: "rgba(255,255,255,0.1)" },
                         ticks: {
                             color: "#F8F9FA",
                             font: { family: "'Poppins', sans-serif", size: 12 },
                             callback: function(value) {
-                                return formatCurrency(value); // ✅ Avec suffixe $
+                                return formatCurrency(value); // Avec suffixe $
                             }
                         }
                     }
@@ -181,7 +177,7 @@ function updatePortfolioChart(chartData) {
                             label: function(context) {
                                 const label = context.dataset.label || '';
                                 const value = context.parsed.y;
-                                return `${label}: ${formatCurrency(value)}`; // ✅ Avec suffixe $
+                                return `${label}: ${formatCurrency(value)}`; // Avec suffixe $
                             }
                         }
                     },
@@ -195,41 +191,41 @@ function updatePortfolioChart(chartData) {
             }
         });
     } else {
+        // Mise à jour des données du graphique existant
         chart.data.labels = labels;
         chart.data.datasets[0].data = dataSolde;
         chart.update();
     }
 }
 
-
-
-
-// ------------------ INTERVAL MANAGEMENT ------------------
+// ------------------ GESTION DES INTERVALLES ------------------
 document.querySelectorAll('.interval-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        // 1. Remove the "active" class from all buttons
+        // 1. Retirer la classe active de tous les boutons
         document.querySelectorAll('.interval-btn').forEach(b => b.classList.remove('active'));
 
-        // 2. Add the "active" class to the clicked button
+        // 2. Ajouter la classe active au bouton cliqué
         btn.classList.add('active');
 
-        // 3. Update the current interval
+        // 3. Mettre à jour l’intervalle courant
         currentInterval = btn.getAttribute('data-interval');
 
-        // 4. Refresh the data
+        // 4. Rafraîchir les données
         refreshPortfolioData();
     });
 });
 
-// ------------------ INITIALIZATION ------------------
+// ------------------ INITIALISATION ------------------
 document.addEventListener('DOMContentLoaded', () => {
+    // Sélection du bouton jour par défaut
     const defaultBtn = document.querySelector('.interval-btn[data-interval="jour"]');
     if (defaultBtn) {
         defaultBtn.classList.add('active');
     }
+    // Lancement du premier rafraîchissement
     refreshPortfolioData();
+    refreshDashboardStats();
+    refreshPositions();
+    // Rafraîchir les positions toutes les 3 secondes
+    setInterval(refreshPositions, 3000);
 });
-
-refreshDashboardStats();
-refreshPositions();
-setInterval(refreshPositions, 3000);

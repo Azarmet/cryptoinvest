@@ -1,15 +1,14 @@
-// Global filter variables
-var currentCategory = "tous";
-var currentSearch = "";
-// Current page, default starts at 1
-var currentPage = 1;
+// ------------------ VARIABLES GLOBALES DE FILTRAGE ------------------
+var currentCategory = "tous";    // Catégorie sélectionnée ("tous" par défaut)
+var currentSearch = "";          // Terme de recherche saisi
+var currentPage = 1;             // Page actuelle (pagination)
 
-// As soon as the page loads, call loadArticles(1) to get page 1
+// ------------------ INITIALISATION AU CHARGEMENT ------------------
 window.addEventListener("DOMContentLoaded", function () {
-  loadArticles(1);
+  loadArticles(1);  // Charge la page 1 des articles dès le chargement
 });
 
-// AJAX function to load filtered articles
+// ------------------ FONCTION AJAX POUR CHARGER LES ARTICLES ------------------
 function loadArticles(page) {
   if (typeof page === "undefined") {
     page = 1;
@@ -17,30 +16,25 @@ function loadArticles(page) {
   currentPage = page;
 
   var xhr = new XMLHttpRequest();
-  // Call the "searchLearn" action to retrieve the list of articles in JSON
   xhr.open(
     "GET",
     "index.php?page=learn&action=search" +
-      "&categorie=" +
-      encodeURIComponent(currentCategory) +
-      "&search=" +
-      encodeURIComponent(currentSearch) +
-      "&p=" +
-      currentPage +
-      "&t=" +
-      new Date().getTime(),
+      "&categorie=" + encodeURIComponent(currentCategory) +
+      "&search=" + encodeURIComponent(currentSearch) +
+      "&p=" + currentPage +
+      "&t=" + new Date().getTime(),  // Empêche la mise en cache
     true
   );
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
-      // We receive a JSON object containing: articles, currentPage, totalPages
+      // Réponse JSON contenant { articles, currentPage, totalPages }
       var data = JSON.parse(xhr.responseText);
       var articles = data.articles || [];
       var container = document.getElementById("articles-container");
       container.innerHTML = "";
 
-      // Update the list of articles
+      // Mise à jour de la liste d’articles
       if (articles.length > 0) {
         articles.forEach(function (article) {
           var div = document.createElement("div");
@@ -48,11 +42,13 @@ function loadArticles(page) {
           div.style.padding = "10px";
           div.style.marginBottom = "10px";
 
+          // Choix de l’image (article.image ou image par défaut)
           const imageSrc =
             article.image && article.image !== ""
               ? `public/uploads/article/${article.image}`
-              : "public/image/default-article.jpg"; // default image path
+              : "public/image/default-article.jpg";
 
+          // Construction du HTML de l’article
           var html = `
     <div class="article-image-container">
         <img src="${imageSrc}" alt="${article.titre}" class="article-image">
@@ -67,60 +63,59 @@ function loadArticles(page) {
           container.appendChild(div);
         });
       } else {
+        // Message si aucun article trouvé
         container.innerHTML = "<p>No articles found.</p>";
       }
 
-      // Update pagination
+      // Mise à jour de la pagination
       buildPagination(data.currentPage, data.totalPages);
     }
   };
   xhr.send();
 }
 
-/**
- * Builds the pagination in JavaScript, inside the div#pagination.
- */
+// ------------------ FONCTION DE CONSTRUCTION DE LA PAGINATION ------------------
 function buildPagination(current, total) {
-    const paginationDiv = document.getElementById("pagination");
-    if (!paginationDiv) return;
-  
-    if (total <= 1) {
-      paginationDiv.innerHTML = "";
-      return;
-    }
-  
-    let ul = '<ul style="list-style: none; display: flex; gap: 5px; flex-wrap: wrap; justify-content: center;">';
-  
-    // "Previous" link
-    if (current > 1) {
-      ul += `<li onclick="loadArticles(${current - 1});" class="page-link">Previous</li>`;
-    }
-  
-    // Links for each page
-    for (let i = 1; i <= total; i++) {
-      if (i === current) {
-        ul += `<li class="page-link active">${i}</li>`;
-      } else {
-        ul += `<li onclick="loadArticles(${i});" class="page-link">${i}</li>`;
-      }
-    }
-  
-    // "Next" link
-    if (current < total) {
-      ul += `<li onclick="loadArticles(${current + 1});" class="page-link">Next</li>`;
-    }
-  
-    ul += "</ul>";
-    paginationDiv.innerHTML = ul;
-}
-  
+  const paginationDiv = document.getElementById("pagination");
+  if (!paginationDiv) return;
 
-// Category tab management with scroll
+  // Si une seule page, on n’affiche rien
+  if (total <= 1) {
+    paginationDiv.innerHTML = "";
+    return;
+  }
+
+  let ul = '<ul style="list-style: none; display: flex; gap: 5px; flex-wrap: wrap; justify-content: center;">';
+
+  // Lien "Previous" si on n’est pas sur la première page
+  if (current > 1) {
+    ul += `<li onclick="loadArticles(${current - 1});" class="page-link">Previous</li>`;
+  }
+
+  // Liens pour chaque numéro de page
+  for (let i = 1; i <= total; i++) {
+    if (i === current) {
+      ul += `<li class="page-link active">${i}</li>`;
+    } else {
+      ul += `<li onclick="loadArticles(${i});" class="page-link">${i}</li>`;
+    }
+  }
+
+  // Lien "Next" si on n’est pas sur la dernière page
+  if (current < total) {
+    ul += `<li onclick="loadArticles(${current + 1});" class="page-link">Next</li>`;
+  }
+
+  ul += "</ul>";
+  paginationDiv.innerHTML = ul;
+}
+
+// ------------------ GESTION DES ONGLETS DE CATÉGORIE AVEC SCROLL ------------------
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("category-tabs");
   const tabButtons = container.querySelectorAll(".tab-button");
 
-  // Automatic scroll to the active tab on load
+  // Scroll automatique jusqu’à l’onglet actif au chargement
   const activeTab = container.querySelector(".tab-button.active");
   if (activeTab) {
     setTimeout(() => {
@@ -132,39 +127,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   }
 
-  // Handle click
+  // Clic sur un onglet
   tabButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-      // Update category
+      // Mise à jour de la catégorie courante
       currentCategory = this.getAttribute("data-category");
 
-      // Remove the active class
-      tabButtons.forEach(function (btn) {
-        btn.classList.remove("active");
-      });
-
-      // Add the active class to the clicked button
+      // Actualisation de la classe active
+      tabButtons.forEach(btn => btn.classList.remove("active"));
       this.classList.add("active");
 
-      // Scroll to the button
+      // Scroll vers l’onglet cliqué
       this.scrollIntoView({
         behavior: "smooth",
         inline: "center",
         block: "nearest"
       });
 
-      // Reset search
+      // Réinitialisation de la recherche
       currentSearch = "";
       document.getElementById("learn-search").value = "";
 
-      // Reload articles
+      // Rechargement de la page 1
       loadArticles(1);
     });
   });
 });
 
-// Search management (for the search input)
+// ------------------ GESTION DE LA BARRE DE RECHERCHE ------------------
 document.getElementById("learn-search").addEventListener("input", function () {
+  // Mise à jour du terme de recherche et rechargement de la page 1
   currentSearch = this.value;
   loadArticles(1);
 });
