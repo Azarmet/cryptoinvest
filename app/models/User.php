@@ -125,7 +125,7 @@ class User
      * @param string|null $x         Lien X/Twitter (optionnel).
      * @param string|null $telegram  Lien Telegram (optionnel).
      * @return bool Vrai si la mise à jour a réussi, sinon false.
-     */    
+     */
     public function updateProfile($userId, $pseudo, $bio, $imagePath, $instagram = null, $x = null, $telegram = null)
     {
         $sql = 'UPDATE utilisateur 
@@ -218,7 +218,6 @@ class User
         return $stmt->execute([':id' => $id]);
     }
 
-
     /**
      * Met à jour le rôle d'un utilisateur.
      *
@@ -235,7 +234,6 @@ class User
         ]);
     }
 
-
     /**
      * Vérifie si un pseudo est déjà pris par un autre utilisateur.
      *
@@ -251,7 +249,6 @@ class User
         return $stmt->fetch() ? true : false;
     }
 
-
     /**
      * Recherche des utilisateurs par pseudo ou email.
      *
@@ -260,14 +257,18 @@ class User
      */
     public function searchUsers($term)
     {
-        $stmt = $this->pdo->prepare('
+        $sql = '
         SELECT id_utilisateur, pseudo, email, role, bio, image_profil
         FROM utilisateur
-        WHERE pseudo LIKE :term OR email LIKE :term
+        WHERE pseudo LIKE :term1 OR email LIKE :term2
         ORDER BY id_utilisateur DESC
-    ');
+    ';
+        $stmt = $this->pdo->prepare($sql);
         $like = '%' . $term . '%';
-        $stmt->execute([':term' => $like]);
+        $stmt->execute([
+            ':term1' => $like,
+            ':term2' => $like
+        ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
