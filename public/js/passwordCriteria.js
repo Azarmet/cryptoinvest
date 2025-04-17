@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmPasswordInput = document.getElementById('confirm_password');
     const registerForm = document.querySelector('.register-form');
     
-    // Create the criteria container if it doesn't already exist
+    // Crée le conteneur des critères s'il n'existe pas déjà
     let criteriaContainer = document.getElementById('password-criteria');
     if (!criteriaContainer) {
         criteriaContainer = document.createElement('div');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         passwordInput.parentNode.insertBefore(criteriaContainer, passwordInput.nextSibling);
     }
 
-    // Define the criteria
+    // Définit les critères
     const criteria = {
         uppercase: {
             regex: /[A-Z]/,
@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Function to update the criteria display
+    // Fonction de mise à jour de l'affichage des critères
     function updateCriteria() {
         const value = passwordInput.value;
         const confirmValue = confirmPasswordInput.value;
         let allValid = true;
         let criteriaHTML = '<ul>';
         
-        // Check the main criteria
+        // Vérifie les critères principaux
         for (let key in criteria) {
             const item = criteria[key];
             if (item.regex.test(value)) {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Check password matching
+        // Vérifie la correspondance des mots de passe
         if (value === confirmValue && value !== '') {
             criteriaHTML += `<li class="valid">Passwords match</li>`;
         } else {
@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return allValid;
     }
 
-    // Update dynamically on input
+    // Met à jour dynamiquement à la saisie
     passwordInput.addEventListener('input', updateCriteria);
     confirmPasswordInput.addEventListener('input', updateCriteria);
 
-    // Prevent form submission if criteria are not met
+    // Empêche la soumission du formulaire si les critères ne sont pas remplis
     registerForm.addEventListener('submit', function(e) {
         if (!updateCriteria()) {
             e.preventDefault();

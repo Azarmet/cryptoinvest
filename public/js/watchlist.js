@@ -1,18 +1,23 @@
-// Function to refresh the watchlist table via AJAX
+// Fonction de rafraîchissement dynamique du tableau de la watchlist via AJAX
 function refreshWatchlistData() {
     var xhr = new XMLHttpRequest();
-    // Add a "timestamp" parameter to avoid caching
+    // Ajoute un paramètre timestamp pour éviter la mise en cache des requêtes
     xhr.open("GET", "index.php?page=watchlist&action=refresh&timestamp=" + new Date().getTime(), true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
+            // Analyse la réponse JSON reçue
             var cryptos = JSON.parse(xhr.responseText);
             var tbody = document.querySelector("#watchlist-table tbody");
+            // Vide le contenu actuel du tableau
             tbody.innerHTML = "";
             if (cryptos.length > 0) {
                 cryptos.forEach(function(crypto) {
+                    // Formatage de la variation à deux décimales
                     var variation = parseFloat(crypto.variation_24h).toFixed(2);
+                    // Choix de la classe CSS selon le signe de la variation
                     let colorClass = variation >= 0 ? 'positive' : 'negative';
-                    var row = "<tr class='crypto-link'  data-symbol='" + crypto.code + "'>" +
+                    // Construction de la ligne HTML pour chaque crypto
+                    var row = "<tr class='crypto-link' data-symbol='" + crypto.code + "'>" +
                               "<td>" + crypto.code + "</td>" +
                               "<td class='" + colorClass + "'>" + crypto.prix_actuel + "</td>" +
                               "<td class='" + colorClass + "'>" + variation + "%" + "</td>" +
@@ -22,6 +27,7 @@ function refreshWatchlistData() {
                     tbody.innerHTML += row;
                 });
             } else {
+                // Message affiché si la watchlist est vide
                 tbody.innerHTML = "<tr><td colspan='5'>Your watchlist is empty.</td></tr>";
             }
         }
@@ -29,18 +35,23 @@ function refreshWatchlistData() {
     xhr.send();
 }
 
+// Fonction de mise à jour du widget TradingView avec un nouveau symbole
 function updateTradingViewSymbol(symbol) {
     const container = document.querySelector("#tradingview-widget-container");
-    container.innerHTML = ""; // Clear the previous widget
+    // Vide le conteneur pour insérer un nouveau widget
+    container.innerHTML = "";
 
+    // Création d’un nouvel élément <div> pour le widget
     const widgetDiv = document.createElement("div");
     widgetDiv.id = "tradingview_abcdef";
     container.appendChild(widgetDiv);
 
+    // Chargement du script TradingView
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://s3.tradingview.com/tv.js";
     script.onload = function () {
+        // Initialisation du widget avec les paramètres souhaités
         new TradingView.widget({
             "container_id": "tradingview_abcdef",
             "symbol": symbol,
@@ -61,17 +72,19 @@ function updateTradingViewSymbol(symbol) {
     container.appendChild(script);
 }
 
-// Handle click on a crypto code row
+// Gestion du clic sur une ligne de crypto pour changer le symbole du widget
 document.addEventListener("click", function(e) {
     const row = e.target.closest(".crypto-link");
+    // On ignore les clics sur le bouton de watchlist
     if (row && !e.target.classList.contains("watchlist-toggle")) {
-        e.preventDefault(); 
+        e.preventDefault();
+        // Récupère le symbole de la crypto cliquée
         const newSymbol = row.getAttribute("data-symbol");
 
-        // Update the TradingView widget
+        // Met à jour le widget TradingView
         updateTradingViewSymbol(newSymbol);
 
-        // Update the <select> element in tradingOrder, if present
+        // Met à jour, si présent, le <select> du formulaire de trading
         const select = document.getElementById("crypto_code");
         if (select) {
             for (let i = 0; i < select.options.length; i++) {
@@ -80,17 +93,18 @@ document.addEventListener("click", function(e) {
                     break;
                 }
             }
-
+            // Déclenche l'événement 'change' pour notifier les autres scripts
             const event = new Event("change");
             select.dispatchEvent(event);
         }
     }
 });
 
+// Au chargement de la page, initialise le widget par défaut et charge la watchlist
 window.onload = function() {
     updateTradingViewSymbol("BTCUSDT");
     refreshWatchlistData();
 };
 
-// Refresh the watchlist every 5 seconds (5000 milliseconds)
+// Rafraîchit automatiquement la watchlist toutes les 5 secondes
 setInterval(refreshWatchlistData, 5000);
