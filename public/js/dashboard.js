@@ -101,12 +101,23 @@ function refreshPositions() {
 
 // Chart management with Chart.js
 let chart;
+
+function formatCurrency(value) {
+    if (value >= 1_000_000) {
+        return `$${(value / 1_000_000).toFixed(1)}M`;
+    } else if (value >= 1_000) {
+        return `$${(value / 1_000).toFixed(1)}k`;
+    } else {
+        return `$${Math.round(value)}`;
+    }
+}
+
 function updatePortfolioChart(chartData) {
     const labels = chartData.map(d => d.date);
-    const dataSolde = chartData.map(d => d.solde);
+    const dataSolde = chartData.map(d => Math.round(d.solde)); // ✅ Arrondi des données ici
     const ctx = document.getElementById('portfolioChart').getContext('2d');
 
-    // Create a vertical gradient for the fill
+    // Création du dégradé vertical
     let gradientStroke = ctx.createLinearGradient(0, 0, 0, 300);
     gradientStroke.addColorStop(0, "rgba(241, 196, 15, 0.8)");
     gradientStroke.addColorStop(1, "rgba(241, 196, 15, 0.2)");
@@ -122,7 +133,7 @@ function updatePortfolioChart(chartData) {
                     borderColor: "rgba(241, 196, 15, 1)",
                     backgroundColor: gradientStroke,
                     fill: true,
-                    tension: 0.4,               // Smooth curves
+                    tension: 0.4,
                     pointRadius: 4,
                     pointHoverRadius: 6,
                     pointBackgroundColor: "rgba(241, 196, 15, 1)",
@@ -152,7 +163,10 @@ function updatePortfolioChart(chartData) {
                         },
                         ticks: {
                             color: "#F8F9FA",
-                            font: { family: "'Poppins', sans-serif", size: 12 }
+                            font: { family: "'Poppins', sans-serif", size: 12 },
+                            callback: function(value) {
+                                return formatCurrency(value); // ✅ Avec suffixe $
+                            }
                         }
                     }
                 },
@@ -162,7 +176,14 @@ function updatePortfolioChart(chartData) {
                         titleFont: { family: "'Poppins', sans-serif", size: 14 },
                         bodyFont: { family: "'Poppins', sans-serif", size: 12 },
                         padding: 10,
-                        cornerRadius: 8
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = context.parsed.y;
+                                return `${label}: ${formatCurrency(value)}`; // ✅ Avec suffixe $
+                            }
+                        }
                     },
                     legend: {
                         labels: {
@@ -179,6 +200,8 @@ function updatePortfolioChart(chartData) {
         chart.update();
     }
 }
+
+
 
 
 // ------------------ INTERVAL MANAGEMENT ------------------

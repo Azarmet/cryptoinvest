@@ -607,7 +607,7 @@
 
 /* =================== Login Page Styles =================== */
 .login-container {
-  margin: 50px auto;
+  margin: 20vh auto;
   padding: 20px;
   max-width: 90%;
   background: linear-gradient(135deg, rgba(30, 30, 47, 0.8705882353), rgba(44, 62, 80, 0.8784313725));
@@ -685,7 +685,7 @@
   padding: 15px;
   color: #F8F9FA;
 }
-.market-container h2 {
+.market-container .market_title {
   font-family: "Roboto", sans-serif;
   color: #F8F9FA;
   text-align: center;
@@ -2596,6 +2596,11 @@ input:focus {
 }
 
 /* =================== Base =================== */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #f1c40f #1e1e2f;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   background-color: #2C2C2C;
@@ -2635,11 +2640,6 @@ body {
 
 main {
   flex: 1;
-}
-
-html{
-  scrollbar-width: thin;
-  scrollbar-color: #f1c40f #1e1e2f;
 }
 
 /*# sourceMappingURL=style.css.map */

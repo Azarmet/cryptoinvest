@@ -1,5 +1,6 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
 <div class="market-container">  
+  <h1 class="market_title">Mar<span class="orange">ket</span></h1>
   <!-- Onglets de catégories -->
   <div class="market-tabs">
     <button class="tab-button" data-category="all">All</button>
