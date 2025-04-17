@@ -1,23 +1,29 @@
+# ───────────────────────────────────────────────────────────
+# Fichier : .htaccess
+# ───────────────────────────────────────────────────────────
+
+# 1) Fichier par défaut
+DirectoryIndex index.php index.html
+
+# 2) Désactiver l’affichage des répertoires
 Options -Indexes
-RewriteEngine On
+
+# 3) Protection des logs
 <FilesMatch "\.log$">
-  Order allow,deny
-  Deny from all
+    Order allow,deny
+    Deny from all
 </FilesMatch>
 
-# Rediriger tout le trafic vers HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# Rediriger tout vers index.php
+
+# 4) Réécrire tout vers index.php si ce n’est pas un fichier ou répertoire existant
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
 
-
+# 5) Encodage et limites PHP
 AddDefaultCharset UTF-8
 
-# Optionnel : Augmenter certaines limites
-php_value memory_limit 256M
+php_value memory_limit        256M
 php_value upload_max_filesize 50M
-php_value post_max_size 50M
-php_value max_execution_time 180
+php_value post_max_size       50M
+php_value max_execution_time  180
