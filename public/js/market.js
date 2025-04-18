@@ -220,7 +220,7 @@ function refreshPositions() {
                     <td>${pos.date_ouverture}</td>
                     <td class="${pnlClass}">${pnl.toFixed(2)}</td>
                     <td class="${roiClass}">${roi.toFixed(2)}%</td>
-                    <td><a href="index.php?page=dashboard&action=closePosition&id=${pos.id_transaction}" class="close-btn">Close</a></td>
+                    <td><a href="index.php?page=market&action=closePosition&id=${pos.id_transaction}" class="close-btn">Close</a></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -265,6 +265,19 @@ function refreshPortfolioData() {
         })
         .catch(err => console.error(err));
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+
+    // Si le paramètre "success" est présent dans l'URL
+    if (success) {
+        const section = document.getElementById('positions-section-scroll');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+});
 
 // ------------------ LANCEMENT INITIAL ------------------
 if (isLoggedIn) {

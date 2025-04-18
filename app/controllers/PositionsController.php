@@ -102,11 +102,11 @@ function closePosition()
 
         if ($success === false) {
             // Redirection avec message d’erreur s’il y a eu un problème
-            header('Location: index.php?page=' . urlencode($page) . '&error=erreur_cloture_position');
+            header('Location: index.php?page=' . $page . '&error=erreur_cloture_position');
             exit();
         }
 
-        header('Location: index.php?page=' . urlencode($page) . '&success=position_closed');
+        header('Location: index.php?page=' . $page . '&success=position_closed');
         exit();
     } else {
         // Redirection si l'ID est manquant ou invalide
