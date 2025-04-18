@@ -64,7 +64,7 @@ class User
 
         // === ENREGISTREMENT ===
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $imgdefaut = 'public/uploads/profiles/default.png';
+        $imgdefaut = 'public/uploads/profiles/default.webp';
 
         $insertSql = 'INSERT INTO utilisateur (email, pseudo, mot_de_passe, image_profil) 
                   VALUES (:email, :pseudo, :mot_de_passe, :image_profil)';

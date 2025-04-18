@@ -205,7 +205,7 @@ function searchLearn()
     }
 
     // Nombre d'articles par page
-    $articlesPerPage = 10;
+    $articlesPerPage = 6;
     $offset = ($page - 1) * $articlesPerPage;
 
     // Récupération des articles filtrés

@@ -2638,7 +2638,7 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   background-color: #2C2C2C;
-  background-image: url("../image/mainbackground.png");
+  background-image: url("../image/mainbackground.webp");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

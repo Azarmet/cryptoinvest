@@ -22,7 +22,7 @@
 
         <!-- FEATURE 1 : Simulation de trading avec fonds virtuels -->
         <div class="feature trade">
-            <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/trade-bg.jpg');"></div>
+            <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/trade-bg.webp');"></div>
             <div class="feature-overlay"></div>
             <div class="feature-content">
                 <h2><span class="orange">Trade</span> Virtual Funds</h2>

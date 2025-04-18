@@ -23,7 +23,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <!-- Logo et nom de la marque -->
             <div class="logo">
                 <a href="index.php?page=home">
-                    <img src="<?= RACINE_URL . 'public/image/logo.png'?>" alt="CryptoInvest logo" class="logo-header">
+                    <img src="<?= RACINE_URL . 'public/image/logo.webp'?>" alt="CryptoInvest logo" class="logo-header">
                     <span class="brand-name">Crypto<span class="orange">Invest</span></span>
                 </a>
             </div>

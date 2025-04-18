@@ -1,6 +1,6 @@
 <!-- Section « Learn » mettant en avant les ressources pédagogiques -->
 <div class="feature learn">
-    <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/learn-bg.jpg');"></div>
+    <div class="feature-bg" style="background-image: url('<?= RACINE_URL ?>public/image/learn-bg.webp');"></div>
     <div class="feature-overlay"></div>
     <!-- Contenu textuel et appel à l'action de la section Learn -->
     <div class="feature-content">

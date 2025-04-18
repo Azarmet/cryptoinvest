@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS utilisateur (
     mot_de_passe  VARCHAR(255) NOT NULL,
     role          VARCHAR(20)  NOT NULL DEFAULT 'utilisateur',
     bio           TEXT NULL,
-    image_profil  VARCHAR(255) NULL DEFAULT 'public/uploads/profiles/default.png',
+    image_profil  VARCHAR(255) NULL DEFAULT 'public/uploads/profiles/default.webp',
     instagram     VARCHAR(255) DEFAULT NULL,
     x             VARCHAR(255) DEFAULT NULL,
     telegram      VARCHAR(255) DEFAULT NULL
