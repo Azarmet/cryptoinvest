@@ -97,7 +97,7 @@ endforeach;
             <tr>
                 <th>RANK</th>
                 <th class="th-pseudo">Username</th>
-                <?php if (isset($_GET['page']) && $page === 'home'): ?>
+                <?php if ((isset($_GET['page']) && $page === 'home') || (!isset($_GET['page']))): ?>
                     <!-- Colonne Balance uniquement sur l'accueil -->
                     <th>Balance</th>
                 <?php endif; ?>
