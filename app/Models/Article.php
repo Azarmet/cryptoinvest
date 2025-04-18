@@ -234,7 +234,7 @@ class Article
         }
 
         // Optionnel : validation de l'image (URL ou fichier)
-        if (!empty($data['image']) && !preg_match('/\.(jpg|jpeg|png|gif)$/i', $data['image'])) {
+        if (!empty($data['image']) && !preg_match('/\.(jpg|jpeg|png|webp|gif)$/i', $data['image'])) {
             return ['success' => false, 'error' => "Le format d'image est invalide."];
         }
 

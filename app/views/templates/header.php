@@ -7,10 +7,12 @@ if (session_status() == PHP_SESSION_NONE) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CryptoInvest</title>
+    <title>CryptoInvest <?php if (isset($_GET['page']) && $_GET['page'] !== 'home'): echo ucfirst(htmlspecialchars($_GET['page'], ENT_QUOTES, 'UTF-8')); endif; ?></title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/webp" href="<?= RACINE_URL ?>public/image/logo.webp">
     <!-- Icones FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" >
     <!-- Feuille de style principale -->
     <link rel="stylesheet" href="<?= RACINE_URL . 'public/css/style.css'?>">
 </head>

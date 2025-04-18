@@ -15,6 +15,12 @@
   margin-bottom: 20px;
   text-align: center;
 }
+@media (min-width: 768px) {
+  .detail-article-container .article-image {
+    max-width: 60%;
+    }
+  }
+
 
 .article-meta {
   text-align: center;
@@ -2629,6 +2635,136 @@ input:focus {
   box-shadow: 0 0 10px rgba(241, 196, 15, 0.5333333333);
 }
 
+/* ===========================
+   Styles modale & bouton
+   Mobile‑First
+   =========================== */
+
+/* Bouton How to trade (mobile) */
+.how-to-trade-btn {
+  display: block;
+  width: calc(100% - 2rem);
+  max-width: 150px;
+  margin: 1.5rem auto;
+  padding: 0.5rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  background-color: #F1C40F;
+  color: #2C3E50;
+  border: 2px solid #F1C40F;
+  border-radius: 50px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+.how-to-trade-btn:active {
+  transform: scale(0.98);
+}
+.how-to-trade-btn:hover {
+  background-color: rgba(241, 196, 15, 0.7);
+  color: #fff;
+}
+
+/* Overlay de la modale */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0; /* top/right/bottom/left = 0 */
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Contenu (mobile) */
+.modal-content {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 30, 47, 0.87),
+    rgba(44, 62, 80, 0.88)
+  );
+  color: #F8F9FA;
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  max-width: 360px;
+  margin: 5% auto;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+/* Croix de fermeture stylée */
+.modal .close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 32px;
+  height: 32px;
+  background-color: #2C3E50;
+  color: #F1C40F;
+  font-size: 1.2rem;
+  font-weight: bold;
+  /* Centrage avec flexbox */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Suppression du line-height qui gênait */
+  line-height: normal;
+  border: 2px solid #F1C40F;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.modal .close-btn:hover {
+  background-color: #F1C40F;
+  color: #2C3E50;
+  transform: scale(1.1);
+}
+
+
+/* Vidéo responsive */
+.modal-content video {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background-color: #000;
+  margin-top: 0.5rem;
+}
+
+/* ===================
+   Adaptations desktop
+   =================== */
+@media (min-width: 768px) {
+  /* Bouton plus grand et centré */
+  .how-to-trade-btn {
+    max-width: 150px;
+    padding: 0.5rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  /* Modale plus large */
+  .modal-content {
+    max-width: 640px;
+    padding: 2rem;
+  }
+
+  /* Croix mieux positionnée */
+  .modal .close-btn {
+    top: -16px;
+    right: -16px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: normal;
+  }
+}
+
 /* =================== Base =================== */
 html {
   scrollbar-width: thin;
@@ -2677,3 +2813,4 @@ main {
 }
 
 /*# sourceMappingURL=style.css.map */
+

@@ -26,6 +26,21 @@ $userName = htmlspecialchars($_SESSION['user']['pseudo'] ?? 'Utilisateur');
     <!-- SECTION 3 : Historique des transactions -->
     <?php require_once RACINE . 'app/views/templates/history.php'; ?>
 
+    <!-- Bouton How to trade -->
+<button id="howToTradeBtn" class="how-to-trade-btn">
+  How to trade
+</button>
+
+<!-- Modal pour la vidéo -->
+<div id="howToTradeModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <video controls width="100%">
+      <source src="<?= RACINE_URL ?>public/video/tuto-trade.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo.
+    </video>
+  </div>
+</div>
 
 
 </div>

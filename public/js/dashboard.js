@@ -215,6 +215,30 @@ document.querySelectorAll('.interval-btn').forEach(btn => {
     });
 });
 
+// ------------------ Partie Modale Video ------------------
+document.addEventListener('DOMContentLoaded', () => {
+    const btn   = document.getElementById('howToTradeBtn');
+    const modal = document.getElementById('howToTradeModal');
+    const close = document.querySelector('.close-btn');
+  
+    // Ouvre la popup
+    btn.addEventListener('click', () => {
+      modal.style.display = 'block';
+    });
+  
+    // Ferme la popup au clic sur la croix
+    close.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  
+    // Ferme la popup si l'utilisateur clique en dehors du contenu
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+
 // ------------------ INITIALISATION ------------------
 document.addEventListener('DOMContentLoaded', () => {
     // Sélection du bouton jour par défaut
