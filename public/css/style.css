@@ -311,7 +311,7 @@
   min-height: 250px;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 0 16px 8px rgba(14, 14, 14, 0.6), 0 0 16px 8px rgba(24, 24, 24, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
 .home-features .feature .feature-bg {
   position: absolute;
@@ -374,7 +374,7 @@
 
 .leader {
   margin-top: 50px;
-  box-shadow: 0 0 16px 8px rgba(14, 14, 14, 0.6), 0 0 16px 8px rgba(24, 24, 24, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* =================== Learn Page Styles =================== */
@@ -2774,7 +2774,7 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   background-color: #2C2C2C;
-  background-image: url("../image/mainbackground.webp");
+  background-image: url("../image/mainbackground.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

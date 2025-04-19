@@ -1,6 +1,6 @@
 <?php require_once RACINE . 'app/views/templates/header.php'; ?>
 
-<div class="detail-article-container">
+<article class="detail-article-container">
     <h1><?= htmlspecialchars($article['titre']) ?></h1>
     <div class="article-meta">
         <img src="<?= RACINE_URL ."/public/uploads/article/" . $article['image']?>" alt="<?= htmlspecialchars($article['titre']) ?>" class="article-image">
@@ -10,6 +10,6 @@
         <?= nl2br($article['contenu']) ?>
     </div>
     <p class="back-link"><a href="index.php?page=learn">← Retour</a></p>
-</div>
+</article>
 
 <?php require_once RACINE . 'app/views/templates/footer.php'; ?>

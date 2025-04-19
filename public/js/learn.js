@@ -37,7 +37,7 @@ function loadArticles(page) {
       // Mise à jour de la liste d’articles
       if (articles.length > 0) {
         articles.forEach(function (article) {
-          var div = document.createElement("div");
+          var div = document.createElement("article");
           div.className = "article-item";
           div.style.padding = "10px";
           div.style.marginBottom = "10px";

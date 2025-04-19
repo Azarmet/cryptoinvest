@@ -7,7 +7,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Your <span class="orange">crypto future</span> begins<span class="orange"> here</span></h1>
-            <p>Join us to explore the exciting world of cryptocurrency</p>
+            <p>Simulate. Learn. Trade with Confidence.</p>
             <!-- Bouton conditionnel : dirige vers le dashboard si connecté, sinon vers le formulaire de connexion -->
             <?php if (isset($_SESSION['user'])): ?>
                 <a href="index.php?page=dashboard" class="btn-get-started">Get Started</a>
