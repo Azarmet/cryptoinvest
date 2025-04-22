@@ -2,13 +2,18 @@
  * Récupère et affiche la Crypto Fear & Greed Index depuis l’API alternative.me
  * - Met à jour la valeur, la position de l’aiguille et la couleur du libellé
  */
-async function loadFearIndex() {
-    try {
-        // Récupération des données JSON de l’API
-        const res = await fetch("https://api.alternative.me/fng/");
-        const data = await res.json();
-        const value = parseInt(data.data[0].value);                   // Valeur numérique (0–100)
-        const classification = data.data[0].value_classification;     // Libellé textuel
+function loadFearIndex() {
+    // Requête GET vers l’API (cache désactivé)
+    fetch("https://api.alternative.me/fng/")
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(data => {
+        const value = parseInt(data.data[0].value, 10);                   // Valeur numérique (0–100)
+        const classification = data.data[0].value_classification;         // Libellé textuel
 
         // Affiche la valeur numérique
         document.getElementById("index-value").textContent = value;
@@ -43,12 +48,12 @@ async function loadFearIndex() {
         // Applique la couleur de fond et la couleur du texte du libellé
         label.style.backgroundColor = color;
         label.style.color = "#fff";
-
-    } catch (err) {
+    })
+    .catch(err => {
         // En cas d’erreur, log et affiche "Error" dans le libellé
         console.error("Erreur lors du chargement de l'indice :", err);
         document.getElementById("index-label").textContent = "Error";
-    }
+    });
 }
 
 // Exécute loadFearIndex dès que le DOM est prêt
