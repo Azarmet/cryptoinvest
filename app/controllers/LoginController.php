@@ -27,7 +27,7 @@ function processLogin()
         // Valider et assainir l'email
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password = trim($_POST['password']);
-
+        
         if (!$email || empty($password)) {
             $error = 'Veuillez fournir un email valide et un mot de passe.';
             require_once RACINE . 'app/views/login.php';
@@ -36,13 +36,16 @@ function processLogin()
 
         $userModel = new User();
         $user = $userModel->login($email, $password);
-
         if ($user) {
             session_start();
             // Régénérer l'ID de session pour prévenir la fixation de session
             session_regenerate_id(true);
             $_SESSION['user'] = $user;
             $_SESSION['role'] = $user['role'];
+
+            if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin'){
+                $_SESSION['unique'] =  '55551564365184949565356487';
+            }
             header('Location: index.php?page=home');
             exit();
         } else {

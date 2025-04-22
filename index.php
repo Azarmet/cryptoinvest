@@ -15,7 +15,7 @@
         session_start();
     };
     
-    if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin'){
+    if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin' && $_SESSION['unique'] ==='55551564365184949565356487'){
         routeurBack();
     }else{
     routeur();
