@@ -12,10 +12,11 @@
     // Appeler la fonction du routeur
     
     if (session_status() === PHP_SESSION_NONE) {
+        session_name('CryptoInvest');
         session_start();
     };
     
-    if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin' && $_SESSION['unique'] ==='55551564365184949565356487'){
+    if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin' && session_id() === $_SESSION['uniqueID']){
         routeurBack();
     }else{
     routeur();

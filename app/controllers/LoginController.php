@@ -44,7 +44,7 @@ function processLogin()
             $_SESSION['role'] = $user['role'];
 
             if(isset($_SESSION['role']) &&  $_SESSION['role'] === 'admin'){
-                $_SESSION['unique'] =  '55551564365184949565356487';
+                $_SESSION['uniqueID'] =  session_id();
             }
             header('Location: index.php?page=home');
             exit();
