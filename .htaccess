@@ -23,6 +23,10 @@ Options -Indexes
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
+# 4) Redirection vers HTTPS (si ce n’est pas déjà en HTTPS)
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # 5) Encodage et limites PHP
 AddDefaultCharset UTF-8
